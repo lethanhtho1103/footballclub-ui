@@ -89,7 +89,7 @@ function Register() {
         SetErrClassPass(false);
         SetErrClassConf(false);
       }
-    }, 500);
+    }, 1000);
   };
 
   const handleKeyDownSubmit = () => {
