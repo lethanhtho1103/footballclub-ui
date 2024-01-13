@@ -20,14 +20,16 @@ function Login() {
   const inputRef = useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [userInput, setUserInput] = useState('');
+  const [emailInput, setEmail] = useState('');
   const [passInput, setPassInput] = useState('');
-  const [errClass, setErrClass] = useState(true);
+  const [errClass, setErrClass] = useState(false);
+  const [errClassEmail, setErrClassEmail] = useState(false);
+  const [errClassPass, SetErrClassPass] = useState(false);
   const [isLoader, setIsLoader] = useState(false);
 
   const handleChange = (e, type) => {
     if (type === 'user') {
-      setUserInput(e.target.value);
+      setEmail(e.target.value);
     } else if (type === 'password') {
       setPassInput(e.target.value);
     }
@@ -36,16 +38,19 @@ function Login() {
   const handleSubmit = async () => {
     setIsLoader(true);
     let isLoader = await setTimeout(async () => {
-      const res = await userService.login(userInput, passInput);
+      const res = await userService.login(emailInput, passInput);
       setIsLoader(false);
       clearTimeout(isLoader);
       if (res.access_token) {
         saveUserLogin(res);
-        setErrClass(true);
-      } else {
         setErrClass(false);
-        setUserInput('');
+      } else {
+        setErrClass(true);
+        setErrClassEmail(true);
+        SetErrClassPass(true);
+        setEmail('');
         setPassInput('');
+
         inputRef.current.focus();
       }
     }, 500);
@@ -106,7 +111,7 @@ function Login() {
         <section className={cx('page-content')}>
           <div
             className={cx('notification-box', 'invalid', {
-              errClass: errClass === true,
+              errClass: errClass === false,
             })}
           >
             <div className={cx('notification-box__text')}>
@@ -116,8 +121,9 @@ function Login() {
           <Form>
             <Form.Group className={cx('mb-4', 'form-gr')}>
               <Form.Control
-                value={userInput}
+                value={emailInput}
                 ref={inputRef}
+                className={cx({ errorClassEmail: errClassEmail === true })}
                 onChange={(e) => handleChange(e, 'user')}
                 required
                 id="user"
@@ -134,6 +140,7 @@ function Login() {
                 value={passInput}
                 onChange={(e) => handleChange(e, 'password')}
                 required
+                className={cx({ errorClassPassword: errClassPass === true })}
                 type="password"
                 id="password"
               />

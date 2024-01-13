@@ -216,6 +216,19 @@
     }
   }
 
+  .errorClassEmail,
+  .errorClassPass {
+    border-color: transparent transparent #f64d61 transparent !important;
+    color: #f64d61 !important;
+    &:focus {
+      border-color: transparent transparent #f64d61 transparent !important;
+      color: #f64d61 !important;
+    }
+    & + .title-input {
+      color: #f64d61 !important;
+    }
+  }
+
   input[value]:not([value='']) {
     box-shadow: none;
     border-color: transparent transparent #ced4da transparent;
