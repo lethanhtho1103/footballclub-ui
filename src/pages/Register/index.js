@@ -27,69 +27,69 @@ function Register() {
   const [successClass, setSuccessClass] = useState(false);
   const [errClassFullName, setErrClassFullName] = useState(false);
   const [errClassEmail, setErrClassEmail] = useState(false);
-  const [errClassPass, SetErrClassPass] = useState(false);
-  const [errClassConf, SetErrClassConf] = useState(false);
+  const [errClassPass, setErrClassPass] = useState(false);
+  const [errClassConf, setErrClassConf] = useState(false);
 
   const [isLoader, setIsLoader] = useState(false);
 
   const handleChange = (e, type) => {
     if (type === 'email') {
       setEmailInput(e.target.value);
+      setErrClassEmail(false);
     } else if (type === 'pass') {
       setPassInput(e.target.value);
+      setErrClassPass(false);
     } else if (type === 'fullName') {
       setFullName(e.target.value);
+      setErrClassFullName(false);
     } else if (type === 'confPass') {
       setConfPass(e.target.value);
+      setErrClassConf(false);
     }
   };
 
   const handelSubmit = async () => {
-    if (fullName.length === 0) {
-      setErrClass(true);
-      setErrClassFullName(true);
-      fullNameRef.current.focus();
-      setErrInput('Full name is required');
-      return;
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const isValid = emailRegex.test(emailInput);
-    if (!isValid) {
-      setErrClass(true);
-      setErrClassEmail(true);
-      setErrInput('Please enter a valid email address');
-      emailRef.current.focus();
-      return;
-    }
-    if (passInput.length < 8) {
-      setErrClass(true);
-      SetErrClassPass(true);
-      setErrInput('Password must be longer than 7 characters');
-      passRef.current.focus();
-      return;
-    }
-    if (confPass !== passInput) {
-      setErrClass(true);
-      SetErrClassConf(true);
-      setErrInput('Field required and passwords need to match.');
-      setConfPass('');
-      confPassRef.current.focus();
-      return;
-    }
     setIsLoader(true);
-    let isLoader = await setTimeout(async () => {
-      const res = await userService.register(fullName, emailInput, passInput);
-      setIsLoader(false);
-      clearTimeout(isLoader);
-      if (res.user) {
+    const isLoader = setTimeout(async () => {
+      try {
+        const res = await userService.register(fullName, emailInput, passInput);
         setErrInput(res.message);
         setSuccessClass(true);
         setErrClassFullName(false);
         setErrClassEmail(false);
-        SetErrClassPass(false);
-        SetErrClassConf(false);
+        setErrClassPass(false);
+        setErrClassConf(false);
+        setIsLoader(false);
+        setFullName('');
+        setEmailInput('');
+        setPassInput('');
+        setConfPass('');
+        clearTimeout(isLoader);
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          if (error.response.data.errors.name) {
+            setErrClass(true);
+            setErrClassFullName(true);
+            fullNameRef.current.focus();
+            setErrInput(error.response.data.errors.name[0]);
+            setIsLoader(false);
+          } else if (error.response.data.errors.email) {
+            setErrClass(true);
+            setErrClassEmail(true);
+            emailRef.current.focus();
+            setErrInput(error.response.data.errors.email[0]);
+            setIsLoader(false);
+          } else if (error.response.data.errors.password) {
+            setErrClass(true);
+            setErrClassPass(true);
+            setErrInput(error.response.data.errors.password[0]);
+            passRef.current.focus();
+            setIsLoader(false);
+          }
+          clearTimeout(isLoader);
+        }
       }
-    }, 1000);
+    }, 500);
   };
 
   const handleKeyDownSubmit = () => {
@@ -206,7 +206,6 @@ function Register() {
                 Confirm Password
               </Form.Label>
             </Form.Group>
-
             <div>
               <Button onClick={handelSubmit} className={cx('submit')}>
                 Register

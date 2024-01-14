@@ -17,7 +17,8 @@ const cx = classNames.bind(styles);
 
 function Login() {
   const btnSubmitRef = useRef();
-  const inputRef = useRef();
+  const emailRef = useRef();
+  const passRef = useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [emailInput, setEmail] = useState('');
@@ -26,34 +27,55 @@ function Login() {
   const [errClassEmail, setErrClassEmail] = useState(false);
   const [errClassPass, SetErrClassPass] = useState(false);
   const [isLoader, setIsLoader] = useState(false);
-
+  const [errMessage, setErrMessage] = useState('');
   const handleChange = (e, type) => {
     if (type === 'user') {
       setEmail(e.target.value);
+      setErrClassEmail(false);
     } else if (type === 'password') {
       setPassInput(e.target.value);
+      SetErrClassPass(false);
     }
   };
 
   const handleSubmit = async () => {
-    setIsLoader(true);
-    let isLoader = await setTimeout(async () => {
-      const res = await userService.login(emailInput, passInput);
-      setIsLoader(false);
-      clearTimeout(isLoader);
-      if (res.access_token) {
-        saveUserLogin(res);
+    if (!emailInput) {
+      setErrMessage('The email field is required.');
+      setErrClass(true);
+      setErrClassEmail(true);
+      emailRef.current.focus();
+      return;
+    } else if (!passInput) {
+      setErrMessage('The password field is required.');
+      setErrClass(true);
+      SetErrClassPass(true);
+      passRef.current.focus();
+      return;
+    }
+    try {
+      setIsLoader(true);
+      const response = await userService.login(emailInput, passInput);
+      // Xử lý dữ liệu khi thành công
+      let isLoader = setTimeout(() => {
+        setIsLoader(false);
+        saveUserLogin(response);
         setErrClass(false);
-      } else {
+        clearTimeout(isLoader);
+      }, 500);
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
         setErrClass(true);
         setErrClassEmail(true);
         SetErrClassPass(true);
         setEmail('');
         setPassInput('');
-
-        inputRef.current.focus();
+        emailRef.current.focus();
+        setIsLoader(false);
+      } else {
+        // Xử lý các mã lỗi khác
+        console.error('Other error:', error);
       }
-    }, 500);
+    }
   };
 
   const saveUserLogin = (data) => {
@@ -115,14 +137,14 @@ function Login() {
             })}
           >
             <div className={cx('notification-box__text')}>
-              <span>Invalid credentials.(Ref: EC4)</span>
+              <span>{errMessage ? errMessage : 'Invalid credentials.(Ref: EC4)'}</span>
             </div>
           </div>
           <Form>
             <Form.Group className={cx('mb-4', 'form-gr')}>
               <Form.Control
                 value={emailInput}
-                ref={inputRef}
+                ref={emailRef}
                 className={cx({ errorClassEmail: errClassEmail === true })}
                 onChange={(e) => handleChange(e, 'user')}
                 required
@@ -137,6 +159,7 @@ function Login() {
 
             <Form.Group className={cx('mb-4', 'form-gr')}>
               <Form.Control
+                ref={passRef}
                 value={passInput}
                 onChange={(e) => handleChange(e, 'password')}
                 required
