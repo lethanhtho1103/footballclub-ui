@@ -1,12 +1,9 @@
 import Players from '~/pages/User/Players';
 import Login from '~/pages/Login';
 import Register from '~/pages/Register';
+import DetailUser from '~/pages/User/DetailUser';
 
 const publicRoutes = [
-  {
-    path: '/players',
-    component: Players,
-  },
   {
     path: '/login',
     component: Login,
@@ -14,6 +11,14 @@ const publicRoutes = [
   {
     path: '/register',
     component: Register,
+  },
+  {
+    path: '/players',
+    component: Players,
+  },
+  {
+    path: '/players/name-player',
+    component: DetailUser,
   },
 ];
 

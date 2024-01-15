@@ -52,7 +52,7 @@ function Register() {
     setIsLoader(true);
     const isLoader = setTimeout(async () => {
       try {
-        const res = await userService.register(fullName, emailInput, passInput);
+        const res = await userService.register(fullName, emailInput, passInput, confPass);
         setErrInput(res.message);
         setSuccessClass(true);
         setErrClassFullName(false);
@@ -84,6 +84,12 @@ function Register() {
             setErrClassPass(true);
             setErrInput(error.response.data.errors.password[0]);
             passRef.current.focus();
+            setIsLoader(false);
+          } else if (error.response.data.errors.confirm_password) {
+            setErrClass(true);
+            setErrClassConf(true);
+            setErrInput(error.response.data.errors.confirm_password[0]);
+            confPassRef.current.focus();
             setIsLoader(false);
           }
           clearTimeout(isLoader);
