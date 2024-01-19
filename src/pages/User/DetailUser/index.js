@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import style from './DetailUser.module.scss';
-import HeaderUser from '~/components/HeaderUser';
-import FooterUser from '~/components/FooterUser';
+import HeaderUser from '~/components/User/HeaderUser';
+import FooterUser from '~/components/User/FooterUser';
 
 const cx = classNames.bind(style);
 

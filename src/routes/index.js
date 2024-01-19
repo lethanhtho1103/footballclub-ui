@@ -2,6 +2,7 @@ import Players from '~/pages/User/Players';
 import Login from '~/pages/Login';
 import Register from '~/pages/Register';
 import DetailUser from '~/pages/User/DetailUser';
+import Admin from '~/pages/Admin/Home';
 
 const publicRoutes = [
   {
@@ -19,6 +20,10 @@ const publicRoutes = [
   {
     path: '/players/name-player',
     component: DetailUser,
+  },
+  {
+    path: '/admin',
+    component: Admin,
   },
 ];
 

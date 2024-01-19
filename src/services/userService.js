@@ -8,6 +8,7 @@ const userService = {
     });
     return res.data;
   },
+
   async register(name, email, password, confirm_password) {
     const res = await axios.post('/api/register-user', {
       name: name,
@@ -16,6 +17,24 @@ const userService = {
       confirm_password: confirm_password,
     });
     return res.data;
+  },
+
+  async getAllPlayers() {
+    try {
+      const res = await axios.get('/api/players');
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async getAllCoaches() {
+    try {
+      const res = await axios.get('/api/coaches');
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
   },
 };
 
