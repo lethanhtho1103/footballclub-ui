@@ -1,10 +1,15 @@
 import Players from '~/pages/User/Players';
 import Login from '~/pages/Login';
 import Register from '~/pages/Register';
-import DetailUser from '~/pages/User/DetailUser';
+import DetailUser from '~/pages/User/DetailPlayer';
 import Admin from '~/pages/Admin/Home';
+import Home from '~/pages/User/Home';
 
 const publicRoutes = [
+  {
+    path: '/',
+    component: Home,
+  },
   {
     path: '/login',
     component: Login,
@@ -18,7 +23,7 @@ const publicRoutes = [
     component: Players,
   },
   {
-    path: '/players/name-player',
+    path: '/players/:name',
     component: DetailUser,
   },
   {

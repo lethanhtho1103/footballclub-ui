@@ -1,5 +1,7 @@
+import HeaderUser from '~/components/User/HeaderUser';
+
 function Home() {
-  return <h1>Home user</h1>;
+  return <HeaderUser />;
 }
 
 export default Home;

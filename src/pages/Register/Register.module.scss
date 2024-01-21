@@ -140,6 +140,9 @@
       background-color: rgba(56, 214, 255, 0.1);
       p {
         margin: 0;
+        strong {
+          font-size: 1.6rem;
+        }
       }
     }
     .invalid {
@@ -150,6 +153,9 @@
       border-left: 6px solid #f64d61;
       color: #f64d61;
       box-shadow: 0px 0px 7px 2px rgba(0, 24, 56, 0.1);
+    }
+    .notification-box__text {
+      font-size: 1.6rem;
     }
     .errClass {
       display: none;
@@ -254,22 +260,22 @@
 }
 
 .submit {
+  margin-top: 12px;
   width: 100%;
   height: 50px;
-  margin-top: 24px;
-  background: #001838;
-  color: #fff;
-  border: solid 1px #001838;
-  border-radius: 6px;
-  font-size: 20px;
-  font-weight: 800;
-  transition: 0.5s;
-  text-transform: uppercase;
+  background: #001838 !important;
+  color: #fff !important;
+  border: solid 1px #001838 !important;
+  border-radius: 6px !important;
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  transition: 0.5s !important;
+  text-transform: uppercase !important;
 
   &:hover {
     cursor: pointer;
-    background-color: #002961;
-    border-color: transparent;
+    background-color: #002961 !important;
+    border-color: transparent !important;
   }
 }
 .register-link {

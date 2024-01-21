@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
 import { userSlice } from '~/redux/reducer';
-import { isLoginSelector } from '~/redux/selector';
+import { accessTokenSelector } from '~/redux/selector';
 import { userService } from '~/services';
 import Loader from '~/components/Loader';
 
@@ -69,6 +69,7 @@ function Login() {
         SetErrClassPass(true);
         setEmail('');
         setPassInput('');
+        setErrMessage('Invalid credentials.(Ref: EC4)');
         emailRef.current.focus();
         setIsLoader(false);
       } else {
@@ -83,13 +84,13 @@ function Login() {
     dispatch(userSlice.actions.toggleUserLogin(true));
   };
 
-  const isLogInEd = useSelector(isLoginSelector);
+  const accessToken = useSelector(accessTokenSelector);
 
   const handleNavigate = useCallback(() => {
-    if (isLogInEd) {
+    if (accessToken) {
       navigate('/');
     }
-  }, [isLogInEd, navigate]);
+  }, [accessToken, navigate]);
 
   const handleKeyDownSubmit = () => {
     window.addEventListener('keydown', (e) => {
@@ -100,7 +101,7 @@ function Login() {
   useEffect(() => {
     handleNavigate();
     handleKeyDownSubmit();
-  }, [handleNavigate, isLogInEd]);
+  }, [handleNavigate, accessToken]);
 
   return (
     <>
@@ -137,7 +138,7 @@ function Login() {
             })}
           >
             <div className={cx('notification-box__text')}>
-              <span>{errMessage ? errMessage : 'Invalid credentials.(Ref: EC4)'}</span>
+              <span>{errMessage}</span>
             </div>
           </div>
           <Form>

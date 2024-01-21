@@ -1,0 +1,222 @@
+.main-content {
+  //   margin-top: 96px;
+  .player-header {
+    position: relative;
+    height: 360px;
+    padding-top: 81px;
+    background-image: url('https://web-assets.mancity.com/dist/images/brand/shipspurple.png');
+    background-position: 50% 20%;
+    background-size: cover;
+    text-align: left;
+    .container {
+      max-width: 976px;
+      width: 100%;
+      padding-left: 2.4rem;
+      padding-right: 2.4rem;
+      margin-left: auto;
+      margin-right: auto;
+      h1 {
+        position: relative;
+        margin-left: -10px;
+        margin-right: -10px;
+        display: flex;
+        flex-wrap: wrap;
+        .first-name {
+          position: relative;
+          margin-left: 20%;
+          line-height: 56px;
+          padding-left: 38%;
+          bottom: -57px;
+          font-weight: 700;
+          color: #e6ff00;
+          text-transform: uppercase;
+          span {
+            padding: 5px 15px;
+            background-color: #001838;
+            font-size: 55px;
+            line-height: 56px;
+          }
+        }
+        .last-name {
+          position: relative;
+          min-width: 1044px;
+          display: inline;
+          white-space: nowrap;
+          color: #fff;
+          font-weight: 700;
+          bottom: -14px;
+          padding: 1px;
+          padding-left: 39%;
+          font-size: 157px;
+          text-transform: uppercase;
+          margin-left: 20%;
+          letter-spacing: -10px;
+          z-index: 2;
+          overflow: hidden;
+        }
+      }
+      .shirt-number {
+        position: absolute;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0;
+        margin: 0 auto;
+        -webkit-text-stroke: 1.5px #e6ff00;
+        bottom: 0px;
+        right: 55%;
+        h2 {
+          bottom: 170px;
+          margin: 0;
+          font-size: 200px;
+          line-height: 220px;
+          margin-bottom: 8px;
+          font-weight: 700;
+          color: transparent;
+          text-align: right;
+          letter-spacing: -8px;
+        }
+      }
+      .image {
+        position: absolute;
+        left: 40%;
+        // transform: translateX(-100%);
+        width: 301px;
+        height: 301px;
+        bottom: 0;
+        z-index: 3;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  .sub-header {
+    padding: 25px 0;
+    box-shadow: 0 4px 16px 0 rgba(0, 24, 56, 0.2);
+    border-bottom: 1px solid #6caddf;
+    .container {
+      padding-left: 24px;
+      padding-right: 24px;
+      max-width: 976px;
+      margin-left: auto;
+      margin-right: auto;
+      .list-tab {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        .tab-item {
+          font-size: 2.4rem;
+          font-weight: 700;
+          padding-right: 20px;
+        }
+      }
+    }
+  }
+  .profile {
+    margin-bottom: 60px;
+    min-height: 316px;
+    .container {
+      max-width: 976px;
+      width: 100%;
+      height: 100%;
+      padding-left: 24px;
+      padding-right: 24px;
+      margin-left: auto;
+      margin-right: auto;
+      .wrapper {
+        width: 100%;
+        height: 100%;
+        // border-bottom: 1px solid #dde6ed;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        .bio {
+          padding-top: 60px;
+          max-width: 50%;
+          .title {
+            width: 100%;
+            padding: 10px 10px 10px 0;
+            font-size: 4rem;
+            line-height: 4.1rem;
+            color: #6caddf;
+            font-weight: 700;
+          }
+          .text {
+            padding: 10px 10px 10px 0;
+            width: 100%;
+            color: #001838;
+            .content {
+              padding-top: 36px;
+              p {
+                margin-bottom: 19px;
+                font-size: 1.8rem;
+                line-height: 1.33;
+                strong {
+                  font-size: 2rem;
+                  line-height: 2.1rem;
+                }
+              }
+            }
+          }
+        }
+        .info {
+          margin-top: 60px;
+          width: 50%;
+          margin-left: 9%;
+          padding-left: 9%;
+          border-left: 1px solid #dde6ed;
+          h3 {
+            padding: 10px 10px 10px 0;
+            font-size: 4rem;
+            line-height: 4.1rem;
+            color: #6caddf;
+            font-weight: 700;
+          }
+          .list-info {
+            width: 100%;
+            padding: 26px 10px 10px 10px;
+            list-style: none;
+            .info-item {
+              padding: 10px 0;
+              border-bottom: 1px solid #dde6ed;
+              .label {
+                padding-bottom: 8px;
+                font-size: 13px;
+                line-height: 1.23;
+                color: #69738c;
+              }
+              .content {
+                padding-left: 0;
+                padding-right: 0;
+                font-size: 33px;
+                line-height: 33px;
+                color: #001838;
+                font-weight: 700;
+                letter-spacing: -2px;
+                display: flex;
+                justify-content: space-between;
+                img {
+                  max-width: 32px;
+                  max-height: 32px;
+                  height: auto;
+                  border: 1px solid #dde6ed;
+                  border-radius: 50%;
+                  display: block;
+                }
+              }
+              &:last-child {
+                border-bottom: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

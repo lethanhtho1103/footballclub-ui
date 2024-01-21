@@ -36,6 +36,45 @@ const userService = {
       console.error(error);
     }
   },
+
+  async getOneCoach({ name }) {
+    if (name) {
+      const res = await axios.get(`/api/coaches/${name}`);
+      return res.data;
+    }
+
+    return 'Thiếu tham số truyền vào';
+  },
+
+  async getOnePlayer({ name }) {
+    if (name) {
+      const res = await axios.get(`/api/players/${name}`);
+      return res.data;
+    }
+
+    return 'Thiếu tham số truyền vào';
+  },
+
+  async getInfoUser({ access_token }) {
+    if (access_token) {
+      try {
+        const res = await axios.post(
+          'api/auth/me',
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          },
+        );
+        return res.data;
+      } catch (error) {
+        console.error('Lỗi khi gửi yêu cầu:', error);
+        // Xử lý lỗi nếu cần
+      }
+    }
+    return 'Thiếu tham số truyền vào';
+  },
 };
 
 export default userService;

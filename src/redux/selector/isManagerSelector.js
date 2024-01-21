@@ -1,5 +1,5 @@
 const isManagerSelector = (state) => {
-    return state.user.isManager;
+  return state.user.isManager;
 };
 
 export default isManagerSelector;
