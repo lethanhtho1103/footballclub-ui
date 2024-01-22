@@ -14,10 +14,7 @@ function PlayerSection({ title, position, players, coaches, cx }) {
                   <div className={cx('header')}>
                     <div className={cx('shirt-number')}>{player.jersey_number}</div>
                     <div className={cx('photo')}>
-                      <img
-                        src="https://www.mancity.com/meta/media/ejhjw1j4/scott-carson.png?width=376&quality=100"
-                        alt="player"
-                      />
+                      <img src={player.image} alt={player.name} />
                     </div>
                     <div className={cx('country')}>
                       <img src="https://mediacdn.mancity.com/meta/media/kbujcobi/gb-eng.svg" alt="country" />

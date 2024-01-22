@@ -33,7 +33,7 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background: url('https://www.si.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTk1NzE1NDM5NDkyMzQzNjkx/imago1022631253h.jpg');
+    background: url('../../../assets/images/bg2.jpeg');
     background-size: contain;
     // background-repeat: no-repeat;
   }
@@ -123,7 +123,7 @@
   }
   .page-content {
     background-color: #fff;
-    padding: 24px 60px 40px;
+    padding: 34px 60px 50px;
     position: relative;
     display: -webkit-box;
     display: flex;
@@ -163,11 +163,16 @@
   }
 }
 
+.form {
+  margin-bottom: 6px;
+}
+
 .form-gr {
   position: relative;
   width: 100%;
   height: 50px;
   margin-top: 40px;
+
   + .form-gr {
     margin-top: 28px;
   }
@@ -263,7 +268,7 @@
   justify-content: space-between;
   font-size: 1.4rem;
   font-weight: 600;
-  margin: 24px 6px 15px;
+  margin: 26px 6px 20px;
 }
 .remember-forgot a {
   color: var(--text-color);
@@ -290,27 +295,4 @@
     background-color: #002961 !important;
     border-color: transparent !important;
   }
-}
-.register-link {
-  margin: auto 0 0;
-  padding-top: 20px;
-  border-top: 1px solid #98c5e9;
-  font-size: 1.6rem;
-  line-height: 22px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.register-link a {
-  display: flex;
-  align-items: center;
-  margin-left: 6px;
-  text-decoration: underline;
-  color: var(--text-color);
-  font-weight: 600;
-}
-.register-link a:hover {
-  text-decoration: none;
 }

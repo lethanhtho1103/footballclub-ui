@@ -5,6 +5,7 @@ import FooterUser from '~/components/User/FooterUser';
 import { useEffect, useState } from 'react';
 import { userService } from '~/services';
 import PlayerSection from '~/components/User/PlayerSection';
+import sponsor from '~/assets/images/sponsor.webp';
 
 const cx = classNames.bind(styles);
 function Players() {
@@ -47,7 +48,7 @@ function Players() {
               <h1>Players</h1>
               <div className={cx('sponsor')}>
                 <span>BROUGHT TO YOU BY</span>
-                <img src="https://www.mancity.com/dist/images/puma_crest.png" alt="sponsor" />
+                <img src={sponsor} alt="sponsor" />
               </div>
             </div>
           </div>

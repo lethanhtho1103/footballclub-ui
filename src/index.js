@@ -6,6 +6,7 @@ import GlobalStyles from './components/GlobalStyles';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistor } from './redux/store';
+import { InfoUserProvider } from '~/Context/InfoUserContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -14,7 +15,9 @@ root.render(
     <GlobalStyles>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <App />
+          <InfoUserProvider>
+            <App />
+          </InfoUserProvider>
         </PersistGate>
       </Provider>
     </GlobalStyles>

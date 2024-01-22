@@ -4,9 +4,9 @@ const userSlice = createSlice({
   name: 'user',
   initialState: {
     isLogInEd: false,
-    isManager: false,
     userData: {},
     access_token: '',
+    role_id: null,
   },
   reducers: {
     toggleUserLogin(state, actions) {
@@ -18,11 +18,16 @@ const userSlice = createSlice({
     },
     saveUserLogin(state, actions) {
       state.userData = actions.payload;
-      state.isManager = actions.payload.type === 'admin' ? true : false;
       state.access_token = actions.payload.access_token;
     },
+
+    saveRoleId(state, actions) {
+      state.role_id = actions.payload.role_id;
+    },
+
     logOutUser(state, actions) {
       state.access_token = '';
+      state.role_id = '';
     },
   },
 });

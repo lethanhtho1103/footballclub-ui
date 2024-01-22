@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import styles from './Login.module.scss';
+import styles from './LoginAdmin.module.scss';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faEnvelope } from '@fortawesome/free-solid-svg-icons';
@@ -7,31 +7,32 @@ import { Button, Form } from 'react-bootstrap';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-
 import { userSlice } from '~/redux/reducer';
 import { accessTokenSelector } from '~/redux/selector';
-import { userService } from '~/services';
 import Loader from '~/components/Loader';
+import bg_player2 from '~/assets/images/bg_player2.webp';
+import logo from '~/assets/images/logo.svg';
+import adminService from '~/services/adminService';
 
 const cx = classNames.bind(styles);
 
-function Login() {
+function LoginAdmin() {
   const btnSubmitRef = useRef();
-  const emailRef = useRef();
+  const userIdlRef = useRef();
   const passRef = useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [emailInput, setEmail] = useState('');
+  const [userId, setUserId] = useState('');
   const [passInput, setPassInput] = useState('');
   const [errClass, setErrClass] = useState(false);
-  const [errClassEmail, setErrClassEmail] = useState(false);
+  const [errClassUserId, setErrClassUserId] = useState(false);
   const [errClassPass, SetErrClassPass] = useState(false);
   const [isLoader, setIsLoader] = useState(false);
   const [errMessage, setErrMessage] = useState('');
   const handleChange = (e, type) => {
     if (type === 'user') {
-      setEmail(e.target.value);
-      setErrClassEmail(false);
+      setUserId(e.target.value);
+      setErrClassUserId(false);
     } else if (type === 'password') {
       setPassInput(e.target.value);
       SetErrClassPass(false);
@@ -39,11 +40,11 @@ function Login() {
   };
 
   const handleSubmit = async () => {
-    if (!emailInput) {
-      setErrMessage('The email field is required.');
+    if (!userId) {
+      setErrMessage('The user_id field is required.');
       setErrClass(true);
-      setErrClassEmail(true);
-      emailRef.current.focus();
+      setErrClassUserId(true);
+      userIdlRef.current.focus();
       return;
     } else if (!passInput) {
       setErrMessage('The password field is required.');
@@ -54,7 +55,7 @@ function Login() {
     }
     try {
       setIsLoader(true);
-      const response = await userService.login(emailInput, passInput);
+      const response = await adminService.login(userId, passInput);
       // Xử lý dữ liệu khi thành công
       let isLoader = setTimeout(() => {
         setIsLoader(false);
@@ -65,12 +66,12 @@ function Login() {
     } catch (error) {
       if (error.response && error.response.status === 401) {
         setErrClass(true);
-        setErrClassEmail(true);
+        setErrClassUserId(true);
         SetErrClassPass(true);
-        setEmail('');
+        setUserId('');
         setPassInput('');
         setErrMessage('Invalid credentials.(Ref: EC4)');
-        emailRef.current.focus();
+        userIdlRef.current.focus();
         setIsLoader(false);
       } else {
         // Xử lý các mã lỗi khác
@@ -88,7 +89,7 @@ function Login() {
 
   const handleNavigate = useCallback(() => {
     if (accessToken) {
-      navigate('/');
+      navigate('/admin');
     }
   }, [accessToken, navigate]);
 
@@ -101,6 +102,7 @@ function Login() {
   useEffect(() => {
     handleNavigate();
     handleKeyDownSubmit();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleNavigate, accessToken]);
 
   return (
@@ -109,25 +111,18 @@ function Login() {
       <nav className={cx('global-nav')}>
         <div className={cx('logo-wrapper')}>
           <Link to="/">
-            <img src="https://www.mancity.com/dist/images/logos/crest.svg" alt="logo" />
+            <img src={logo} alt="logo" />
           </Link>
         </div>
       </nav>
       <div className={cx('player-banner')}>
         <div className={cx('background')} />
-        <img
-          className={cx('image-player')}
-          src="https://login.mancity.com/Content/Images/sample-players/v4/11.png"
-          alt="player"
-        />
+        <img className={cx('image-player')} src={bg_player2} alt="player" />
       </div>
       <main className={cx('container', 'page-wrapper')}>
         <div className={cx('tab-header')}>
           <Link className={cx('sign-in', 'button-tab')} to="/login">
             Sign In
-          </Link>
-          <Link className={cx('register', 'button-tab')} to="/register">
-            Register
           </Link>
         </div>
 
@@ -141,12 +136,12 @@ function Login() {
               <span>{errMessage}</span>
             </div>
           </div>
-          <Form>
+          <Form className={cx('form')}>
             <Form.Group className={cx('mb-4', 'form-gr')}>
               <Form.Control
-                value={emailInput}
-                ref={emailRef}
-                className={cx({ errorClassEmail: errClassEmail === true })}
+                value={userId}
+                ref={userIdlRef}
+                className={cx({ errorClassEmail: errClassUserId === true })}
                 onChange={(e) => handleChange(e, 'user')}
                 required
                 id="user"
@@ -154,7 +149,7 @@ function Login() {
               />
               <Form.Label className={cx('title-input')} htmlFor="user">
                 <FontAwesomeIcon icon={faEnvelope} bounce />
-                Email Address or Supporter Number
+                User_id
               </Form.Label>
             </Form.Group>
 
@@ -189,15 +184,9 @@ function Login() {
           <div className={cx('notification-box')}>
             <p className={cx('notification-box__text')}>
               <strong>
-                You can access our preference centre at any time to opt-out of marketing communications and control how
-                we use your data. Please note, you will still receive general communications, including ticket sales and
-                important club notifications.
+                This is the Admin Login Page. Please enter Admin login information to access administrative functions.
               </strong>
             </p>
-          </div>
-          <div className={cx('register-link')}>
-            Don't have an account?
-            <Link to="/register">Register Now</Link>
           </div>
         </section>
       </main>
@@ -205,4 +194,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginAdmin;

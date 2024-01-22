@@ -106,7 +106,7 @@ function Register() {
 
   useEffect(() => {
     handleKeyDownSubmit();
-  });
+  }, []);
 
   return (
     <>

@@ -12,33 +12,21 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { accessTokenSelector } from '~/redux/selector';
+import { useDispatch } from 'react-redux';
 import { userSlice } from '~/redux/reducer';
-import { useEffect, useState } from 'react';
-import { userService } from '~/services';
+import { useContext } from 'react';
+import { InfoUserContext } from '~/Context/InfoUserContext';
 
 const cx = classNames.bind(styles);
 
 function HeaderUser() {
   const dispatch = useDispatch();
-  const [infoUser, setInfoUser] = useState({});
-
-  const access_token = useSelector(accessTokenSelector);
 
   const handleLogout = () => {
     dispatch(userSlice.actions.logOutUser());
   };
 
-  const handelGetInfoName = async () => {
-    const res = await userService.getInfoUser({ access_token });
-    setInfoUser(res);
-  };
-
-  useEffect(() => {
-    handelGetInfoName();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { infoUser, access_token } = useContext(InfoUserContext);
 
   return (
     <header className={cx('header')}>
@@ -85,7 +73,7 @@ function HeaderUser() {
                             <span>
                               <FontAwesomeIcon icon={faUser} />
                             </span>
-                            {infoUser.name}
+                            {infoUser?.name}
                           </h2>
                           <ul>
                             <li>
@@ -112,7 +100,7 @@ function HeaderUser() {
                     </div>
                   </div>
                 ) : (
-                  <Link to="/login">
+                  <Link to="/user/login">
                     <span className={cx('text')}>Login</span>
                     <span className={cx('thumbnail')}>
                       <FontAwesomeIcon icon={faUser} />

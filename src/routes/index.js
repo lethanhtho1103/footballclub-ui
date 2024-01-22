@@ -1,18 +1,17 @@
 import Players from '~/pages/User/Players';
-import Login from '~/pages/Login';
-import Register from '~/pages/Register';
+import LoginUser from '~/pages/User/LoginUser';
+import Register from '~/pages/User/Register';
 import DetailUser from '~/pages/User/DetailPlayer';
 import Admin from '~/pages/Admin/Home';
 import Home from '~/pages/User/Home';
+import LoginAdmin from '~/pages/Admin/LoginAdmin';
+import InvalidUser_404 from '~/pages/User/InvalidUser_404';
+import InvalidAdmin_404 from '~/pages/Admin/InvalidAdmin_404';
 
 const publicRoutes = [
   {
     path: '/',
     component: Home,
-  },
-  {
-    path: '/login',
-    component: Login,
   },
   {
     path: '/register',
@@ -27,9 +26,28 @@ const publicRoutes = [
     component: DetailUser,
   },
   {
-    path: '/admin',
-    component: Admin,
+    path: '/user/login',
+    component: LoginUser,
+  },
+  {
+    path: '/admin/login',
+    component: LoginAdmin,
+  },
+  {
+    path: '*',
+    component: InvalidUser_404,
   },
 ];
 
-export { publicRoutes };
+const adminRoutes = [
+  {
+    path: '/admin',
+    component: Admin,
+  },
+  {
+    path: '*',
+    component: InvalidAdmin_404,
+  },
+];
+
+export { adminRoutes, publicRoutes };
