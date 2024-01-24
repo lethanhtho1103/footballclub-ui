@@ -7,6 +7,7 @@ import Home from '~/pages/User/Home';
 import LoginAdmin from '~/pages/Admin/LoginAdmin';
 import InvalidUser_404 from '~/pages/User/InvalidUser_404';
 import InvalidAdmin_404 from '~/pages/Admin/InvalidAdmin_404';
+import History from '~/pages/User/History';
 
 const publicRoutes = [
   {
@@ -32,6 +33,10 @@ const publicRoutes = [
   {
     path: '/admin/login',
     component: LoginAdmin,
+  },
+  {
+    path: 'manchester-city-history',
+    component: History,
   },
   {
     path: '*',

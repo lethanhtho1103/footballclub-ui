@@ -5,6 +5,7 @@ import FooterUser from '~/components/User/FooterUser';
 import { useEffect, useState } from 'react';
 import { userService } from '~/services';
 import { useParams } from 'react-router-dom';
+import { baseUrl } from '~/axios';
 
 const cx = classNames.bind(style);
 
@@ -53,7 +54,7 @@ function DetailUser() {
               <h2>#{player.jersey_number}</h2>
             </div>
             <div className={cx('image')}>
-              <img src="https://www.mancity.com/meta/media/lyxf1bib/nathan-ake.png?width=600" alt={player.name} />
+              <img src={`${baseUrl}${player.image}`} alt={player.name} />
             </div>
           </div>
         </header>
@@ -97,7 +98,7 @@ function DetailUser() {
                     <div className={cx('label')}>Nationality</div>
                     <div className={cx('content')}>
                       <div>{player.nationality}</div>{' '}
-                      <img src="https://mediacdn.mancity.com/meta/media/kbujcobi/gb-eng.svg" alt="" />
+                      <img src={`https://flagcdn.com/h60/${player.flag}.png`} alt="No flag" />
                     </div>
                   </li>
                   <li className={cx('info-item')}>

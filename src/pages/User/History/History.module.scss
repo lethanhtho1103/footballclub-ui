@@ -1,0 +1,53 @@
+.treble-winners {
+  display: flex;
+  justify-content: center;
+  background-color: #001838;
+  height: 56px;
+  img {
+    padding: 14.75px 5px;
+  }
+}
+
+.main-content {
+  .header-content {
+    width: 100%;
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .content {
+    margin-top: 43px;
+    margin-bottom: 43px;
+    .container {
+      max-width: 976px;
+      margin-left: auto;
+      margin-right: auto;
+      h2 {
+        margin-top: 64px;
+        margin-top: 40px;
+        text-transform: uppercase;
+        font-size: 60px;
+        line-height: 59px;
+        font-weight: 700;
+        color: #001838;
+        margin-bottom: 50px;
+      }
+      p {
+        margin-bottom: 18px;
+        font-size: 18px;
+        line-height: 1.33;
+        strong {
+          font-size: 18px;
+          line-height: 1.33;
+        }
+        a {
+          color: var(--text-color);
+          &:hover {
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+}

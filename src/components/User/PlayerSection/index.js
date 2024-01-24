@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-
+import { baseUrl } from '~/axios';
 function PlayerSection({ title, position, players, coaches, cx }) {
   return (
     <section>
@@ -14,10 +14,10 @@ function PlayerSection({ title, position, players, coaches, cx }) {
                   <div className={cx('header')}>
                     <div className={cx('shirt-number')}>{player.jersey_number}</div>
                     <div className={cx('photo')}>
-                      <img src={player.image} alt={player.name} />
+                      <img src={`${baseUrl}${player.image}`} alt={player.name} />
                     </div>
                     <div className={cx('country')}>
-                      <img src="https://mediacdn.mancity.com/meta/media/kbujcobi/gb-eng.svg" alt="country" />
+                      <img src={`https://flagcdn.com/h60/${player.flag}.png`} alt="No flag" />
                     </div>
                   </div>
                   <div className={cx('content')}>
