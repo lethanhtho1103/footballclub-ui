@@ -8,6 +8,7 @@ import LoginAdmin from '~/pages/Admin/LoginAdmin';
 import InvalidUser_404 from '~/pages/User/InvalidUser_404';
 import InvalidAdmin_404 from '~/pages/Admin/InvalidAdmin_404';
 import History from '~/pages/User/History';
+import Tickets from '~/pages/User/Tickets';
 
 const publicRoutes = [
   {
@@ -21,6 +22,10 @@ const publicRoutes = [
   {
     path: '/players',
     component: Players,
+  },
+  {
+    path: '/tickets',
+    component: Tickets,
   },
   {
     path: '/players/:name',
