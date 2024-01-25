@@ -107,7 +107,7 @@
     display: flex;
     flex-wrap: wrap;
     margin: 0 auto;
-    margin-top: 38px;
+
     margin-bottom: 43px;
 
     .super-banner {
@@ -198,6 +198,181 @@
         }
         .icon {
           box-shadow: 0 8px 16px 0 rgba(0, 24, 56, 0.5);
+        }
+      }
+    }
+  }
+  .fixture {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 976px;
+    margin-bottom: 24px;
+    padding-top: 40px;
+    border-top: 1px solid #eee;
+    h1 {
+      color: #001838;
+      font-size: 4rem;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+    }
+    .container {
+      display: flex;
+      width: 100%;
+      // padding-left: 60px;
+      // padding-right: 60px;
+      .match {
+        width: 33.3%;
+        background: #fff;
+        padding: 21px 17px 17px;
+        border: 1px solid #dde6ed;
+        border-top: 3px solid #3bd6ff;
+        .header {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          h3 {
+            width: 50%;
+            font-size: 13px;
+            line-height: 16px;
+            color: #69738c;
+            text-transform: uppercase;
+          }
+          a {
+            font-size: 13px;
+            line-height: 16px;
+            color: var(--text-color);
+            font-weight: 600;
+            svg {
+              margin-left: 4px;
+            }
+            &:hover {
+              text-decoration: none;
+            }
+          }
+        }
+        .tournaments {
+          margin-top: 15px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .start-date {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            color: #001838;
+            .date {
+              font-size: 14px;
+              line-height: 17px;
+              font-weight: 700;
+            }
+            p {
+              margin-top: 3px;
+              font-size: 13px;
+              line-height: 16px;
+            }
+          }
+        }
+        .team {
+          margin-top: 14px;
+          display: flex;
+          justify-content: space-evenly;
+          align-items: center;
+          .first,
+          .second {
+            font-size: 15px;
+            line-height: 19px;
+            font-weight: 700;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            .logo {
+              img {
+                max-width: 52px;
+                max-height: 52px;
+                height: auto;
+              }
+            }
+            .name {
+              margin-top: 6px;
+            }
+          }
+          .time {
+            padding: 4px 12px;
+            display: flex;
+            flex-direction: column;
+            height: 40px;
+            text-align: center;
+            background-color: #dde6ed;
+            font-weight: 600;
+            time {
+              font-size: 14px;
+              line-height: 17px;
+              color: #001838;
+            }
+            p {
+              font-size: 10px;
+              line-height: 14px;
+              color: #69738c;
+            }
+          }
+        }
+        .footer {
+          margin-top: 24px;
+          .btn-buy {
+            width: 100%;
+            color: #001838;
+            background-color: #e6ff00;
+            border: 1px solid #e6ff00;
+            padding: 12px 12px 13px;
+            text-transform: uppercase;
+            font-size: 13px;
+            line-height: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            &:hover {
+              opacity: 0.7;
+            }
+          }
+        }
+      }
+      .border {
+        margin-left: auto;
+        margin-right: 8%;
+        perspective: 600px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 300px;
+        height: 250px;
+
+        .wrapper {
+          width: 240px;
+          height: 200px;
+          position: relative;
+          transform-style: preserve-3d;
+          .panel {
+            width: 240px;
+            height: 200px;
+            position: absolute;
+            overflow: hidden;
+          }
+          .one {
+            background-image: url('https://tpc.googlesyndication.com/simgad/2998465129094370958');
+            background-size: 240px 200px;
+          }
+          .two {
+            background-image: url('https://tpc.googlesyndication.com/simgad/17760939831008391745');
+            background-size: 240px 200px;
+          }
+          .three {
+            background-image: url('https://tpc.googlesyndication.com/simgad/9832800391648839235');
+            background-size: 240px 200px;
+          }
+          .four {
+            background-image: url('https://tpc.googlesyndication.com/simgad/681385584186960624');
+            background-size: 240px 200px;
+          }
         }
       }
     }

@@ -6,10 +6,22 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faPlay } from '@fortawesome/free-solid-svg-icons';
 import etihad from '../../../assets/images/etihad.webp';
+import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(style);
 
 function Home() {
+  const [rotation, setRotation] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setRotation((prevRotation) => (prevRotation - 2.5) % 360);
+    }, 100);
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(intervalId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div>
       <HeaderUser />
@@ -87,6 +99,80 @@ function Home() {
               </div>
             </div>
           </Link>
+        </div>
+        <div className={cx('fixture')}>
+          <h1>FEATURES</h1>
+          <div className={cx('container')}>
+            <div className={cx('match')}>
+              <div className={cx('header')}>
+                <h3>NEXT FIXTURE</h3>
+                <Link to="/">
+                  All fixture <FontAwesomeIcon icon={faArrowRight} />
+                </Link>
+              </div>
+              <div className={cx('tournaments')}>
+                <div className={cx('start-date')}>
+                  <div className={cx('date')}>Sun 28 Jan</div>
+                  <p>FA WSL</p>
+                </div>
+              </div>
+              <div className={cx('team')}>
+                <div className={cx('first')}>
+                  <div className={cx('logo')}>
+                    <img
+                      src="https://www.mancity.com/meta/media/t02jppxo/spurs-logo-with-outline.png?width=52&height=52"
+                      alt="first-name"
+                    />
+                  </div>
+                  <div className={cx('name')}>Spurs</div>
+                </div>
+                <div className={cx('time')}>
+                  <div className={cx('content')}>
+                    <time>14:00</time>
+                    <p>GMT</p>
+                  </div>
+                </div>
+                <div className={cx('second')}>
+                  <div className={cx('logo')}>
+                    <img
+                      src="https://www.mancity.com/meta/media/yzscd2rf/manchester_city_fc_badge.png?width=52&height=52"
+                      alt="second-name"
+                    />
+                  </div>
+                  <div className={cx('name')}>Man City</div>
+                </div>
+              </div>
+              <div className={cx('footer')}>
+                <button className={cx('btn-buy')}>Buy tickets</button>
+              </div>
+            </div>
+            <div className={cx('border')}>
+              <div
+                className={cx('wrapper')}
+                style={{
+                  transformOrigin: '50% 50%',
+                  transform: `translate3d(0px, 0px, -180px) rotateY(${rotation}deg)`,
+                }}
+              >
+                <div
+                  className={cx('panel', 'one')}
+                  style={{ transformOrigin: '50% 50%', transform: 'translate(0px, 0px)' }}
+                ></div>
+                <div
+                  className={cx('panel', 'two')}
+                  style={{ transformOrigin: '50% 50%', transform: 'translate3d(120px, 0px, -120px) rotateY(90deg)' }}
+                ></div>
+                <div
+                  className={cx('panel', 'three')}
+                  style={{ transformOrigin: '50% 50%', transform: 'translate3d(0px, 0px, -240px) rotateY(180deg)' }}
+                ></div>
+                <div
+                  className={cx('panel', 'four')}
+                  style={{ transformOrigin: '50% 50%', transform: 'translate3d(-120px, 0px, -120px) rotateY(270deg)' }}
+                ></div>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
       <FooterUser />
