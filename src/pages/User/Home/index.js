@@ -106,7 +106,7 @@ function Home() {
             <div className={cx('match')}>
               <div className={cx('header')}>
                 <h3>NEXT FIXTURE</h3>
-                <Link to="/">
+                <Link to="/tickets">
                   All fixture <FontAwesomeIcon icon={faArrowRight} />
                 </Link>
               </div>

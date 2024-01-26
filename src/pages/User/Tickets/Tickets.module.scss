@@ -113,9 +113,10 @@
           margin-bottom: 25px;
           .wrapper {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
             .heading {
+              width: 25%;
               background-color: #fff;
               display: flex;
               .logo-premier {
@@ -154,9 +155,11 @@
                   width: 40%;
                   display: flex;
                   align-items: center;
-                  margin-right: 12px;
+                  justify-content: flex-end;
+                  img {
+                    margin-left: 8px;
+                  }
                   .name {
-                    margin-right: 8px;
                     font-size: 17px;
                     line-height: 21px;
                     font-weight: 700;
@@ -165,12 +168,14 @@
                 }
                 .second {
                   width: 40%;
-                  margin-left: 12px;
                   display: flex;
+                  justify-content: flex-start;
                   align-items: center;
+                  img {
+                    margin-right: 8px;
+                  }
                   .name {
                     text-align: left;
-                    margin-left: 8px;
                     font-size: 17px;
                     line-height: 21px;
                     font-weight: 700;
@@ -178,6 +183,7 @@
                 }
                 .time {
                   padding: 4px 12px;
+                  margin: 0 12px;
                   display: flex;
                   flex-direction: column;
                   height: 40px;
@@ -185,6 +191,7 @@
                   align-items: center;
                   background-color: #dde6ed;
                   font-weight: 500;
+
                   time {
                     font-size: 15px;
                     line-height: 17px;
@@ -201,6 +208,8 @@
               }
             }
             .btn {
+              width: 25%;
+              padding-left: 25px;
               .btn-buy {
                 margin: 0 10px;
                 max-height: 42px;
@@ -244,9 +253,14 @@
               width: 12px;
               height: 12px;
               border-radius: 9999px;
-              background-color: rgb(250 204 21);
               margin-right: 6px;
               margin-bottom: 1px;
+            }
+            .upcoming {
+              background-color: rgb(250 204 21);
+            }
+            .liveNow {
+              background-color: red;
             }
           }
         }

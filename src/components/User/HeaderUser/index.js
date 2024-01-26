@@ -38,13 +38,13 @@ function HeaderUser() {
           <nav className={cx('nav-primary')}>
             <ul className={cx('nav-list')}>
               <li className={cx('nav-item')}>
-                <Link to="/news">News</Link>
-              </li>
-              <li className={cx('nav-item')}>
                 <Link to="/players">Players</Link>
               </li>
               <li className={cx('nav-item')}>
-                <Link to="/ticket">Tickets</Link>
+                <Link to="/tickets">Tickets</Link>
+              </li>
+              <li className={cx('nav-item')}>
+                <Link to="/results">Results</Link>
               </li>
               <li className={cx('nav-item')}>
                 <Link to="/shop">Shop</Link>

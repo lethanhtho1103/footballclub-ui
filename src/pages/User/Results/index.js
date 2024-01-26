@@ -1,39 +1,26 @@
 import classNames from 'classnames/bind';
-import style from './Tickets.module.scss';
+import style from './Results.module.scss';
 import FooterUser from '~/components/User/FooterUser';
 import HeaderUser from '~/components/User/HeaderUser';
 import premier from '~/assets/images/premier.webp';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 const cx = classNames.bind(style);
 
-function Tickets() {
+function Results() {
   return (
     <div>
       <HeaderUser />
+      <div className={cx('treble-winners')}>
+        <img src="https://www.mancity.com/dist/images/events/treble/treble.svg" alt="treble" />
+        <img src="https://www.mancity.com/dist/images/events/treble/treble-trophies.svg" alt="cup" />
+        <img src="https://www.mancity.com/dist/images/events/treble/winners.svg" alt="winners" />
+      </div>
+      <div className={cx('title')}>
+        <h2>Results</h2>
+      </div>
       <main className={cx('main-content')}>
-        <header className={cx('header')}>
-          <div className={cx('banner')}>
-            <h3>TICKETS</h3>
-            <div className={cx('text')}>
-              Buy official Manchester City tickets and hospitality experiences direct from the Club
-            </div>
-          </div>
-          <div className={cx('ticket-filter')}>
-            <h3 className={cx('title')}>Upcoming matches</h3>
-            <div className={cx('filters')}>
-              <div className={cx('filter-item')}>
-                <div className={cx('label')}>Location</div>
-                <select>
-                  <option value="">All Locations</option>
-                  <option value="1">Home</option>
-                  <option value="0">Away</option>
-                </select>
-              </div>
-              <div className={cx('filter-item')}>
-                <div className={cx('btn-filter')}>Filter</div>
-              </div>
-            </div>
-          </div>
-        </header>
         <div className={cx('body')}>
           <div className={cx('container')}>
             <ul className={cx('list-match')}>
@@ -48,6 +35,14 @@ function Tickets() {
                       <div>Premier League</div>
                       <div>Etihad Stadium</div>
                     </div>
+                    <div
+                      className={cx('results', {
+                        win: true,
+                        // lose: true,
+                      })}
+                    >
+                      <span>W</span>
+                    </div>
                   </div>
                   <div className={cx('content')}>
                     <div className={cx('wrapper')}>
@@ -58,9 +53,10 @@ function Tickets() {
                           alt="first-name"
                         />
                       </div>
-                      <div className={cx('time')}>
-                        <time>14:00</time>
-                        <p>GMT</p>
+                      <div className={cx('score')}>
+                        <div className={cx('host')}>2</div>
+                        <span>-</span>
+                        <div className={cx('away')}>3</div>
                       </div>
                       <div className={cx('second')}>
                         <div className={cx('logo')}>
@@ -73,18 +69,12 @@ function Tickets() {
                       </div>
                     </div>
                   </div>
-                  <div className={cx('btn')}>
-                    <div className={cx('btn-buy')}>Buy now</div>
-                    <div className={cx('description')}>Tickets available</div>
+                  <div className={cx('hight-light')}>
+                    <Link to="/" className={cx('text')}>
+                      Hightlights
+                    </Link>
+                    <FontAwesomeIcon icon={faArrowRight} />
                   </div>
-                </div>
-                <div className={cx('status')}>
-                  <span
-                    className={cx('bg-yellow', {
-                      upcoming: true,
-                    })}
-                  ></span>
-                  <div>Upcoming</div>
                 </div>
               </li>
               <li className={cx('match-item')}>
@@ -98,6 +88,14 @@ function Tickets() {
                       <div>Premier League</div>
                       <div>Etihad Stadium</div>
                     </div>
+                    <div
+                      className={cx('results', {
+                        // win: true,
+                        lose: true,
+                      })}
+                    >
+                      <span>L</span>
+                    </div>
                   </div>
                   <div className={cx('content')}>
                     <div className={cx('wrapper')}>
@@ -108,9 +106,10 @@ function Tickets() {
                           alt="first-name"
                         />
                       </div>
-                      <div className={cx('time')}>
-                        <time>14:00</time>
-                        <p>GMT</p>
+                      <div className={cx('score')}>
+                        <div className={cx('host')}>6</div>
+                        <span>-</span>
+                        <div className={cx('away')}>5</div>
                       </div>
                       <div className={cx('second')}>
                         <div className={cx('logo')}>
@@ -123,19 +122,12 @@ function Tickets() {
                       </div>
                     </div>
                   </div>
-                  <div className={cx('btn')}>
-                    <div className={cx('btn-buy')}>Buy now</div>
-                    <div className={cx('description')}>Tickets available</div>
+                  <div className={cx('hight-light')}>
+                    <Link to="/" className={cx('text')}>
+                      Hightlights
+                    </Link>
+                    <FontAwesomeIcon icon={faArrowRight} />
                   </div>
-                </div>
-                <div className={cx('status')}>
-                  <span
-                    className={cx('bg-yellow', {
-                      // upcoming: true,
-                      liveNow: true,
-                    })}
-                  ></span>
-                  <div>Live now</div>
                 </div>
               </li>
               <li className={cx('match-item')}>
@@ -149,6 +141,15 @@ function Tickets() {
                       <div>Premier League</div>
                       <div>Etihad Stadium</div>
                     </div>
+                    <div
+                      className={cx('results', {
+                        // win: true,
+                        // lose: true,
+                        draw: true,
+                      })}
+                    >
+                      <span>D</span>
+                    </div>
                   </div>
                   <div className={cx('content')}>
                     <div className={cx('wrapper')}>
@@ -159,9 +160,10 @@ function Tickets() {
                           alt="first-name"
                         />
                       </div>
-                      <div className={cx('time')}>
-                        <time>14:00</time>
-                        <p>GMT</p>
+                      <div className={cx('score')}>
+                        <div className={cx('host')}>1</div>
+                        <span>-</span>
+                        <div className={cx('away')}>1</div>
                       </div>
                       <div className={cx('second')}>
                         <div className={cx('logo')}>
@@ -174,18 +176,12 @@ function Tickets() {
                       </div>
                     </div>
                   </div>
-                  <div className={cx('btn')}>
-                    <div className={cx('btn-buy')}>Buy now</div>
-                    <div className={cx('description')}>Tickets available</div>
+                  <div className={cx('hight-light')}>
+                    <Link to="/" className={cx('text')}>
+                      Hightlights
+                    </Link>
+                    <FontAwesomeIcon icon={faArrowRight} />
                   </div>
-                </div>
-                <div className={cx('status')}>
-                  <span
-                    className={cx('bg-yellow', {
-                      upcoming: true,
-                    })}
-                  ></span>
-                  <div>Upcoming</div>
                 </div>
               </li>
               <li className={cx('match-item')}>
@@ -199,6 +195,14 @@ function Tickets() {
                       <div>Premier League</div>
                       <div>Etihad Stadium</div>
                     </div>
+                    <div
+                      className={cx('results', {
+                        win: true,
+                        // lose: true,
+                      })}
+                    >
+                      <span>W</span>
+                    </div>
                   </div>
                   <div className={cx('content')}>
                     <div className={cx('wrapper')}>
@@ -209,9 +213,10 @@ function Tickets() {
                           alt="first-name"
                         />
                       </div>
-                      <div className={cx('time')}>
-                        <time>14:00</time>
-                        <p>GMT</p>
+                      <div className={cx('score')}>
+                        <div className={cx('host')}>2</div>
+                        <span>-</span>
+                        <div className={cx('away')}>3</div>
                       </div>
                       <div className={cx('second')}>
                         <div className={cx('logo')}>
@@ -224,19 +229,12 @@ function Tickets() {
                       </div>
                     </div>
                   </div>
-                  <div className={cx('btn')}>
-                    <div className={cx('btn-buy')}>Buy now</div>
-                    <div className={cx('description')}>Tickets available</div>
+                  <div className={cx('hight-light')}>
+                    <Link to="/" className={cx('text')}>
+                      Hightlights
+                    </Link>
+                    <FontAwesomeIcon icon={faArrowRight} />
                   </div>
-                </div>
-                <div className={cx('status')}>
-                  <span
-                    className={cx('bg-yellow', {
-                      // upcoming: true,
-                      liveNow: true,
-                    })}
-                  ></span>
-                  <div>Live now</div>
                 </div>
               </li>
               <li className={cx('match-item')}>
@@ -250,6 +248,14 @@ function Tickets() {
                       <div>Premier League</div>
                       <div>Etihad Stadium</div>
                     </div>
+                    <div
+                      className={cx('results', {
+                        // win: true,
+                        lose: true,
+                      })}
+                    >
+                      <span>L</span>
+                    </div>
                   </div>
                   <div className={cx('content')}>
                     <div className={cx('wrapper')}>
@@ -260,9 +266,10 @@ function Tickets() {
                           alt="first-name"
                         />
                       </div>
-                      <div className={cx('time')}>
-                        <time>14:00</time>
-                        <p>GMT</p>
+                      <div className={cx('score')}>
+                        <div className={cx('host')}>6</div>
+                        <span>-</span>
+                        <div className={cx('away')}>5</div>
                       </div>
                       <div className={cx('second')}>
                         <div className={cx('logo')}>
@@ -275,18 +282,12 @@ function Tickets() {
                       </div>
                     </div>
                   </div>
-                  <div className={cx('btn')}>
-                    <div className={cx('btn-buy')}>Buy now</div>
-                    <div className={cx('description')}>Tickets available</div>
+                  <div className={cx('hight-light')}>
+                    <Link to="/" className={cx('text')}>
+                      Hightlights
+                    </Link>
+                    <FontAwesomeIcon icon={faArrowRight} />
                   </div>
-                </div>
-                <div className={cx('status')}>
-                  <span
-                    className={cx('bg-yellow', {
-                      upcoming: true,
-                    })}
-                  ></span>
-                  <div>Upcoming</div>
                 </div>
               </li>
               <li className={cx('match-item')}>
@@ -300,6 +301,15 @@ function Tickets() {
                       <div>Premier League</div>
                       <div>Etihad Stadium</div>
                     </div>
+                    <div
+                      className={cx('results', {
+                        // win: true,
+                        // lose: true,
+                        draw: true,
+                      })}
+                    >
+                      <span>D</span>
+                    </div>
                   </div>
                   <div className={cx('content')}>
                     <div className={cx('wrapper')}>
@@ -310,9 +320,10 @@ function Tickets() {
                           alt="first-name"
                         />
                       </div>
-                      <div className={cx('time')}>
-                        <time>14:00</time>
-                        <p>GMT</p>
+                      <div className={cx('score')}>
+                        <div className={cx('host')}>1</div>
+                        <span>-</span>
+                        <div className={cx('away')}>1</div>
                       </div>
                       <div className={cx('second')}>
                         <div className={cx('logo')}>
@@ -325,19 +336,12 @@ function Tickets() {
                       </div>
                     </div>
                   </div>
-                  <div className={cx('btn')}>
-                    <div className={cx('btn-buy')}>Buy now</div>
-                    <div className={cx('description')}>Tickets available</div>
+                  <div className={cx('hight-light')}>
+                    <Link to="/" className={cx('text')}>
+                      Hightlights
+                    </Link>
+                    <FontAwesomeIcon icon={faArrowRight} />
                   </div>
-                </div>
-                <div className={cx('status')}>
-                  <span
-                    className={cx('bg-yellow', {
-                      // upcoming: true,
-                      liveNow: true,
-                    })}
-                  ></span>
-                  <div>Live now</div>
                 </div>
               </li>
             </ul>
@@ -349,4 +353,4 @@ function Tickets() {
   );
 }
 
-export default Tickets;
+export default Results;
