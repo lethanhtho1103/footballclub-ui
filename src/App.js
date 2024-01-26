@@ -13,7 +13,6 @@ function App() {
       default:
         routes = publicRoutes;
     }
-
     return routes.map((route, index) => {
       let LayOut = Fragment;
       if (route.layout) {

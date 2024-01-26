@@ -1,0 +1,68 @@
+.wrap {
+  background-color: #fff;
+  .header {
+    position: relative;
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url('https://images7.alphacoders.com/134/1344764.jpeg') center no-repeat;
+    animation: change_img 24s linear infinite;
+    background-size: cover;
+    will-change: background;
+    overflow: hidden;
+
+    @keyframes change_img {
+      0% {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+          url('https://images8.alphacoders.com/132/1323097.jpeg') center/cover no-repeat;
+      }
+      25% {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+          url('https://wallpapercave.com/wp/wp2540637.jpg') center/cover no-repeat;
+      }
+      50% {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+          url('https://images7.alphacoders.com/134/1344764.jpeg') center/cover no-repeat;
+      }
+      75% {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+          url('https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/bltac2c738d02decd80/60db996547339c0fc01c8b3c/ede3138c341aaefbf0a1dfcd096144218e9564c1.jpg?auto=webp&format=pjpg&width=3840&quality=60')
+            center/cover no-repeat;
+      }
+    }
+
+    .header-main {
+      color: #fff;
+      max-width: 600px;
+      margin-top: 180px;
+
+      h2 {
+        font-size: 55px;
+        line-height: 55px;
+        font-weight: 800;
+        color: #e6ff00;
+      }
+
+      span {
+        display: block;
+        font-size: 16px;
+        line-height: 22px;
+        margin-top: 20px;
+      }
+    }
+
+    &::before {
+      display: block;
+      content: '';
+      position: absolute;
+      width: 110%;
+      bottom: 0;
+      left: -20px;
+      height: 156px;
+      background-size: contain;
+      background-position: bottom;
+      background-repeat: repeat-x;
+      z-index: 1;
+      background-image: url('../../../assets/images/img_1.png');
+    }
+  }
+}
