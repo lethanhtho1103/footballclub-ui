@@ -2,9 +2,10 @@
   display: flex;
   align-items: center;
   padding: 10px 16px;
-  font-size: 1.8rem;
-  font-weight: 800;
-  border-radius: 4px;
+  margin: 0 12px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  border-radius: 8px;
   text-decoration: none;
   color: #000;
   transition: background-color ease-in-out 200ms;
@@ -14,8 +15,8 @@
   }
 
   &.active {
-    color: var(--primary-color);
-
+    color: #fff;
+    background-color: #4b49ac;
     .icon {
       display: none;
     }

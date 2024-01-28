@@ -1,7 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './Sidebar.module.scss';
 import Menu, { MenuItem } from './Menu';
-// import config from '~/config';
 import {
   HomeIcon,
   HomeActiveIcon,
@@ -9,9 +8,7 @@ import {
   UserGroupActiveIcon,
   DiscoverIcon,
   DiscoverActiveIcon,
-  LiveIcon,
-  LiveActiveIcon,
-} from '~/components/Icons';
+} from '~/components/Admin/Icons';
 import { Link } from 'react-router-dom';
 import logo from '~/assets/images/logo.svg';
 
@@ -28,20 +25,20 @@ function Sidebar() {
       </Link>
       <Menu>
         <MenuItem
-          title="Flayer Management"
-          //   to={config.routes.home}
+          title="Players Management"
+          to="/admin/players-management"
           icon={<HomeIcon />}
           activeIcon={<HomeActiveIcon />}
         />
         <MenuItem
-          title="Match Management"
-          //  to={config.routes.following}
+          title="Matches Management"
+          to="/admin/matches-management"
           icon={<UserGroupIcon />}
           activeIcon={<UserGroupActiveIcon />}
         />
         <MenuItem
           title="Statistical"
-          //  to={config.routes.discover}
+          to="/admin/statistical"
           icon={<DiscoverIcon />}
           activeIcon={<DiscoverActiveIcon />}
         />

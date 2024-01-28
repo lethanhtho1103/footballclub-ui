@@ -153,25 +153,16 @@ export const LiveActiveIcon = ({ width = '3.2rem', height = '3.2rem', className 
   </svg>
 );
 
-export const DiscoverIcon = ({ width = '3.2rem', height = '3.2rem', className }) => (
+export const DiscoverIcon = ({ width = '2.6rem', height = '2.6rem', className }) => (
   <svg
     fill="currentColor"
     className={className}
     width={width}
     height={height}
-    viewBox="0 0 48 48"
     xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 448 512"
   >
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M24 37.4a13.4 13.4 0 1 0 0-26.8 13.4 13.4 0 0 0 0 26.8ZM40.5 24a16.5 16.5 0 1 1-33 0 16.5 16.5 0 0 1 33 0Z"
-    ></path>
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M27.13 27.18a2 2 0 0 0 .93-1.32l1.84-9.33a.6.6 0 0 0-.9-.63l-8.14 4.92a2 2 0 0 0-.92 1.32l-1.84 9.33c-.1.52.45.9.9.63l8.13-4.92Zm-5.04-.45 3.11-1.89.7-3.57-3.1 1.89-.7 3.57Z"
-    ></path>
+    <path d="M160 80c0-26.5 21.5-48 48-48h32c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H208c-26.5 0-48-21.5-48-48V80zM0 272c0-26.5 21.5-48 48-48H80c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V272zM368 96h32c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H368c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48z" />
   </svg>
 );
 

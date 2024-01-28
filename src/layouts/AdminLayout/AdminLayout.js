@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
-import styles from './DefaultLayout.module.scss';
+import styles from './AdminLayout.module.scss';
 import classNames from 'classnames/bind';
 import Header from '~/layouts/components/Header';
 import Sidebar from '../components/Sidebar';
 
 const cx = classNames.bind(styles);
 
-function DefaultLayout({ children }) {
+function AdminLayout({ children }) {
   return (
     <div className={cx('wrapper')}>
       <Sidebar />
@@ -18,8 +18,8 @@ function DefaultLayout({ children }) {
   );
 }
 
-DefaultLayout.propTypes = {
+AdminLayout.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default DefaultLayout;
+export default AdminLayout;

@@ -10,7 +10,9 @@ import InvalidAdmin_404 from '~/pages/Admin/InvalidAdmin_404';
 import History from '~/pages/User/History';
 import Tickets from '~/pages/User/Tickets';
 import Results from '~/pages/User/Results';
-import PlayersManager from '~/pages/Admin/PlayersManager';
+import Statistical from '~/pages/Admin/Statistical';
+import PlayersManagement from '~/pages/Admin/PlayersManagement';
+import MatchesManagement from '~/pages/Admin/MatchesManager';
 
 const publicRoutes = [
   {
@@ -61,9 +63,16 @@ const adminRoutes = [
     component: Admin,
   },
   {
-    path: '/admin/players-manager',
-    component: PlayersManager,
-    layout: null,
+    path: '/admin/players-management',
+    component: PlayersManagement,
+  },
+  {
+    path: '/admin/matches-management',
+    component: MatchesManagement,
+  },
+  {
+    path: '/admin/statistical',
+    component: Statistical,
   },
   {
     path: '*',
