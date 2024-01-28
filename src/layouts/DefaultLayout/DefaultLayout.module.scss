@@ -1,0 +1,24 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  // align-items: flex-start;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container {
+  position: relative;
+  width: 80%;
+  margin-left: 20%;
+  padding-left: 24px;
+  // padding-right: 24px;
+  background-color: #f4f7ff;
+}
+
+.content {
+  width: 100%;
+  margin-top: 80px;
+  padding-top: 12px;
+  height: 2000px;
+}

@@ -103,7 +103,7 @@ function LoginAdmin() {
     handleNavigate();
     handleKeyDownSubmit();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [handleNavigate, accessToken]);
+  }, [accessToken]);
 
   return (
     <>

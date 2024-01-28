@@ -11,7 +11,7 @@ import {
   faTicket,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
-
+import logo from '~/assets/images/logo.svg';
 import { useDispatch } from 'react-redux';
 import { userSlice } from '~/redux/reducer';
 import { useContext } from 'react';
@@ -33,7 +33,7 @@ function HeaderUser() {
       <div className={cx('wrapper')}>
         <div className={cx('container')}>
           <Link to="/" className={cx('logo')}>
-            <img src="https://www.mancity.com/dist/images/logos/crest.svg" alt="Logo" />
+            <img src={logo} alt="Logo" />
           </Link>
           <nav className={cx('nav-primary')}>
             <ul className={cx('nav-list')}>
@@ -100,7 +100,7 @@ function HeaderUser() {
                     </div>
                   </div>
                 ) : (
-                  <Link to="/user/login">
+                  <Link to="/login">
                     <span className={cx('text')}>Login</span>
                     <span className={cx('thumbnail')}>
                       <FontAwesomeIcon icon={faUser} />

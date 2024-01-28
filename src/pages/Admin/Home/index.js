@@ -8,9 +8,9 @@ const cx = classNames.bind(style);
 
 function Home() {
   const links = [
-    { name: 'QUẢN LÝ CẦU THỦ', to: '/admin' },
-    { name: 'QUẢN LÝ TRẬN ĐẤU', to: '/admin' },
-    { name: 'THỐNG KÊ', to: '/admin' },
+    { name: 'PLAYER MANAGEMENT', to: '/admin/players-manager' },
+    { name: 'MATCH MANAGEMENT', to: '/admin' },
+    { name: 'STATISTICAL', to: '/admin' },
   ];
   return (
     <>

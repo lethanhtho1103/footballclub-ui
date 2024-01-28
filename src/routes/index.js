@@ -10,6 +10,7 @@ import InvalidAdmin_404 from '~/pages/Admin/InvalidAdmin_404';
 import History from '~/pages/User/History';
 import Tickets from '~/pages/User/Tickets';
 import Results from '~/pages/User/Results';
+import PlayersManager from '~/pages/Admin/PlayersManager';
 
 const publicRoutes = [
   {
@@ -37,7 +38,7 @@ const publicRoutes = [
     component: DetailUser,
   },
   {
-    path: '/user/login',
+    path: '/login',
     component: LoginUser,
   },
   {
@@ -58,6 +59,11 @@ const adminRoutes = [
   {
     path: '/admin',
     component: Admin,
+  },
+  {
+    path: '/admin/players-manager',
+    component: PlayersManager,
+    layout: null,
   },
   {
     path: '*',
