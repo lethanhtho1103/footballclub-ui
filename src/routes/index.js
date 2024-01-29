@@ -48,7 +48,7 @@ const publicRoutes = [
     component: LoginAdmin,
   },
   {
-    path: 'manchester-city-history',
+    path: '/manchester-city-history',
     component: History,
   },
   {

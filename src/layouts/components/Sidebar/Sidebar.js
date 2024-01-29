@@ -1,14 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Sidebar.module.scss';
 import Menu, { MenuItem } from './Menu';
-import {
-  HomeIcon,
-  HomeActiveIcon,
-  UserGroupIcon,
-  UserGroupActiveIcon,
-  DiscoverIcon,
-  DiscoverActiveIcon,
-} from '~/components/Admin/Icons';
+import { BallIcon, Statistical, PlayerIcon } from '~/components/Admin/Icons';
 import { Link } from 'react-router-dom';
 import logo from '~/assets/images/logo.svg';
 
@@ -24,24 +17,9 @@ function Sidebar() {
         <div className={cx('name-club')}>Manchester City</div>
       </Link>
       <Menu>
-        <MenuItem
-          title="Players Management"
-          to="/admin/players-management"
-          icon={<HomeIcon />}
-          activeIcon={<HomeActiveIcon />}
-        />
-        <MenuItem
-          title="Matches Management"
-          to="/admin/matches-management"
-          icon={<UserGroupIcon />}
-          activeIcon={<UserGroupActiveIcon />}
-        />
-        <MenuItem
-          title="Statistical"
-          to="/admin/statistical"
-          icon={<DiscoverIcon />}
-          activeIcon={<DiscoverActiveIcon />}
-        />
+        <MenuItem title="Players Management" to="/admin/players-management" icon={<PlayerIcon />} />
+        <MenuItem title="Matches Management" to="/admin/matches-management" icon={<BallIcon />} />
+        <MenuItem title="Statistical" to="/admin/statistical" icon={<Statistical />} />
       </Menu>
       {/* <SuggestedAccounts label="Suggest Account" />
       <SuggestedAccounts label="Following accounts" /> */}

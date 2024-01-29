@@ -5,7 +5,7 @@ import style from './Menu.module.scss';
 
 const cx = classNames.bind(style);
 
-function MenuItem({ to, title, icon, activeIcon }) {
+function MenuItem({ to, title, icon }) {
   return (
     <NavLink
       to={to}
@@ -16,7 +16,6 @@ function MenuItem({ to, title, icon, activeIcon }) {
       }
     >
       <span className={cx('icon')}>{icon}</span>
-      <span className={cx('active-icon')}>{activeIcon}</span>
       <span className={cx('title')}>{title}</span>
     </NavLink>
   );
