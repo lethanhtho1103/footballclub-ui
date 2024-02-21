@@ -3,18 +3,19 @@ import 'tippy.js/dist/tippy.css';
 import classNames from 'classnames/bind';
 import { faEarthAsia, faGear, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import styles from './Header.module.scss';
 import Image from '~/components/Admin/Images';
 import Menu from '~/components/Admin/Popper/Menu';
 import { Notification } from '~/components/Admin/Icons';
+import { useDispatch } from 'react-redux';
+
+import { userSlice } from '~/redux/reducer';
+import { useContext } from 'react';
+import { InfoUserContext } from '~/Context/InfoUserContext';
 // import Search from '../Search';
 
 const cx = classNames.bind(styles);
 const currentUser = true;
-const handleMenuChange = (menuItem) => {
-  console.log(menuItem);
-};
 
 const MENU_ITEMS = [
   {
@@ -39,6 +40,20 @@ const MENU_ITEMS = [
 ];
 
 function Header() {
+  const dispatch = useDispatch();
+
+  const { infoUser } = useContext(InfoUserContext);
+
+  const handleLogout = () => {
+    dispatch(userSlice.actions.logOutUser());
+  };
+
+  const handleMenuChange = (menuItem) => {
+    if (menuItem.title === 'Log out') {
+      handleLogout();
+    }
+  };
+
   const userMenu = [
     {
       icon: <FontAwesomeIcon icon={faUser} />,
@@ -55,7 +70,7 @@ function Header() {
     {
       icon: <FontAwesomeIcon icon={faSignOut} />,
       title: 'Log out',
-      to: '/logout',
+      to: '/admin/login',
       separate: true,
     },
   ];
@@ -89,7 +104,7 @@ function Header() {
               />
             </Menu>
 
-            <div className={cx('name')}>Thanh Tho</div>
+            <div className={cx('name')}>{infoUser?.name}</div>
           </div>
         </div>
       </div>

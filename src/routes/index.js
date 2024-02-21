@@ -51,10 +51,10 @@ const publicRoutes = [
     path: '/manchester-city-history',
     component: History,
   },
-  {
-    path: '*',
-    component: InvalidUser_404,
-  },
+  // {
+  //   path: '*',
+  //   component: InvalidUser_404,
+  // },
 ];
 
 const adminRoutes = [
