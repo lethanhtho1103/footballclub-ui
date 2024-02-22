@@ -1,6 +1,6 @@
 import { AdminLayout } from '~/layouts';
 
-function PlayersManagement() {
+function Players() {
   return (
     <AdminLayout>
       <h1>Players management</h1>
@@ -8,4 +8,4 @@ function PlayersManagement() {
   );
 }
 
-export default PlayersManagement;
+export default Players;

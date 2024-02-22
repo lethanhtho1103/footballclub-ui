@@ -17,7 +17,16 @@ function Sidebar() {
         <div className={cx('name-club')}>Manchester City</div>
       </Link>
       <Menu>
-        <MenuItem title="Players Management" to="/admin/players-management" icon={<PlayerIcon />} />
+        <MenuItem
+          title="Users Management"
+          to="/admin/management/players"
+          icon={<PlayerIcon />}
+          subMenuItems={[
+            { label: 'Players', to: '/admin/management/players' },
+            { label: 'Coach', to: '/admin/management/coach' },
+          ]}
+        />
+
         <MenuItem title="Matches Management" to="/admin/matches-management" icon={<BallIcon />} />
         <MenuItem title="Statistical" to="/admin/statistical" icon={<Statistical />} />
       </Menu>

@@ -5,14 +5,16 @@ import DetailUser from '~/pages/User/DetailPlayer';
 import Admin from '~/pages/Admin/Home';
 import Home from '~/pages/User/Home';
 import LoginAdmin from '~/pages/Admin/LoginAdmin';
-import InvalidUser_404 from '~/pages/User/InvalidUser_404';
+// import InvalidUser_404 from '~/pages/User/InvalidUser_404';
 import InvalidAdmin_404 from '~/pages/Admin/InvalidAdmin_404';
 import History from '~/pages/User/History';
 import Tickets from '~/pages/User/Tickets';
 import Results from '~/pages/User/Results';
 import Statistical from '~/pages/Admin/Statistical';
-import PlayersManagement from '~/pages/Admin/PlayersManagement';
+// import UsersManagement from '~/pages/Admin/UsersManagement';
 import MatchesManagement from '~/pages/Admin/MatchesManager';
+import CoachManagement from '~/pages/Admin/Coach';
+import PlayersManagement from '~/pages/Admin/Players';
 
 const publicRoutes = [
   {
@@ -62,8 +64,16 @@ const adminRoutes = [
     path: '/admin',
     component: Admin,
   },
+  // {
+  //   path: '/admin/users-management',
+  //   component: UsersManagement,
+  // },
   {
-    path: '/admin/players-management',
+    path: '/admin/management/coach',
+    component: CoachManagement,
+  },
+  {
+    path: '/admin/management/players',
     component: PlayersManagement,
   },
   {
