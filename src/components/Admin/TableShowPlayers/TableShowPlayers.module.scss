@@ -1,0 +1,131 @@
+.show {
+  left: 0px;
+}
+.wrap {
+  position: relative;
+  height: calc(100vh - 104px);
+
+  .icon-back {
+    font-size: #383838;
+    position: absolute;
+    cursor: pointer;
+    top: 48px;
+    left: 40px;
+    padding: 8px 16px;
+    transition: all 0.2s linear;
+
+    &:hover {
+      color: #383838c4;
+    }
+  }
+
+  .title {
+    text-align: center;
+    // margin: 48px 0;
+    margin-bottom: 28px;
+  }
+
+  .view-showtime {
+    margin-top: 12px;
+    margin-bottom: 28px;
+    font-size: 1.3rem;
+    color: #383838;
+    font-style: unset;
+    text-decoration: underline;
+    cursor: pointer;
+    &:hover {
+      color: blue;
+    }
+  }
+
+  .no-show-time {
+    display: flex;
+    margin-top: 24px;
+    justify-content: center;
+  }
+
+  .note {
+    margin: 20px 0 20px 0px;
+    font-size: 14px;
+    color: #333;
+    font-weight: 600;
+    line-height: 24px;
+
+    .note-list {
+      list-style: circle;
+
+      .list-tyle {
+        margin-right: 12px;
+      }
+    }
+
+    .note-item {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #383838;
+      font-weight: 400;
+    }
+  }
+
+  .control {
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 60px;
+
+    .wrap-more {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      + .wrap-more {
+        margin-left: 40px;
+      }
+    }
+    .more-content {
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.5);
+      line-height: 24px;
+    }
+
+    .more-number {
+      margin-left: 12px;
+      font-size: 14px;
+      color: #333;
+      font-weight: 500;
+      line-height: 24px;
+      display: inline-block;
+      max-width: 270px;
+    }
+  }
+
+  .done {
+    font-size: 14px;
+    text-align: center;
+    font-weight: 500;
+    color: #333;
+    margin-top: 20px;
+    opacity: 0.9;
+  }
+
+  .btn {
+    margin: 0 8px !important;
+    padding: 0 8px;
+  }
+
+  .table {
+    margin: 20px 60px 20px 0;
+
+    .header {
+      padding: 8px 12px;
+      font-size: 14px;
+      color: #333;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-weight: 800;
+      border: 1px solid rgb(80, 58, 58);
+    }
+  }
+}

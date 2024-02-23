@@ -62,8 +62,8 @@ import PropTypes from 'prop-types';
 import { NavLink, useLocation } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import style from './Menu.module.scss';
-import { ArrowDown, ArrowRight } from '~/components/Admin/Icons';
-
+import { UilAngleRight } from '@iconscout/react-unicons';
+import { UilAngleDown } from '@iconscout/react-unicons';
 const cx = classNames.bind(style);
 
 function MenuItem({ to, title, icon, subMenuItems }) {
@@ -88,7 +88,7 @@ function MenuItem({ to, title, icon, subMenuItems }) {
       <div className={cx('nav-link')}>
         <span className={cx('icon')}>{icon}</span>
         <span className={cx('title')}>{title}</span>
-        <div className={cx('menu-arrow')}>{isSubmenuActive ? <ArrowDown /> : <ArrowRight />}</div>
+        <div className={cx('menu-arrow')}>{isSubmenuActive ? <UilAngleDown /> : <UilAngleRight />}</div>
       </div>
 
       {subMenuItems && (

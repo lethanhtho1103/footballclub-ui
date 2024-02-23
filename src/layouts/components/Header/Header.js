@@ -8,7 +8,6 @@ import Image from '~/components/Admin/Images';
 import Menu from '~/components/Admin/Popper/Menu';
 import { Notification } from '~/components/Admin/Icons';
 import { useDispatch } from 'react-redux';
-
 import { userSlice } from '~/redux/reducer';
 import { useContext } from 'react';
 import { InfoUserContext } from '~/Context/InfoUserContext';
@@ -88,11 +87,6 @@ function Header() {
                 <span className={cx('badge')}>11</span>
               </button>
             </Tippy>
-            {/* <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
-              <button className={cx('action-btn')}>
-                <List />
-              </button>
-            </Menu> */}
           </>
           <div className={cx('profile')}>
             <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>

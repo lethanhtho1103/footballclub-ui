@@ -97,7 +97,7 @@ function DetailUser() {
                   <li className={cx('info-item')}>
                     <div className={cx('label')}>Nationality</div>
                     <div className={cx('content')}>
-                      <div>{player.nationality}</div>{' '}
+                      <div>{player.nationality}</div>
                       <img src={`https://flagcdn.com/h60/${player.flag}.png`} alt="No flag" />
                     </div>
                   </li>
@@ -107,7 +107,7 @@ function DetailUser() {
                   </li>
                   <li className={cx('info-item')}>
                     <div className={cx('label')}>Joined City</div>
-                    <div className={cx('content')}>2017-07-01</div>
+                    <div className={cx('content')}>{player.contract || `1-1-1991`}</div>
                   </li>
                 </ul>
               </div>
