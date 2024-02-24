@@ -14,14 +14,14 @@ function GlobalFilter({ preGlobalFilteredRows, globalFilter, setGlobalFilter }) 
 
   return (
     <span className={cx('wrap')}>
-      <span className={cx('title')}>Tìm kiếm:</span>
+      <span className={cx('title')}>Search:</span>
       <input
         value={value || ''}
         onChange={(e) => {
           setValue(e.target.value);
           onChange(e.target.value);
         }}
-        placeholder={`${count} cầu thủ`}
+        placeholder={`${count} players`}
         style={{
           fontSize: '1.1rem',
           border: '0',

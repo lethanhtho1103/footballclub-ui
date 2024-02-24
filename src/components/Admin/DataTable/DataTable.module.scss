@@ -34,8 +34,9 @@
         background: aliceblue;
         color: #000;
         font-weight: bold;
-        padding-left: 12px;
         min-width: 66px;
+        text-align: center;
+        padding: 4px 0;
       }
     }
 
@@ -45,6 +46,7 @@
         padding: 10px 20px;
         border: solid 1px gray;
         background: papayawhip;
+        text-align: center;
       }
 
       td:nth-child(2) {

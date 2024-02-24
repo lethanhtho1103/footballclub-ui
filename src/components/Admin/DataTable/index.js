@@ -73,11 +73,11 @@ function DataTable({ data, columns }) {
           >
             {[5, 10, 20, 30, 40, 50].map((pageSize) => (
               <option key={pageSize} value={pageSize}>
-                Hiển thị {pageSize}
+                Show {pageSize}
               </option>
             ))}
           </select>
-          Hiển thị {pageSize} / {rows.length} kết quả
+          Show {pageSize} / {rows.length} result
         </div>
         <div className={cx('header__table--search')}>
           <GlobalFilter
@@ -128,17 +128,17 @@ function DataTable({ data, columns }) {
       <br />
       <div className={cx('table-footer')}>
         <div className={cx('table-page-number')}>
-          Trang
+          Page
           <em>
             {pageIndex + 1} / {pageOptions.length}
           </em>
         </div>
         <div className={cx('table-control')}>
           <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-            Trang trước
+            Previous page
           </button>
           <button onClick={() => nextPage()} disabled={!canNextPage}>
-            Trang tiếp theo
+            Next page
           </button>
         </div>
       </div>
@@ -146,7 +146,7 @@ function DataTable({ data, columns }) {
       {/* footer */}
       <div className={cx('footer__end')}>
         <hr />
-        ---Hết---
+        ---End---
       </div>
     </div>
   );
