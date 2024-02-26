@@ -2,22 +2,35 @@ import DataTable from '~/components/Admin/DataTable';
 import classNames from 'classnames/bind';
 import style from './TableShowPlayers.module.scss';
 import { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import { UilTimes, UilEditAlt, UilPlus } from '@iconscout/react-unicons';
 import { userService } from '~/services';
-// import ToastMassage from '../ToastMassage';
+import ModalCreatePlayers from '../ModalCreatePlayers';
+import adminService from '~/services/adminService';
+import ToastMassage from '../ToastMassage';
 
 const cx = classNames.bind(style);
 
 function TableShowPlayers() {
   const [row, setRow] = useState([]);
+  const [showDeleteConfirmationDialog, setShowDeleteConfirmationDialog] = useState(false);
+  const [userId, setUserId] = useState('');
+  const [obToast, setObToast] = useState({
+    content: '',
+    isShow: false,
+  });
+
+  const [isShowModalCreatePlayers, setIsShowModalCreatePlayers] = useState(false);
+
   const columns = [
     { Header: 'Clothers number', accessor: 'col1', filter: 'fuzzyText' },
     { Header: 'Player name', accessor: 'col2', filter: 'fuzzyText' },
-    { Header: 'Date of birth', accessor: 'col3', filter: 'fuzzyText' },
-    { Header: 'Nationality', accessor: 'col4', filter: 'fuzzyText' },
-    { Header: 'Position', accessor: 'col5', filter: 'fuzzyText' },
-    { Header: 'Actions', accessor: 'col6', disableSortBy: true },
+    { Header: 'Email', accessor: 'col3', filter: 'fuzzyText' },
+    // { Header: 'Password', accessor: 'col4', filter: 'fuzzyText' },
+    { Header: 'Date of birth', accessor: 'col5', filter: 'fuzzyText' },
+    { Header: 'Nationality', accessor: 'col6', filter: 'fuzzyText' },
+    { Header: 'Position', accessor: 'col7', filter: 'fuzzyText' },
+    { Header: 'Actions', accessor: 'col8', disableSortBy: true },
   ];
 
   const convertToDataRow = (row) => {
@@ -25,8 +38,10 @@ function TableShowPlayers() {
       return {
         col1: row.jersey_number,
         col2: row.name,
-        col3: row.date_of_birth,
-        col4: (
+        col3: row.email,
+        // col4: row.password,
+        col5: row.date_of_birth,
+        col6: (
           <div
             style={{
               display: 'flex',
@@ -50,8 +65,8 @@ function TableShowPlayers() {
             />
           </div>
         ),
-        col5: row.position,
-        col6: (
+        col7: row.position,
+        col8: (
           <div
             style={{
               display: 'flex',
@@ -64,16 +79,16 @@ function TableShowPlayers() {
                 backgroundColor: '#5E5DF0',
                 color: '#fff',
                 borderRadius: '8px',
+                borderColor: '#5E5DF0',
               }}
               onMouseOver={(e) => (e.target.style.opacity = 0.8)}
               onMouseOut={(e) => (e.target.style.opacity = 1)}
-              // onClick={() => handleShow(row.filmId, row.roomShowTime.id, row.startDate, row.startTime)}
             >
               <UilEditAlt size={18} />
             </Button>
             <Button
               style={{
-                padding: '4px 10px',
+                padding: '4px 8px',
                 backgroundColor: '#FF4742',
                 color: '#fff',
                 borderRadius: '8px',
@@ -81,7 +96,7 @@ function TableShowPlayers() {
               }}
               onMouseOver={(e) => (e.target.style.opacity = 0.8)}
               onMouseOut={(e) => (e.target.style.opacity = 1)}
-              // onClick={() => handleShow(row.filmId, row.roomShowTime.id, row.startDate, row.startTime)}
+              onClick={() => handleShowDeleteConfirmationDialog(row.user_id)}
             >
               <UilTimes size={18} />
             </Button>
@@ -94,8 +109,91 @@ function TableShowPlayers() {
 
   const handleGetAllPlayers = async () => {
     const res = await userService.getAllPlayers();
-    console.log(res.players);
     convertToDataRow(res.players);
+  };
+
+  const handleCloseModalCreatePlayers = () => {
+    setIsShowModalCreatePlayers(false);
+  };
+  const handleClose = () => setShowDeleteConfirmationDialog(false);
+
+  const handleShowDeleteConfirmationDialog = (user_id) => {
+    setShowDeleteConfirmationDialog(true);
+    setUserId(user_id);
+  };
+
+  const handleDelete = async () => {
+    const res = await adminService.deletePlayer(userId);
+    setObToast({ content: res.message, isShow: true });
+    handleClose();
+    handleGetAllPlayers();
+  };
+
+  const DeleteConfirmationDialog = () => {
+    return (
+      <Modal show={showDeleteConfirmationDialog} onHide={handleClose} centered>
+        <Modal.Header
+          closeButton
+          className="modal-header"
+          style={{
+            backgroundColor: '#fff',
+            borderRadius: '5px',
+            padding: '20px 20px 10px',
+            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
+          }}
+        >
+          <Modal.Title style={{ fontSize: '24px' }}>Confirm player deletion</Modal.Title>
+        </Modal.Header>
+        <Modal.Body
+          className="modal-body"
+          style={{
+            padding: '20px 20px 20px',
+            fontSize: '1.4rem',
+          }}
+        >
+          Are you sure you want to delete?
+        </Modal.Body>
+        <Modal.Footer
+          className="modal-footer"
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            marginTop: '20px',
+          }}
+        >
+          <Button
+            variant="secondary"
+            onClick={handleClose}
+            style={{
+              backgroundColor: '#385678',
+              color: '#fff',
+              fontSize: '1.3rem',
+              fontWeight: '600',
+              borderRadius: '5px',
+              padding: '7.4px 16px',
+              marginRight: '8px',
+              border: 'none',
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="danger"
+            onClick={handleDelete}
+            style={{
+              backgroundColor: '#d9534f',
+              color: '#fff',
+              fontSize: '1.3rem',
+              fontWeight: '600',
+              borderRadius: '5px',
+              padding: '7px 16px',
+            }}
+          >
+            Confirm
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
   };
 
   useEffect(() => {
@@ -115,7 +213,7 @@ function TableShowPlayers() {
           <div className={cx('note')}>
             Actions:
             <div className={cx('btn-actions')}>
-              <Button className={cx('btn-add')}>
+              <Button className={cx('btn-add')} onClick={() => setIsShowModalCreatePlayers(true)}>
                 <UilPlus size={16} />
                 <span>Add player</span>
               </Button>
@@ -124,11 +222,16 @@ function TableShowPlayers() {
           <div className={cx('table')}>
             <DataTable columns={columns} data={row} />
           </div>
-          {/* {DeleteConfirmationDialog()} */}
-          {/* {obToast.content.length > 0 && (
-              <ToastMassage dur={3000} isShow={obToast.show} header={obToast.header} content={obToast.content} />
-            )} */}
+          {DeleteConfirmationDialog()}
+          {obToast?.content?.length > 0 && (
+            <ToastMassage
+              isShow={obToast.show}
+              content={obToast.content}
+              handleClose={() => setObToast({ content: '' })}
+            />
+          )}
         </div>
+        <ModalCreatePlayers isShow={isShowModalCreatePlayers} handleClose={handleCloseModalCreatePlayers} />
       </div>
     </div>
   );
