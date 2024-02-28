@@ -9,12 +9,11 @@ import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import style from './ModalCreatePlayers.module.scss';
 import classNames from 'classnames/bind';
 import adminService from '~/services/adminService';
-// import { filmService } from '~/services';
 import { useSelector } from 'react-redux';
 import { accessTokenSelector } from '~/redux/selector';
 
 const cx = classNames.bind(style);
-function ModalCreatePlayers({ isShow, handleClose }) {
+function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
   const access_token = useSelector(accessTokenSelector);
 
   const [name, setName] = useState('');
@@ -25,7 +24,7 @@ function ModalCreatePlayers({ isShow, handleClose }) {
   const [position, setPosition] = useState('');
   const [jersey_number, setJerseyNumber] = useState();
   const [image, setImage] = useState();
-  const [flag, setFlag] = useState();
+  const [flag, setFlag] = useState('');
   const [detail, setDetail] = useState('');
 
   const [nameErr, setNameErr] = useState('');
@@ -40,14 +39,12 @@ function ModalCreatePlayers({ isShow, handleClose }) {
   const [detailErr, setDetailErr] = useState('');
 
   const [obToast, setObToast] = useState({
-    header: '',
     content: '',
     isShow: false,
   });
 
   const changeInput = (e, type) => {
     const value = e.target.value;
-
     switch (type) {
       case 'name': {
         setName(value);
@@ -59,9 +56,6 @@ function ModalCreatePlayers({ isShow, handleClose }) {
       }
       case 'password': {
         setPassword(value);
-        const newSuggestions = filterSuggestions(value);
-        setSuggestions(newSuggestions);
-        setShowSuggestions(newSuggestions.length > 0);
         break;
       }
       case 'date_of_birth': {
@@ -80,10 +74,6 @@ function ModalCreatePlayers({ isShow, handleClose }) {
         setJerseyNumber(value);
         break;
       }
-      case 'image': {
-        setImage(value);
-        break;
-      }
       case 'flag': {
         setFlag(value);
         break;
@@ -98,21 +88,8 @@ function ModalCreatePlayers({ isShow, handleClose }) {
     }
   };
 
-  const [suggestions, setSuggestions] = useState(['Mỹ', 'Nhật Bản', 'Việt Nam', 'Thái Lan', 'Hàn Quốc', 'Trung Quốc']);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-
-  // Hàm này sẽ được gọi khi người dùng chọn một gợi ý từ danh sách
-  const selectSuggestion = (suggestion) => {
-    setPassword(suggestion);
-    setSuggestions([]);
-    setShowSuggestions(false);
-    setPassword(suggestion);
-  };
-
-  const filterSuggestions = (value) => {
-    // Thực hiện lọc danh sách gợi ý dựa trên giá trị nhập vào
-    const filtered = suggestions.filter((suggestion) => suggestion.toLowerCase().includes(value.toLowerCase()));
-    return filtered;
+  const handleChangeImage = (e) => {
+    setImage(e.target.files[0]);
   };
 
   const setDefaultValue = (type) => {
@@ -136,54 +113,44 @@ function ModalCreatePlayers({ isShow, handleClose }) {
       setNationality('');
       setPosition('');
       setJerseyNumber('');
-      setImage('');
+      setImage();
       setFlag('');
       setDetail('');
       // Add more state variables if needed
     }
   };
 
-  const toggleShowToast = ({ header, content, show }) => {
-    setObToast((toast) => {
-      return {
-        header: header ? header : '',
-        content: content ? content : '',
-        isShow: show ? show : !toast.isShow,
-      };
-    });
-  };
-
   const checkErr = (type) => {
     switch (type) {
       case 'name': {
-        return nameErr.length > 0;
+        return nameErr?.length > 0;
       }
       case 'email': {
-        return emailErr.length > 0;
+        return emailErr?.length > 0;
       }
       case 'password': {
-        return passwordErr.length > 0;
+        return passwordErr?.length > 0;
       }
       case 'date_of_birth': {
-        return dateOfBirthErr.length > 0;
+        return dateOfBirthErr?.length > 0;
       }
       case 'nationality': {
-        return nationalityErr.length > 0;
+        return nationalityErr?.length > 0;
       }
       case 'position': {
-        return positionErr.length > 0;
+        return positionErr?.length > 0;
       }
       case 'jersey_number': {
-        return jerseyNumberErr.length > 0;
+        return jerseyNumberErr?.length > 0;
       }
       case 'image': {
-        return imageErr.length > 0;
+        return imageErr?.length > 0;
       }
       case 'flag': {
-        return flagErr.length > 0;
+        return flagErr?.length > 0;
       }
       case 'detail': {
-        return detailErr.length > 0;
+        return detailErr?.length > 0;
       }
       default: {
         break;
@@ -191,120 +158,51 @@ function ModalCreatePlayers({ isShow, handleClose }) {
     }
   };
 
-  const validate = () => {
-    let err = true;
-
-    if (!name) {
-      setNameErr('Please enter the player name!');
-      err = false;
-    } else {
-      setNameErr('');
-    }
-
-    if (!email) {
-      setEmailErr('Please enter the player email!');
-      err = false;
-    } else {
-      setEmailErr('');
-    }
-
-    if (!password) {
-      setPasswordErr('Please enter the player password!');
-      err = false;
-    } else {
-      setPasswordErr('');
-    }
-
-    if (!date_of_birth) {
-      setDateOfBirthErr('Please select a date of birth for the player!');
-      err = false;
-    } else {
-      setDateOfBirthErr('');
-    }
-
-    if (!nationality) {
-      setNationalityErr('Please enter the player nationality!');
-      err = false;
-    } else {
-      setNationalityErr('');
-    }
-
-    if (!position) {
-      setPositionErr('Please enter the player position!');
-      err = false;
-    } else {
-      setPositionErr('');
-    }
-
-    if (!jersey_number) {
-      setJerseyNumberErr('Please enter the player jersey number!');
-      err = false;
-    } else {
-      setJerseyNumberErr('');
-    }
-
-    if (!image) {
-      setImageErr('Please select an image for the player!');
-      err = false;
-    } else {
-      setImageErr('');
-    }
-
-    if (!flag) {
-      setFlagErr('Please enter the player flag!');
-      err = false;
-    } else {
-      setFlagErr('');
-    }
-
-    if (!detail) {
-      setDetailErr('Please enter the player detail!');
-      err = false;
-    } else {
-      setDetailErr('');
-    }
-
-    if (err) setDefaultValue('er');
-    return err;
+  const validateErrors = (errors) => {
+    setNameErr(errors.name);
+    setEmailErr(errors.email);
+    setPasswordErr(errors.password);
+    setDateOfBirthErr(errors.date_of_birth);
+    setNationalityErr(errors.nationality);
+    setPositionErr(errors.position);
+    setJerseyNumberErr(errors.jersey_number);
+    setImageErr(errors.image);
+    setFlagErr(errors.flag);
+    setDetailErr(errors.detail);
   };
 
   const createPlayer = async () => {
-    const res = await adminService.createPlayer(
-      access_token,
-      name,
-      email,
-      password,
-      date_of_birth,
-      nationality,
-      position,
-      jersey_number,
-      image,
-      flag,
-      detail,
-    );
-    console.log(res);
-    // if (res.errCode === 0) {
-    //   toggleShowToast({ header: 'Xong', content: 'Đã tạo phim thành công', isShow: true });
-    //   handleClose();
-    //   setDefaultValue();
-    // }
+    try {
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.append('date_of_birth', date_of_birth);
+      formData.append('nationality', nationality);
+      formData.append('flag', flag);
+      formData.append('position', position);
+      formData.append('jersey_number', jersey_number);
+      formData.append('image', image);
+      const res = await adminService.createPlayer(access_token, formData);
+      if (res.user) {
+        setDefaultValue();
+        handleGetAllPlayers();
+        setObToast({ content: res.message, isShow: true });
+      }
+    } catch (error) {
+      validateErrors(error.response.data.errors);
+    }
   };
 
   const handleCLickSuccess = () => {
-    // if (validate()) {
-    //   createPlayer();
-    // }
     createPlayer();
   };
 
   return (
     <>
-      <ToastMassage
-        isShow={obToast.isShow}
-        header={obToast.header}
-        content={obToast.content}
-        handleClose={() => toggleShowToast({})}
-      />
+      {obToast?.content?.length > 0 && (
+        <ToastMassage isShow={obToast.show} content={obToast.content} handleClose={() => setObToast({ content: '' })} />
+      )}
       <Modal
         show={isShow}
         onHide={() => {
@@ -563,7 +461,6 @@ function ModalCreatePlayers({ isShow, handleClose }) {
                     onChange={(e) => changeInput(e, 'position')}
                     required=""
                     name="position"
-                    min="1"
                     placeholder="position"
                     value={position}
                     id="position"
@@ -602,11 +499,11 @@ function ModalCreatePlayers({ isShow, handleClose }) {
                 })}
               >
                 <input
-                  onChange={(e) => changeInput(e, 'image')}
+                  onChange={handleChangeImage}
                   id="image"
                   className={cx('form__field')}
                   type="file"
-                  value={image}
+                  accept="image/png, image/jpeg, image/webp, image/jpg"
                   autoComplete="off"
                 ></input>
                 <label className={cx('form__label')} htmlFor="image">
@@ -624,7 +521,7 @@ function ModalCreatePlayers({ isShow, handleClose }) {
                   onChange={(e) => changeInput(e, 'detail')}
                   id="detail"
                   name="detail"
-                  defaultValue={detail}
+                  value={detail}
                   className={cx('form__field', 'detail')}
                   autoComplete="off"
                 ></textarea>

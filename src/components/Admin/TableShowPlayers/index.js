@@ -8,11 +8,13 @@ import { userService } from '~/services';
 import ModalCreatePlayers from '../ModalCreatePlayers';
 import adminService from '~/services/adminService';
 import ToastMassage from '../ToastMassage';
+import Loader from '~/components/Loader';
 
 const cx = classNames.bind(style);
 
 function TableShowPlayers() {
   const [row, setRow] = useState([]);
+  const [isLoader, setIsLoader] = useState(false);
   const [showDeleteConfirmationDialog, setShowDeleteConfirmationDialog] = useState(false);
   const [userId, setUserId] = useState('');
   const [obToast, setObToast] = useState({
@@ -122,11 +124,16 @@ function TableShowPlayers() {
     setUserId(user_id);
   };
 
-  const handleDelete = async () => {
-    const res = await adminService.deletePlayer(userId);
-    setObToast({ content: res.message, isShow: true });
-    handleClose();
-    handleGetAllPlayers();
+  const handleDelete = () => {
+    setIsLoader(true);
+    let isLoader = setTimeout(async () => {
+      const res = await adminService.deletePlayer(userId);
+      setObToast({ content: res.message, isShow: true });
+      handleClose();
+      setIsLoader(false);
+      handleGetAllPlayers();
+      clearTimeout(isLoader);
+    }, 500);
   };
 
   const DeleteConfirmationDialog = () => {
@@ -202,38 +209,45 @@ function TableShowPlayers() {
   }, []);
 
   return (
-    <div
-      className={cx('wrap', {
-        show: true,
-      })}
-    >
-      <div className={cx('container-content')}>
-        <div className={cx('wrap-table')}>
-          <h2 className={cx('title')}>List of players</h2>
-          <div className={cx('note')}>
-            Actions:
-            <div className={cx('btn-actions')}>
-              <Button className={cx('btn-add')} onClick={() => setIsShowModalCreatePlayers(true)}>
-                <UilPlus size={16} />
-                <span>Add player</span>
-              </Button>
+    <>
+      {isLoader && <Loader />}
+      <div
+        className={cx('wrap', {
+          show: true,
+        })}
+      >
+        <div className={cx('container-content')}>
+          <div className={cx('wrap-table')}>
+            <h2 className={cx('title')}>List of players</h2>
+            <div className={cx('note')}>
+              Actions:
+              <div className={cx('btn-actions')}>
+                <Button className={cx('btn-add')} onClick={() => setIsShowModalCreatePlayers(true)}>
+                  <UilPlus size={16} />
+                  <span>Add player</span>
+                </Button>
+              </div>
             </div>
+            <div className={cx('table')}>
+              <DataTable columns={columns} data={row} />
+            </div>
+            {DeleteConfirmationDialog()}
+            {obToast?.content?.length > 0 && (
+              <ToastMassage
+                isShow={obToast.show}
+                content={obToast.content}
+                handleClose={() => setObToast({ content: '' })}
+              />
+            )}
           </div>
-          <div className={cx('table')}>
-            <DataTable columns={columns} data={row} />
-          </div>
-          {DeleteConfirmationDialog()}
-          {obToast?.content?.length > 0 && (
-            <ToastMassage
-              isShow={obToast.show}
-              content={obToast.content}
-              handleClose={() => setObToast({ content: '' })}
-            />
-          )}
+          <ModalCreatePlayers
+            isShow={isShowModalCreatePlayers}
+            handleClose={handleCloseModalCreatePlayers}
+            handleGetAllPlayers={handleGetAllPlayers}
+          />
         </div>
-        <ModalCreatePlayers isShow={isShowModalCreatePlayers} handleClose={handleCloseModalCreatePlayers} />
       </div>
-    </div>
+    </>
   );
 }
 

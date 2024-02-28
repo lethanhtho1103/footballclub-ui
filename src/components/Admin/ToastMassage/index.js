@@ -6,7 +6,7 @@ import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
 
 const cx = classNames.bind(styles);
 
-function ToastMassage({ content, handleClose, isShow, dur = 3200 }) {
+function ToastMassage({ content, handleClose, isShow, dur = 4000 }) {
   return (
     <div className={cx('wrap')}>
       <ToastContainer>
