@@ -9,9 +9,35 @@ const adminService = {
     return res.data;
   },
 
-  async createPlayer(access_token, formData) {
+  async createPlayer(formData) {
     try {
       const res = await axios.post('/api/players', formData, {
+        headers: {
+          // Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.error('Error creating player:', error);
+      throw error;
+    }
+  },
+
+  async getOnePlayer(user_id) {
+    try {
+      const res = await axios.get('api/players/', {
+        params: { user_id: user_id },
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+
+  async updatePlayer(user_id, formData, access_token) {
+    try {
+      const res = await axios.post(`/api/players/${user_id}`, formData, {
         headers: {
           Authorization: `Bearer ${access_token}`,
           'Content-Type': 'multipart/form-data',

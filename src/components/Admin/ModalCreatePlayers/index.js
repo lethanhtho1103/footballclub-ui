@@ -9,13 +9,10 @@ import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import style from './ModalCreatePlayers.module.scss';
 import classNames from 'classnames/bind';
 import adminService from '~/services/adminService';
-import { useSelector } from 'react-redux';
-import { accessTokenSelector } from '~/redux/selector';
 
 const cx = classNames.bind(style);
-function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
-  const access_token = useSelector(accessTokenSelector);
 
+function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -104,7 +101,6 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
       setImageErr('');
       setFlagErr('');
       setDetailErr('');
-      // Add more error variables if needed
     } else {
       setName('');
       setEmail('');
@@ -116,7 +112,6 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
       setImage();
       setFlag('');
       setDetail('');
-      // Add more state variables if needed
     }
   };
 
@@ -183,7 +178,8 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
       formData.append('position', position);
       formData.append('jersey_number', jersey_number);
       formData.append('image', image);
-      const res = await adminService.createPlayer(access_token, formData);
+
+      const res = await adminService.createPlayer(formData);
       if (res.user) {
         setDefaultValue();
         handleGetAllPlayers();
@@ -452,7 +448,7 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
                 </div>
               </div>
               <div className={cx('col-md-6')}>
-                <div
+                {/* <div
                   className={cx('form__group', 'field', {
                     err: checkErr('position'),
                   })}
@@ -467,6 +463,22 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
                     className={cx('form__field')}
                     type="input"
                   ></input>
+                  <label className={cx('form__label')} htmlFor="position">
+                    <span>*</span> Position:
+                  </label>
+                </div> */}
+                <div
+                  className={cx('form__group', 'field', 'section-type', {
+                    err: checkErr('position'),
+                  })}
+                >
+                  <select value={position} name="position" id="position" onChange={(e) => changeInput(e, 'position')}>
+                    <option value="">Select position</option>
+                    <option value="Goalkeeper">Goalkeeper</option>
+                    <option value="Defender">Defender</option>
+                    <option value="Midfielder">Midfielder</option>
+                    <option value="Forward">Forward</option>
+                  </select>
                   <label className={cx('form__label')} htmlFor="position">
                     <span>*</span> Position:
                   </label>

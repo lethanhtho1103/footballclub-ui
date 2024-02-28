@@ -9,6 +9,8 @@ import ModalCreatePlayers from '../ModalCreatePlayers';
 import adminService from '~/services/adminService';
 import ToastMassage from '../ToastMassage';
 import Loader from '~/components/Loader';
+import { baseUrl } from '~/axios';
+import noAvatar from '~/assets/images/no-avatar.png';
 
 const cx = classNames.bind(style);
 
@@ -38,7 +40,27 @@ function TableShowPlayers() {
   const convertToDataRow = (row) => {
     const dataRow = row.map((row, index) => {
       return {
-        col1: row.jersey_number,
+        col1: (
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-evenly',
+            }}
+          >
+            <img
+              src={row.image.length > 9 ? `${baseUrl}${row.image}` : noAvatar}
+              alt=""
+              style={{
+                width: '48px',
+                height: '48px',
+                display: 'block',
+                borderRadius: '50%',
+              }}
+            />
+            {row.jersey_number}
+          </div>
+        ),
         col2: row.name,
         col3: row.email,
         // col4: row.password,
@@ -48,7 +70,7 @@ function TableShowPlayers() {
             style={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
+              justifyContent: 'space-evenly',
             }}
           >
             {row.nationality}
@@ -56,13 +78,11 @@ function TableShowPlayers() {
               src={`https://flagcdn.com/h60/${row.flag}.png`}
               alt="No flag"
               style={{
-                maxWidth: '32px',
-                maxHeight: '32px',
-                height: 'auto',
+                width: '32px',
+                height: '32px',
                 border: '1px solid #dde6ed',
-                borderRadius: '50%',
                 display: 'block',
-                marginLeft: '8px',
+                borderRadius: '6px',
               }}
             />
           </div>

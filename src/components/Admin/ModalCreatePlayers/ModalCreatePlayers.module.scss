@@ -123,7 +123,11 @@ input[type='number']::-webkit-inner-spin-button {
     .form__field {
       border-bottom: 2px solid #ff0f0f !important;
     }
+    select {
+      border-bottom: 2px solid #ff0f0f !important;
+    }
   }
+
   ul {
     list-style: none;
     padding: 0;
@@ -235,9 +239,11 @@ input[type='number']::-webkit-inner-spin-button {
 
 .section-type {
   margin-bottom: 26px !important;
-  .type {
+  select {
+    width: 100%;
     border: none;
-    margin-top: 14px !important;
+    font-size: 1.4rem;
+    margin-top: 18px !important;
     border-bottom: 2px solid #9b9b9b;
   }
 }
