@@ -15,6 +15,7 @@ import Statistical from '~/pages/Admin/Statistical';
 import MatchesManagement from '~/pages/Admin/MatchesManager';
 import CoachManagement from '~/pages/Admin/Coach';
 import PlayersManagement from '~/pages/Admin/Players';
+import BuyTicket from '~/pages/User/BuyTicket';
 
 const publicRoutes = [
   {
@@ -32,6 +33,10 @@ const publicRoutes = [
   {
     path: '/tickets',
     component: Tickets,
+  },
+  {
+    path: '/tickets/:id',
+    component: BuyTicket,
   },
   {
     path: '/results',

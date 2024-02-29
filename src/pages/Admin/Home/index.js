@@ -12,6 +12,7 @@ function Home() {
     { name: 'MATCHES MANAGEMENT', to: '/admin/matches-management' },
     { name: 'STATISTICAL', to: '/admin/statistical' },
   ];
+
   return (
     <>
       <div className={cx('wrap')}>

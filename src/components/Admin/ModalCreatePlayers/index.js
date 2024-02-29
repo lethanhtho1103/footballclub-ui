@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import ToastMassage from '../ToastMassage';
 import Form from 'react-bootstrap/Form';
@@ -9,10 +9,15 @@ import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import style from './ModalCreatePlayers.module.scss';
 import classNames from 'classnames/bind';
 import adminService from '~/services/adminService';
+import * as request from '~/utils/httpRequest';
+import Loader from '~/components/Loader';
 
 const cx = classNames.bind(style);
 
 function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
+  const [countries, setCountries] = useState([]);
+  const [isLoader, setIsLoader] = useState(false);
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -91,16 +96,16 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
 
   const setDefaultValue = (type) => {
     if (type === 'er') {
-      setNameErr('');
-      setEmailErr('');
-      setPasswordErr('');
-      setDateOfBirthErr('');
-      setNationalityErr('');
-      setPositionErr('');
-      setJerseyNumberErr('');
-      setImageErr('');
-      setFlagErr('');
-      setDetailErr('');
+      // setNameErr('');
+      // setEmailErr('');
+      // setPasswordErr('');
+      // setDateOfBirthErr('');
+      // setNationalityErr('');
+      // setPositionErr('');
+      // setJerseyNumberErr('');
+      // setImageErr('');
+      // setFlagErr('');
+      // setDetailErr('');
     } else {
       setName('');
       setEmail('');
@@ -112,6 +117,16 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
       setImage();
       setFlag('');
       setDetail('');
+      setNameErr('');
+      setEmailErr('');
+      setPasswordErr('');
+      setDateOfBirthErr('');
+      setNationalityErr('');
+      setPositionErr('');
+      setJerseyNumberErr('');
+      setImageErr('');
+      setFlagErr('');
+      setDetailErr('');
     }
   };
 
@@ -191,11 +206,26 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
   };
 
   const handleCLickSuccess = () => {
-    createPlayer();
+    setIsLoader(true);
+    let isLoader = setTimeout(() => {
+      createPlayer();
+      setIsLoader(false);
+      clearTimeout(isLoader);
+    }, 800);
   };
+
+  const handleGetAllCountries = async () => {
+    const res = await request.get();
+    setCountries(res);
+  };
+
+  useEffect(() => {
+    handleGetAllCountries();
+  }, []);
 
   return (
     <>
+      {isLoader && <Loader />}
       {obToast?.content?.length > 0 && (
         <ToastMassage isShow={obToast.show} content={obToast.content} handleClose={() => setObToast({ content: '' })} />
       )}
@@ -382,7 +412,7 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
             </div>
             <div className={cx('row')}>
               <div className={cx('col-md-6')}>
-                <div
+                {/* <div
                   className={cx('form__group', 'field', {
                     err: checkErr('nationality'),
                   })}
@@ -400,8 +430,34 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
                   <label className={cx('form__label')} htmlFor="nationality">
                     <span>*</span> Nationality:
                   </label>
+                </div> */}
+                <div
+                  className={cx('form__group', 'field', 'section-type', {
+                    err: checkErr('nationality'),
+                  })}
+                >
+                  <select
+                    value={nationality}
+                    name="nationality"
+                    id="nationality"
+                    className={cx('nationality')}
+                    onChange={(e) => changeInput(e, 'nationality')}
+                  >
+                    <option value="">Select nationality</option>
+                    {countries.map((country, index) => {
+                      return (
+                        <option key={index} value={country.name.common}>
+                          {country.name.common}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <label className={cx('form__label')} htmlFor="nationality">
+                    <span>*</span> Nationality:
+                  </label>
                 </div>
               </div>
+
               <div className={cx('col-md-6')}>
                 <div
                   className={cx('form__group', 'field', {
@@ -448,31 +504,18 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
                 </div>
               </div>
               <div className={cx('col-md-6')}>
-                {/* <div
-                  className={cx('form__group', 'field', {
-                    err: checkErr('position'),
-                  })}
-                >
-                  <input
-                    onChange={(e) => changeInput(e, 'position')}
-                    required=""
-                    name="position"
-                    placeholder="position"
-                    value={position}
-                    id="position"
-                    className={cx('form__field')}
-                    type="input"
-                  ></input>
-                  <label className={cx('form__label')} htmlFor="position">
-                    <span>*</span> Position:
-                  </label>
-                </div> */}
                 <div
                   className={cx('form__group', 'field', 'section-type', {
                     err: checkErr('position'),
                   })}
                 >
-                  <select value={position} name="position" id="position" onChange={(e) => changeInput(e, 'position')}>
+                  <select
+                    value={position}
+                    name="position"
+                    id="position"
+                    className={cx('position')}
+                    onChange={(e) => changeInput(e, 'position')}
+                  >
                     <option value="">Select position</option>
                     <option value="Goalkeeper">Goalkeeper</option>
                     <option value="Defender">Defender</option>
