@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const request = axios.create({
-  baseURL: 'https://restcountries.com/v3.1/all',
+  baseURL: 'https://trial.mobiscroll.com/content/countries.json',
 });
 
 export const get = async () => {

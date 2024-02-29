@@ -18,6 +18,7 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
   const [countries, setCountries] = useState([]);
   const [isLoader, setIsLoader] = useState(false);
 
+  const [selectedOption, setSelectedOption] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -37,7 +38,6 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
   const [positionErr, setPositionErr] = useState('');
   const [jerseyNumberErr, setJerseyNumberErr] = useState('');
   const [imageErr, setImageErr] = useState('');
-  const [flagErr, setFlagErr] = useState('');
   const [detailErr, setDetailErr] = useState('');
 
   const [obToast, setObToast] = useState({
@@ -65,7 +65,12 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
         break;
       }
       case 'nationality': {
-        setNationality(value);
+        setSelectedOption(value);
+        const selectedCountry = countries.find((country) => country.value.toLowerCase() === value.toLowerCase());
+        if (selectedCountry) {
+          setFlag(selectedCountry.value.toLowerCase());
+          setNationality(selectedCountry.text);
+        }
         break;
       }
       case 'position': {
@@ -74,10 +79,6 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
       }
       case 'jersey_number': {
         setJerseyNumber(value);
-        break;
-      }
-      case 'flag': {
-        setFlag(value);
         break;
       }
       case 'detail': {
@@ -95,39 +96,25 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
   };
 
   const setDefaultValue = (type) => {
-    if (type === 'er') {
-      // setNameErr('');
-      // setEmailErr('');
-      // setPasswordErr('');
-      // setDateOfBirthErr('');
-      // setNationalityErr('');
-      // setPositionErr('');
-      // setJerseyNumberErr('');
-      // setImageErr('');
-      // setFlagErr('');
-      // setDetailErr('');
-    } else {
-      setName('');
-      setEmail('');
-      setPassword('');
-      setDateOfBirth('');
-      setNationality('');
-      setPosition('');
-      setJerseyNumber('');
-      setImage();
-      setFlag('');
-      setDetail('');
-      setNameErr('');
-      setEmailErr('');
-      setPasswordErr('');
-      setDateOfBirthErr('');
-      setNationalityErr('');
-      setPositionErr('');
-      setJerseyNumberErr('');
-      setImageErr('');
-      setFlagErr('');
-      setDetailErr('');
-    }
+    setName('');
+    setEmail('');
+    setPassword('');
+    setDateOfBirth('');
+    setNationality('');
+    setPosition('');
+    setJerseyNumber('');
+    setImage();
+    setFlag('');
+    setDetail('');
+    setNameErr('');
+    setEmailErr('');
+    setPasswordErr('');
+    setDateOfBirthErr('');
+    setNationalityErr('');
+    setPositionErr('');
+    setJerseyNumberErr('');
+    setImageErr('');
+    setDetailErr('');
   };
 
   const checkErr = (type) => {
@@ -156,9 +143,6 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
       case 'image': {
         return imageErr?.length > 0;
       }
-      case 'flag': {
-        return flagErr?.length > 0;
-      }
       case 'detail': {
         return detailErr?.length > 0;
       }
@@ -177,7 +161,6 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
     setPositionErr(errors.position);
     setJerseyNumberErr(errors.jersey_number);
     setImageErr(errors.image);
-    setFlagErr(errors.flag);
     setDetailErr(errors.detail);
   };
 
@@ -205,18 +188,18 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
     }
   };
 
+  const handleGetAllCountries = async () => {
+    const res = await request.get();
+    setCountries(res);
+  };
+
   const handleCLickSuccess = () => {
     setIsLoader(true);
     let isLoader = setTimeout(() => {
       createPlayer();
       setIsLoader(false);
       clearTimeout(isLoader);
-    }, 800);
-  };
-
-  const handleGetAllCountries = async () => {
-    const res = await request.get();
-    setCountries(res);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -247,7 +230,6 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
               positionErr ||
               jerseyNumberErr ||
               imageErr ||
-              flagErr ||
               detailErr,
           })}
         >
@@ -320,14 +302,6 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
                   <label htmlFor="image">
                     <FontAwesomeIcon icon={faCircleExclamation} />
                     {imageErr}
-                  </label>
-                </li>
-              )}
-              {flagErr && (
-                <li>
-                  <label htmlFor="flag">
-                    <FontAwesomeIcon icon={faCircleExclamation} />
-                    {flagErr}
                   </label>
                 </li>
               )}
@@ -410,76 +384,28 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
                 </label>
               </div>
             </div>
-            <div className={cx('row')}>
-              <div className={cx('col-md-6')}>
-                {/* <div
-                  className={cx('form__group', 'field', {
-                    err: checkErr('nationality'),
-                  })}
-                >
-                  <input
-                    required=""
-                    onChange={(e) => changeInput(e, 'nationality')}
-                    value={nationality}
-                    name="nationality"
-                    placeholder="nationality"
-                    id="nationality"
-                    className={cx('form__field')}
-                    type="input"
-                  ></input>
-                  <label className={cx('form__label')} htmlFor="nationality">
-                    <span>*</span> Nationality:
-                  </label>
-                </div> */}
-                <div
-                  className={cx('form__group', 'field', 'section-type', {
-                    err: checkErr('nationality'),
-                  })}
-                >
-                  <select
-                    value={nationality}
-                    name="nationality"
-                    id="nationality"
-                    className={cx('nationality')}
-                    onChange={(e) => changeInput(e, 'nationality')}
-                  >
-                    <option value="">Select nationality</option>
-                    {countries.map((country, index) => {
-                      return (
-                        <option key={index} value={country.name.common}>
-                          {country.name.common}
-                        </option>
-                      );
-                    })}
-                  </select>
-                  <label className={cx('form__label')} htmlFor="nationality">
-                    <span>*</span> Nationality:
-                  </label>
-                </div>
-              </div>
-
-              <div className={cx('col-md-6')}>
-                <div
-                  className={cx('form__group', 'field', {
-                    err: checkErr('flag'),
-                  })}
-                >
-                  <input
-                    onChange={(e) => changeInput(e, 'flag')}
-                    required=""
-                    name="flag"
-                    min="1"
-                    placeholder="flag"
-                    value={flag}
-                    id="flag"
-                    className={cx('form__field')}
-                    type="input"
-                  ></input>
-                  <label className={cx('form__label')} htmlFor="flag">
-                    <span>*</span> Flag:
-                  </label>
-                </div>
-              </div>
+            <div
+              className={cx('form__group', 'field', 'section-type', {
+                err: checkErr('nationality'),
+              })}
+            >
+              <select
+                value={selectedOption}
+                name="nationality"
+                id="nationality"
+                className={cx('nationality')}
+                onChange={(e) => changeInput(e, 'nationality')}
+              >
+                <option value="">Select nationality</option>
+                {countries.map((country, index) => (
+                  <option key={index} value={country.value.toLowerCase()}>
+                    {country.text}
+                  </option>
+                ))}
+              </select>
+              <label className={cx('form__label')} htmlFor="nationality">
+                <span>*</span> Nationality:
+              </label>
             </div>
             <div className={cx('row')}>
               <div className={cx('col-md-6')}>
