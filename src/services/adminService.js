@@ -41,7 +41,6 @@ const adminService = {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('Updating player');
       return res.data;
     } catch (error) {
       console.error('Error creating player:', error);

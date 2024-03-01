@@ -4,8 +4,7 @@ import ToastMassage from '../ToastMassage';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBug } from '@fortawesome/free-solid-svg-icons';
-import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { faCircleExclamation, faBug } from '@fortawesome/free-solid-svg-icons';
 import style from './ModalCreatePlayers.module.scss';
 import classNames from 'classnames/bind';
 import adminService from '~/services/adminService';
@@ -199,7 +198,9 @@ function ModalCreatePlayers({ handleClose, handleGetAllPlayers, player, access_t
       formData.append('flag', flag);
       formData.append('position', position);
       formData.append('jersey_number', jersey_number);
-      formData.append('image', image);
+      if (player?.image !== image) {
+        formData.append('image', image);
+      }
       formData.append('detail', detail);
       const res = await adminService.updatePlayer(userId, formData, access_token);
       if (res.player) {
@@ -207,7 +208,9 @@ function ModalCreatePlayers({ handleClose, handleGetAllPlayers, player, access_t
         handleGetAllPlayers();
         setObToast({ content: res.message, isShow: true });
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleCLickCreate = () => {
@@ -503,13 +506,7 @@ function ModalCreatePlayers({ handleClose, handleGetAllPlayers, player, access_t
                   err: checkErr('image'),
                 })}
               >
-                <input
-                  onChange={handleChangeImage}
-                  id="image"
-                  className={cx('form__field')}
-                  type="file"
-                  autoComplete="off"
-                ></input>
+                <input onChange={handleChangeImage} id="image" className={cx('form__field')} type="file"></input>
                 <label className={cx('form__label')} htmlFor="image">
                   <span>*</span> Select file image:
                 </label>
