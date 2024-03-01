@@ -215,19 +215,17 @@ function ModalCreatePlayers({ handleClose, handleGetAllPlayers, player, access_t
 
   const handleCLickCreate = () => {
     setIsLoader(true);
-    let isLoader = setTimeout(() => {
+    setTimeout(() => {
       handleCreatePlayer();
-      setIsLoader(false);
       clearTimeout(isLoader);
     }, 1000);
   };
 
   const handleCLickUpdate = () => {
     setIsLoader(true);
-    let isLoader = setTimeout(() => {
+    setTimeout(() => {
       handleUpdatePlayer();
       setIsLoader(false);
-      clearTimeout(isLoader);
     }, 1000);
   };
 
@@ -346,69 +344,63 @@ function ModalCreatePlayers({ handleClose, handleGetAllPlayers, player, access_t
         </Modal.Header>
         <Modal.Body className={cx('modal-body')}>
           <Form>
-            <div>
-              <div
-                className={cx('form__group', 'field', {
-                  err: checkErr('name'),
-                })}
-              >
-                <input
-                  required=""
-                  placeholder="Name"
-                  id="name"
-                  className={cx('form__field')}
-                  autoComplete="off"
-                  type="input"
-                  value={name}
-                  onChange={(e) => changeInput(e, 'name')}
-                ></input>
-                <label className={cx('form__label')} htmlFor="name">
-                  <span>*</span> Name:
-                </label>
-              </div>
+            <div
+              className={cx('form__group', 'field', {
+                err: checkErr('name'),
+              })}
+            >
+              <input
+                required=""
+                placeholder="Name"
+                id="name"
+                className={cx('form__field')}
+                autoComplete="off"
+                type="input"
+                value={name}
+                onChange={(e) => changeInput(e, 'name')}
+              ></input>
+              <label className={cx('form__label')} htmlFor="name">
+                <span>*</span> Name:
+              </label>
             </div>
-            <div>
-              <div
-                className={cx('form__group', 'field', {
-                  err: checkErr('email'),
-                })}
-              >
-                <input
-                  required=""
-                  placeholder="Email"
-                  id="email"
-                  className={cx('form__field')}
-                  autoComplete="off"
-                  type="input"
-                  value={email}
-                  onChange={(e) => changeInput(e, 'email')}
-                ></input>
-                <label className={cx('form__label')} htmlFor="email">
-                  <span>*</span> Email Address:
-                </label>
-              </div>
+            <div
+              className={cx('form__group', 'field', {
+                err: checkErr('email'),
+              })}
+            >
+              <input
+                required=""
+                placeholder="Email"
+                id="email"
+                className={cx('form__field')}
+                autoComplete="off"
+                type="input"
+                value={email}
+                onChange={(e) => changeInput(e, 'email')}
+              ></input>
+              <label className={cx('form__label')} htmlFor="email">
+                <span>*</span> Email Address:
+              </label>
             </div>
             {!player && (
-              <div>
-                <div
-                  className={cx('form__group', 'field', {
-                    err: checkErr('password'),
-                  })}
-                >
-                  <input
-                    required=""
-                    placeholder="Password"
-                    id="password"
-                    className={cx('form__field')}
-                    autoComplete="off"
-                    type="password"
-                    value={password}
-                    onChange={(e) => changeInput(e, 'password')}
-                  ></input>
-                  <label className={cx('form__label')} htmlFor="password">
-                    <span>*</span> Password:
-                  </label>
-                </div>
+              <div
+                className={cx('form__group', 'field', {
+                  err: checkErr('password'),
+                })}
+              >
+                <input
+                  required=""
+                  placeholder="Password"
+                  id="password"
+                  className={cx('form__field')}
+                  autoComplete="off"
+                  type="password"
+                  value={password}
+                  onChange={(e) => changeInput(e, 'password')}
+                ></input>
+                <label className={cx('form__label')} htmlFor="password">
+                  <span>*</span> Password:
+                </label>
               </div>
             )}
             <div
@@ -481,55 +473,49 @@ function ModalCreatePlayers({ handleClose, handleGetAllPlayers, player, access_t
                 </div>
               </div>
             </div>
-            <div>
-              <div
-                className={cx('form__group', 'field', {
-                  err: checkErr('date_of_birth'),
-                })}
-              >
-                <input
-                  onChange={(e) => changeInput(e, 'date_of_birth')}
-                  id="date_of_birth"
-                  className={cx('form__field')}
-                  type="date"
-                  value={date_of_birth}
-                  autoComplete="off"
-                ></input>
-                <label className={cx('form__label')} htmlFor="date_of_birth">
-                  <span>*</span> Date of birth
-                </label>
-              </div>
+            <div
+              className={cx('form__group', 'field', {
+                err: checkErr('date_of_birth'),
+              })}
+            >
+              <input
+                onChange={(e) => changeInput(e, 'date_of_birth')}
+                id="date_of_birth"
+                className={cx('form__field')}
+                type="date"
+                value={date_of_birth}
+                autoComplete="off"
+              ></input>
+              <label className={cx('form__label')} htmlFor="date_of_birth">
+                <span>*</span> Date of birth
+              </label>
             </div>
-            <div>
-              <div
-                className={cx('form__group', 'field', {
-                  err: checkErr('image'),
-                })}
-              >
-                <input onChange={handleChangeImage} id="image" className={cx('form__field')} type="file"></input>
-                <label className={cx('form__label')} htmlFor="image">
-                  <span>*</span> Select file image:
-                </label>
-              </div>
+            <div
+              className={cx('form__group', 'field', {
+                err: checkErr('image'),
+              })}
+            >
+              <input onChange={handleChangeImage} id="image" className={cx('form__field')} type="file"></input>
+              <label className={cx('form__label')} htmlFor="image">
+                <span>*</span> Select file image:
+              </label>
             </div>
-            <div>
-              <div
-                className={cx('form__group', 'field', 'detail-err', {
-                  err: checkErr('detail'),
-                })}
-              >
-                <textarea
-                  onChange={(e) => changeInput(e, 'detail')}
-                  id="detail"
-                  name="detail"
-                  value={detail}
-                  className={cx('form__field', 'detail')}
-                  autoComplete="off"
-                ></textarea>
-                <label className={cx('form__label')} htmlFor="detail">
-                  Detail:
-                </label>
-              </div>
+            <div
+              className={cx('form__group', 'field', 'detail-err', {
+                err: checkErr('detail'),
+              })}
+            >
+              <textarea
+                onChange={(e) => changeInput(e, 'detail')}
+                id="detail"
+                name="detail"
+                value={detail}
+                className={cx('form__field', 'detail')}
+                autoComplete="off"
+              ></textarea>
+              <label className={cx('form__label')} htmlFor="detail">
+                Detail:
+              </label>
             </div>
           </Form>
         </Modal.Body>

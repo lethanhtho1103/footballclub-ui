@@ -108,12 +108,6 @@ input[type='number']::-webkit-inner-spin-button {
   width: 100%;
   margin-top: 14px;
 
-  // &:first-child {
-  //   margin-top: 10px;
-  // }
-  // // &:last-child {
-  // //   margin-bottom: 20px;
-  // // }
   .icon {
     position: absolute;
     right: 12px;
@@ -239,7 +233,6 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 .section-type {
-  // margin-bottom: 26px !important;
   .position,
   .nationality {
     width: 100%;
@@ -253,6 +246,6 @@ input[type='number']::-webkit-inner-spin-button {
 .detail-err.err {
   .form__field {
     border: 2px solid #ff0f0f;
-    border-radius: 4px; /* You can add border-radius if you want rounded corners */
+    border-radius: 4px;
   }
 }

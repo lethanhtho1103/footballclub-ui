@@ -161,13 +161,12 @@ function TableShowPlayers() {
 
   const handleDelete = () => {
     setIsLoader(true);
-    let isLoader = setTimeout(async () => {
+    setTimeout(async () => {
       const res = await adminService.deletePlayer(userId, access_token);
       setObToast({ content: res.message, isShow: true });
       handleClose();
       setIsLoader(false);
       handleGetAllPlayers();
-      clearTimeout(isLoader);
     }, 500);
   };
 
