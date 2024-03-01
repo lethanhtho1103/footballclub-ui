@@ -209,7 +209,7 @@ function ModalCreatePlayers({ handleClose, handleGetAllPlayers, player, access_t
         setObToast({ content: res.message, isShow: true });
       }
     } catch (error) {
-      console.error(error);
+      validateErrors(error.response.data.errors);
     }
   };
 
@@ -217,7 +217,7 @@ function ModalCreatePlayers({ handleClose, handleGetAllPlayers, player, access_t
     setIsLoader(true);
     setTimeout(() => {
       handleCreatePlayer();
-      clearTimeout(isLoader);
+      setIsLoader(false);
     }, 1000);
   };
 

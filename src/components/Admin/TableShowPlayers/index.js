@@ -47,15 +47,16 @@ function TableShowPlayers() {
   const convertToDataRow = (row) => {
     const dataRow = row.map((row, index) => {
       return {
-        col1: (
+        col1: row.jersey_number,
+        col2: (
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-evenly',
+              justifyContent: 'flex-end',
             }}
           >
-            {row.jersey_number}
+            <div style={{ width: '100%', textAlign: 'center' }}>{row.name}</div>
             <img
               src={row.image?.length > 9 ? `${baseUrl}${row.image}` : noAvatar}
               alt=""
@@ -68,7 +69,6 @@ function TableShowPlayers() {
             />
           </div>
         ),
-        col2: row.name,
         col3: row.email,
         col5: row.date_of_birth,
         col6: (
