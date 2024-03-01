@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import ToastMassage from '../ToastMassage';
 import Form from 'react-bootstrap/Form';
@@ -9,26 +9,24 @@ import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import style from './ModalCreatePlayers.module.scss';
 import classNames from 'classnames/bind';
 import adminService from '~/services/adminService';
-import * as request from '~/utils/httpRequest';
 import Loader from '~/components/Loader';
 
 const cx = classNames.bind(style);
 
-function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
-  const [countries, setCountries] = useState([]);
+function ModalCreatePlayers({ handleClose, handleGetAllPlayers, player, access_token, countries, userId }) {
   const [isLoader, setIsLoader] = useState(false);
 
-  const [selectedOption, setSelectedOption] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [date_of_birth, setDateOfBirth] = useState('');
-  const [nationality, setNationality] = useState('');
-  const [position, setPosition] = useState('');
-  const [jersey_number, setJerseyNumber] = useState();
-  const [image, setImage] = useState();
-  const [flag, setFlag] = useState('');
-  const [detail, setDetail] = useState('');
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [name, setName] = useState(player?.name || '');
+  const [email, setEmail] = useState(player?.email || '');
+  const [password, setPassword] = useState(player?.password || '');
+  const [date_of_birth, setDateOfBirth] = useState(player?.date_of_birth || '');
+  const [nationality, setNationality] = useState(player?.nationality || '');
+  const [position, setPosition] = useState(player?.position || '');
+  const [jersey_number, setJerseyNumber] = useState(player?.jersey_number);
+  const [image, setImage] = useState(player?.image || null);
+  const [flag, setFlag] = useState(player?.flag || '');
+  const [detail, setDetail] = useState(player?.detail || '');
 
   const [nameErr, setNameErr] = useState('');
   const [emailErr, setEmailErr] = useState('');
@@ -95,17 +93,17 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
     setImage(e.target.files[0]);
   };
 
-  const setDefaultValue = (type) => {
-    setName('');
-    setEmail('');
-    setPassword('');
-    setDateOfBirth('');
-    setNationality('');
-    setPosition('');
-    setJerseyNumber('');
-    setImage();
-    setFlag('');
-    setDetail('');
+  const setDefaultValue = (player) => {
+    setName(player?.name || '');
+    setEmail(player?.email || '');
+    setPassword(player?.password || '');
+    setDateOfBirth(player?.date_of_birth || '');
+    setNationality(player?.nationality || '');
+    setPosition(player?.position || '');
+    setJerseyNumber(player?.jersey_number || '');
+    setImage(player?.image || null);
+    setFlag(player?.flag || '');
+    setDetail(player?.detail || '');
     setNameErr('');
     setEmailErr('');
     setPasswordErr('');
@@ -115,6 +113,7 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
     setJerseyNumberErr('');
     setImageErr('');
     setDetailErr('');
+    setSelectedOption('');
   };
 
   const checkErr = (type) => {
@@ -164,7 +163,7 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
     setDetailErr(errors.detail);
   };
 
-  const createPlayer = async () => {
+  const handleCreatePlayer = async () => {
     try {
       const formData = new FormData();
       formData.append('name', name);
@@ -176,8 +175,9 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
       formData.append('position', position);
       formData.append('jersey_number', jersey_number);
       formData.append('image', image);
+      formData.append('detail', detail);
 
-      const res = await adminService.createPlayer(formData);
+      const res = await adminService.createPlayer(formData, access_token);
       if (res.user) {
         setDefaultValue();
         handleGetAllPlayers();
@@ -188,23 +188,45 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
     }
   };
 
-  const handleGetAllCountries = async () => {
-    const res = await request.get();
-    setCountries(res);
+  const handleUpdatePlayer = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.append('date_of_birth', date_of_birth);
+      formData.append('nationality', nationality);
+      formData.append('flag', flag);
+      formData.append('position', position);
+      formData.append('jersey_number', jersey_number);
+      formData.append('image', image);
+      formData.append('detail', detail);
+      const res = await adminService.updatePlayer(userId, formData, access_token);
+      if (res.player) {
+        setDefaultValue(res.player);
+        handleGetAllPlayers();
+        setObToast({ content: res.message, isShow: true });
+      }
+    } catch (error) {}
   };
 
-  const handleCLickSuccess = () => {
+  const handleCLickCreate = () => {
     setIsLoader(true);
     let isLoader = setTimeout(() => {
-      createPlayer();
+      handleCreatePlayer();
       setIsLoader(false);
       clearTimeout(isLoader);
     }, 1000);
   };
 
-  useEffect(() => {
-    handleGetAllCountries();
-  }, []);
+  const handleCLickUpdate = () => {
+    setIsLoader(true);
+    let isLoader = setTimeout(() => {
+      handleUpdatePlayer();
+      setIsLoader(false);
+      clearTimeout(isLoader);
+    }, 1000);
+  };
 
   return (
     <>
@@ -213,7 +235,7 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
         <ToastMassage isShow={obToast.show} content={obToast.content} handleClose={() => setObToast({ content: '' })} />
       )}
       <Modal
-        show={isShow}
+        show={true}
         onHide={() => {
           setDefaultValue('er');
           handleClose();
@@ -317,7 +339,7 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
           </div>
         </div>
         <Modal.Header closeButton>
-          <h5 className={cx('modal-title')}>Add Player</h5>
+          <h5 className={cx('modal-title')}>{player ? 'Update player' : 'Add Player'}</h5>
         </Modal.Header>
         <Modal.Body className={cx('modal-body')}>
           <Form>
@@ -363,27 +385,29 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
                 </label>
               </div>
             </div>
-            <div>
-              <div
-                className={cx('form__group', 'field', {
-                  err: checkErr('password'),
-                })}
-              >
-                <input
-                  required=""
-                  placeholder="Password"
-                  id="password"
-                  className={cx('form__field')}
-                  autoComplete="off"
-                  type="password"
-                  value={password}
-                  onChange={(e) => changeInput(e, 'password')}
-                ></input>
-                <label className={cx('form__label')} htmlFor="password">
-                  <span>*</span> Password:
-                </label>
+            {!player && (
+              <div>
+                <div
+                  className={cx('form__group', 'field', {
+                    err: checkErr('password'),
+                  })}
+                >
+                  <input
+                    required=""
+                    placeholder="Password"
+                    id="password"
+                    className={cx('form__field')}
+                    autoComplete="off"
+                    type="password"
+                    value={password}
+                    onChange={(e) => changeInput(e, 'password')}
+                  ></input>
+                  <label className={cx('form__label')} htmlFor="password">
+                    <span>*</span> Password:
+                  </label>
+                </div>
               </div>
-            </div>
+            )}
             <div
               className={cx('form__group', 'field', 'section-type', {
                 err: checkErr('nationality'),
@@ -396,7 +420,7 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
                 className={cx('nationality')}
                 onChange={(e) => changeInput(e, 'nationality')}
               >
-                <option value="">Select nationality</option>
+                <option value="">{nationality || player?.nationality || 'Select nationality'}</option>
                 {countries.map((country, index) => (
                   <option key={index} value={country.value.toLowerCase()}>
                     {country.text}
@@ -484,7 +508,6 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
                   id="image"
                   className={cx('form__field')}
                   type="file"
-                  accept="image/png, image/jpeg, image/webp, image/jpg"
                   autoComplete="off"
                 ></input>
                 <label className={cx('form__label')} htmlFor="image">
@@ -524,9 +547,15 @@ function ModalCreatePlayers({ isShow, handleClose, handleGetAllPlayers }) {
           >
             Cancel
           </Button>
-          <Button className={cx('btn')} variant="primary" onClick={handleCLickSuccess}>
-            Create
-          </Button>
+          {player ? (
+            <Button className={cx('btn')} variant="primary" onClick={handleCLickUpdate}>
+              Update
+            </Button>
+          ) : (
+            <Button className={cx('btn')} variant="primary" onClick={handleCLickCreate}>
+              Create
+            </Button>
+          )}
         </Modal.Footer>
       </Modal>
     </>

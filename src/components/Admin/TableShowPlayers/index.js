@@ -11,14 +11,22 @@ import ToastMassage from '../ToastMassage';
 import Loader from '~/components/Loader';
 import { baseUrl } from '~/axios';
 import noAvatar from '~/assets/images/no-avatar.png';
+import { useSelector } from 'react-redux';
+import { accessTokenSelector } from '~/redux/selector';
+import * as request from '~/utils/httpRequest';
 
 const cx = classNames.bind(style);
 
 function TableShowPlayers() {
+  const access_token = useSelector(accessTokenSelector);
   const [row, setRow] = useState([]);
+  const [countries, setCountries] = useState([]);
+  const [player, setPlayer] = useState();
   const [isLoader, setIsLoader] = useState(false);
   const [showDeleteConfirmationDialog, setShowDeleteConfirmationDialog] = useState(false);
   const [userId, setUserId] = useState('');
+  const [name, setName] = useState('');
+
   const [obToast, setObToast] = useState({
     content: '',
     isShow: false,
@@ -27,10 +35,9 @@ function TableShowPlayers() {
   const [isShowModalCreatePlayers, setIsShowModalCreatePlayers] = useState(false);
 
   const columns = [
-    { Header: 'Clothers number', accessor: 'col1', filter: 'fuzzyText' },
+    { Header: 'Jersey number', accessor: 'col1', filter: 'fuzzyText' },
     { Header: 'Player name', accessor: 'col2', filter: 'fuzzyText' },
     { Header: 'Email', accessor: 'col3', filter: 'fuzzyText' },
-    // { Header: 'Password', accessor: 'col4', filter: 'fuzzyText' },
     { Header: 'Date of birth', accessor: 'col5', filter: 'fuzzyText' },
     { Header: 'Nationality', accessor: 'col6', filter: 'fuzzyText' },
     { Header: 'Position', accessor: 'col7', filter: 'fuzzyText' },
@@ -48,8 +55,9 @@ function TableShowPlayers() {
               justifyContent: 'space-evenly',
             }}
           >
+            {row.jersey_number}
             <img
-              src={row.image.length > 9 ? `${baseUrl}${row.image}` : noAvatar}
+              src={row.image?.length > 9 ? `${baseUrl}${row.image}` : noAvatar}
               alt=""
               style={{
                 width: '48px',
@@ -58,22 +66,20 @@ function TableShowPlayers() {
                 borderRadius: '50%',
               }}
             />
-            {row.jersey_number}
           </div>
         ),
         col2: row.name,
         col3: row.email,
-        // col4: row.password,
         col5: row.date_of_birth,
         col6: (
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-evenly',
+              justifyContent: 'flex-end',
             }}
           >
-            {row.nationality}
+            <div style={{ width: '100%', textAlign: 'center' }}>{row.nationality}</div>
             <img
               src={`https://flagcdn.com/h60/${row.flag}.png`}
               alt="No flag"
@@ -82,7 +88,7 @@ function TableShowPlayers() {
                 height: '32px',
                 border: '1px solid #dde6ed',
                 display: 'block',
-                borderRadius: '6px',
+                borderRadius: '4px',
               }}
             />
           </div>
@@ -92,7 +98,7 @@ function TableShowPlayers() {
           <div
             style={{
               display: 'flex',
-              justifyContent: 'space-evenly',
+              justifyContent: 'space-around',
             }}
           >
             <Button
@@ -105,6 +111,7 @@ function TableShowPlayers() {
               }}
               onMouseOver={(e) => (e.target.style.opacity = 0.8)}
               onMouseOut={(e) => (e.target.style.opacity = 1)}
+              onClick={() => handleUpdatePlayer(row.user_id)}
             >
               <UilEditAlt size={18} />
             </Button>
@@ -118,7 +125,7 @@ function TableShowPlayers() {
               }}
               onMouseOver={(e) => (e.target.style.opacity = 0.8)}
               onMouseOut={(e) => (e.target.style.opacity = 1)}
-              onClick={() => handleShowDeleteConfirmationDialog(row.user_id)}
+              onClick={() => handleShowDeleteConfirmationDialog(row.user_id, row.name)}
             >
               <UilTimes size={18} />
             </Button>
@@ -134,20 +141,28 @@ function TableShowPlayers() {
     convertToDataRow(res.players);
   };
 
+  const handleUpdatePlayer = async (user_id) => {
+    const res = await adminService.getOnePlayer(user_id);
+    setIsShowModalCreatePlayers(true);
+    setUserId(user_id);
+    setPlayer(res);
+  };
+
   const handleCloseModalCreatePlayers = () => {
     setIsShowModalCreatePlayers(false);
   };
   const handleClose = () => setShowDeleteConfirmationDialog(false);
 
-  const handleShowDeleteConfirmationDialog = (user_id) => {
+  const handleShowDeleteConfirmationDialog = (user_id, name) => {
     setShowDeleteConfirmationDialog(true);
     setUserId(user_id);
+    setName(name);
   };
 
   const handleDelete = () => {
     setIsLoader(true);
     let isLoader = setTimeout(async () => {
-      const res = await adminService.deletePlayer(userId);
+      const res = await adminService.deletePlayer(userId, access_token);
       setObToast({ content: res.message, isShow: true });
       handleClose();
       setIsLoader(false);
@@ -178,7 +193,7 @@ function TableShowPlayers() {
             fontSize: '1.4rem',
           }}
         >
-          Are you sure you want to delete?
+          Are you sure you want to delete {name}?
         </Modal.Body>
         <Modal.Footer
           className="modal-footer"
@@ -223,8 +238,14 @@ function TableShowPlayers() {
     );
   };
 
+  const handleGetAllCountries = async () => {
+    const res = await request.get();
+    setCountries(res);
+  };
+
   useEffect(() => {
     handleGetAllPlayers();
+    handleGetAllCountries();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -242,7 +263,13 @@ function TableShowPlayers() {
             <div className={cx('note')}>
               Actions:
               <div className={cx('btn-actions')}>
-                <Button className={cx('btn-add')} onClick={() => setIsShowModalCreatePlayers(true)}>
+                <Button
+                  className={cx('btn-add')}
+                  onClick={() => {
+                    setIsShowModalCreatePlayers(true);
+                    setPlayer(null);
+                  }}
+                >
                   <UilPlus size={16} />
                   <span>Add player</span>
                 </Button>
@@ -260,11 +287,16 @@ function TableShowPlayers() {
               />
             )}
           </div>
-          <ModalCreatePlayers
-            isShow={isShowModalCreatePlayers}
-            handleClose={handleCloseModalCreatePlayers}
-            handleGetAllPlayers={handleGetAllPlayers}
-          />
+          {isShowModalCreatePlayers && (
+            <ModalCreatePlayers
+              handleClose={handleCloseModalCreatePlayers}
+              handleGetAllPlayers={handleGetAllPlayers}
+              access_token={access_token}
+              countries={countries}
+              player={player}
+              userId={userId}
+            />
+          )}
         </div>
       </div>
     </>

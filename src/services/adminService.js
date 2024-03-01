@@ -9,11 +9,11 @@ const adminService = {
     return res.data;
   },
 
-  async createPlayer(formData) {
+  async createPlayer(formData, access_token) {
     try {
       const res = await axios.post('/api/players', formData, {
         headers: {
-          // Authorization: `Bearer ${access_token}`,
+          Authorization: `Bearer ${access_token}`,
           'Content-Type': 'multipart/form-data',
         },
       });
@@ -26,10 +26,8 @@ const adminService = {
 
   async getOnePlayer(user_id) {
     try {
-      const res = await axios.get('api/players/', {
-        params: { user_id: user_id },
-      });
-      return res.data;
+      const res = await axios.get(`api/players/id/${user_id}`);
+      return res.data.player;
     } catch (error) {
       console.log(error.message);
     }
@@ -43,6 +41,7 @@ const adminService = {
           'Content-Type': 'multipart/form-data',
         },
       });
+      console.log('Updating player');
       return res.data;
     } catch (error) {
       console.error('Error creating player:', error);
@@ -50,8 +49,12 @@ const adminService = {
     }
   },
 
-  async deletePlayer(user_id) {
-    const res = await axios.delete(`api/players/${user_id}`);
+  async deletePlayer(user_id, access_token) {
+    const res = await axios.delete(`api/players/${user_id}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
     return res.data;
   },
 };

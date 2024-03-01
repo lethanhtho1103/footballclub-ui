@@ -4,6 +4,15 @@
 .wrap {
   position: relative;
   height: calc(100vh - 104px);
+  width: 100%;
+  .container-content {
+    position: relative;
+    background: #f4f7ff;
+    width: calc(100% + 48px);
+    left: -36px;
+    right: 0;
+    padding-left: 36px;
+  }
 
   .icon-back {
     font-size: #383838;
@@ -124,7 +133,7 @@
 
   .table {
     margin: 20px 60px 20px 0;
-
+    width: calc(100% - 36px);
     .header {
       padding: 8px 12px;
       font-size: 14px;
