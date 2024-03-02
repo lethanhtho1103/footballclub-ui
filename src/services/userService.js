@@ -75,6 +75,24 @@ const userService = {
     }
     return 'Thiếu tham số truyền vào';
   },
+
+  async getAllMatches() {
+    try {
+      const res = await axios.get('api/matches');
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async getAllMatchesHistory() {
+    try {
+      const res = await axios.get('/api/match-history');
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
 };
 
 export default userService;

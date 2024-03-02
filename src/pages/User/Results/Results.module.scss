@@ -90,10 +90,12 @@
                   display: block;
                   text-align: center;
                   margin-top: 20%;
+                  text-transform: uppercase;
                 }
               }
               .win {
                 background-color: #2fdca5;
+                margin-right: 4px;
               }
               .lose {
                 background-color: #2f3133;
@@ -105,7 +107,7 @@
               }
             }
             .content {
-              width: 50%;
+              width: 58%;
               .wrapper {
                 width: 100%;
                 display: flex;
@@ -169,7 +171,7 @@
               }
             }
             .hight-light {
-              width: 25%;
+              width: 17%;
               padding-left: 25px;
               text-align: right;
               font-size: 14px;

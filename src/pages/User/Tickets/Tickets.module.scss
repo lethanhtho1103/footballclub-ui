@@ -158,6 +158,8 @@
                   justify-content: flex-end;
                   img {
                     margin-left: 8px;
+                    width: 52px;
+                    height: 52px;
                   }
                   .name {
                     font-size: 17px;
@@ -171,6 +173,7 @@
                   display: flex;
                   justify-content: flex-start;
                   align-items: center;
+
                   img {
                     margin-right: 8px;
                   }
@@ -203,6 +206,31 @@
                     line-height: 14px;
                     color: #69738c;
                     margin: 0;
+                  }
+                }
+              }
+              .reverse {
+                flex-direction: row-reverse;
+                .first,
+                .second {
+                  flex-direction: row-reverse;
+                }
+                .first {
+                  .name {
+                    text-align: left;
+                  }
+                  img {
+                    margin-left: 0;
+                    margin-right: 8px;
+                  }
+                }
+                .second {
+                  .name {
+                    text-align: right;
+                  }
+                  img {
+                    margin-left: 8px;
+                    margin-right: 0;
                   }
                 }
               }
