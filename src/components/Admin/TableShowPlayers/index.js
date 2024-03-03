@@ -81,7 +81,7 @@ function TableShowPlayers() {
           >
             <div style={{ width: '100%', textAlign: 'center' }}>{row.nationality}</div>
             <img
-              src={`https://flagcdn.com/h60/${row.flag}.png`}
+              src={`https://flagcdn.com/36x27/${row.flag}.png`}
               alt="No flag"
               style={{
                 width: '32px',

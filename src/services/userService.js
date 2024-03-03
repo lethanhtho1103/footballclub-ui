@@ -85,6 +85,15 @@ const userService = {
     }
   },
 
+  async getAllMatchesComingUp() {
+    try {
+      const res = await axios.get('api/match-comeup');
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
   async getAllMatchesHistory() {
     try {
       const res = await axios.get('/api/match-history');

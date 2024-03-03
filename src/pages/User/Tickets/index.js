@@ -6,14 +6,30 @@ import premier from '~/assets/images/premier.webp';
 import { useEffect, useState } from 'react';
 import { userService } from '~/services';
 import { baseUrl } from '~/axios';
-import mancity from '~/assets/images/manchester_city.webp';
+import cityLogo from '~/assets/images/manchester_city.webp';
+import Loader from '~/components/Loader';
 const cx = classNames.bind(style);
 
 function Tickets() {
+  const [isLoader, setIsLoader] = useState(false);
   const [matches, setMatches] = useState([]);
+  const [state, setState] = useState(2);
+
   const handleGetAllMatches = async () => {
-    const res = await userService.getAllMatches();
-    setMatches(res.matches);
+    const res = await userService.getAllMatchesComingUp();
+    const upcomingMatches = res.upcoming_matches.sort((a, b) => {
+      const dateA = new Date(`${a.game_date}T${a.game_time}`);
+      const dateB = new Date(`${b.game_date}T${b.game_time}`);
+      return dateA - dateB;
+    });
+    if (state === 2) {
+      setMatches(upcomingMatches);
+    } else {
+      const filteredMatches = upcomingMatches.filter((match) => {
+        return match.host === state;
+      });
+      setMatches(filteredMatches);
+    }
   };
 
   function extractHourFromTimeString(timeString) {
@@ -24,11 +40,21 @@ function Tickets() {
     return formattedTime;
   }
 
+  const handleFilterStadium = () => {
+    setIsLoader(true);
+    setTimeout(() => {
+      handleGetAllMatches();
+      setIsLoader(false);
+    }, 500);
+  };
+
   useEffect(() => {
     handleGetAllMatches();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div>
+      {isLoader && <Loader />}
       <HeaderUser />
       <main className={cx('main-content')}>
         <header className={cx('header')}>
@@ -43,13 +69,13 @@ function Tickets() {
             <div className={cx('filters')}>
               <div className={cx('filter-item')}>
                 <div className={cx('label')}>Location</div>
-                <select>
-                  <option value="">All Locations</option>
+                <select onChange={(e) => setState(Number(e.target.value))}>
+                  <option value="2">All Locations</option>
                   <option value="1">Home</option>
                   <option value="0">Away</option>
                 </select>
               </div>
-              <div className={cx('filter-item')}>
+              <div className={cx('filter-item')} onClick={handleFilterStadium}>
                 <div className={cx('btn-filter')}>Filter</div>
               </div>
             </div>
@@ -87,7 +113,7 @@ function Tickets() {
                         </div>
                         <div className={cx('second')}>
                           <div className={cx('logo')}>
-                            <img src={mancity} alt="man-city" />
+                            <img src={cityLogo} alt="man-city" />
                           </div>
                           <div className={cx('name')}>Manchester City</div>
                         </div>

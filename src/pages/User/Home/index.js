@@ -6,22 +6,53 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faPlay } from '@fortawesome/free-solid-svg-icons';
 import etihad from '../../../assets/images/etihad.webp';
+import cityLogo from '~/assets/images/manchester_city.webp';
+import { baseUrl } from '~/axios';
 import { useEffect, useState } from 'react';
+import { userService } from '~/services';
 
 const cx = classNames.bind(style);
 
 function Home() {
   const [rotation, setRotation] = useState(0);
+  const [matchFuture, setMatchFuture] = useState();
+
+  const handleGetMatchFuture = async () => {
+    const res = await userService.getAllMatches();
+    const currentDateTime = new Date();
+    const upcomingMatches = res.matches
+      .filter((match) => {
+        const gameDateTime = new Date(`${match.game_date}T${match.game_time}`);
+        return gameDateTime > currentDateTime;
+      })
+      .sort((a, b) => {
+        const dateA = new Date(`${a.game_date}T${a.game_time}`);
+        const dateB = new Date(`${b.game_date}T${b.game_time}`);
+        return dateA - dateB;
+      });
+
+    if (upcomingMatches.length > 0) {
+      setMatchFuture(upcomingMatches[0]);
+    }
+  };
+
+  function extractHourFromTimeString(timeString) {
+    var dateObject = new Date('1970-01-01T' + timeString + 'Z');
+    var hour = dateObject.getUTCHours();
+    var minute = dateObject.getUTCMinutes();
+    var formattedTime = (hour < 10 ? '0' + hour : hour) + ':' + (minute < 10 ? '0' : '') + minute;
+    return formattedTime;
+  }
 
   useEffect(() => {
+    handleGetMatchFuture();
     const intervalId = setInterval(() => {
       setRotation((prevRotation) => (prevRotation - 2.5) % 360);
     }, 100);
-
-    // Cleanup interval on component unmount
     return () => clearInterval(intervalId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <div>
       <HeaderUser />
@@ -112,34 +143,32 @@ function Home() {
               </div>
               <div className={cx('tournaments')}>
                 <div className={cx('start-date')}>
-                  <div className={cx('date')}>Sun 28 Jan</div>
-                  <p>FA WSL</p>
+                  <div className={cx('date')}>{matchFuture?.game_date}</div>
+                  <p>Premier League</p>
                 </div>
               </div>
               <div className={cx('team')}>
                 <div className={cx('first')}>
                   <div className={cx('logo')}>
-                    <img
-                      src="https://www.mancity.com/meta/media/t02jppxo/spurs-logo-with-outline.png?width=52&height=52"
-                      alt="first-name"
-                    />
+                    <img src={matchFuture?.host === 1 ? cityLogo : baseUrl + matchFuture?.club.image} alt="No images" />
                   </div>
-                  <div className={cx('name')}>Spurs</div>
+                  <div className={cx('name')}>
+                    {matchFuture?.host === 1 ? 'Manchester City' : matchFuture?.club.name}
+                  </div>
                 </div>
                 <div className={cx('time')}>
                   <div className={cx('content')}>
-                    <time>14:00</time>
+                    <time>{extractHourFromTimeString(matchFuture?.game_time)}</time>
                     <p>GMT</p>
                   </div>
                 </div>
                 <div className={cx('second')}>
                   <div className={cx('logo')}>
-                    <img
-                      src="https://www.mancity.com/meta/media/yzscd2rf/manchester_city_fc_badge.png?width=52&height=52"
-                      alt="second-name"
-                    />
+                    <img src={matchFuture?.host === 1 ? baseUrl + matchFuture?.club.image : cityLogo} alt="No images" />
                   </div>
-                  <div className={cx('name')}>Man City</div>
+                  <div className={cx('name')}>
+                    {matchFuture?.host === 1 ? matchFuture?.club.name : 'Manchester City'}
+                  </div>
                 </div>
               </div>
               <div className={cx('footer')}>

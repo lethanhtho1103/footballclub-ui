@@ -19,7 +19,6 @@ function DetailUser() {
     try {
       const res = await userService.getOnePlayer({ name });
       const playerData = res.player;
-
       if (playerData) {
         setPlayer(playerData);
         setFirstName(playerData?.name.split(' ')[0] || '');
@@ -34,7 +33,6 @@ function DetailUser() {
 
   useEffect(() => {
     handleGetOnePlayer();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name]);
 
@@ -98,7 +96,7 @@ function DetailUser() {
                     <div className={cx('label')}>Nationality</div>
                     <div className={cx('content')}>
                       <div>{player.nationality}</div>
-                      <img src={`https://flagcdn.com/h60/${player.flag}.png`} alt="No flag" />
+                      <img src={`https://flagcdn.com/40x30/${player.flag}.png`} alt="No flag" />
                     </div>
                   </li>
                   <li className={cx('info-item')}>
@@ -107,7 +105,7 @@ function DetailUser() {
                   </li>
                   <li className={cx('info-item')}>
                     <div className={cx('label')}>Joined City</div>
-                    <div className={cx('content')}>{player.contract || `1-1-1991`}</div>
+                    <div className={cx('content')}>{player.contract?.date_created || ''}</div>
                   </li>
                 </ul>
               </div>
