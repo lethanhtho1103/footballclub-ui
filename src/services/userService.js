@@ -102,6 +102,15 @@ const userService = {
       console.error(error);
     }
   },
+
+  async getOneMatch(game_id) {
+    try {
+      const res = await axios.get(`/api/matches/${game_id}`);
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
 };
 
 export default userService;

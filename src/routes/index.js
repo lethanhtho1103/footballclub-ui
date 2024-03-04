@@ -35,7 +35,7 @@ const publicRoutes = [
     component: Tickets,
   },
   {
-    path: '/tickets/:id',
+    path: '/matches/:game_id',
     component: BuyTicket,
   },
   {

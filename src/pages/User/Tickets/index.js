@@ -8,6 +8,7 @@ import { userService } from '~/services';
 import { baseUrl } from '~/axios';
 import cityLogo from '~/assets/images/manchester_city.webp';
 import Loader from '~/components/Loader';
+import { Link } from 'react-router-dom';
 const cx = classNames.bind(style);
 
 function Tickets() {
@@ -120,7 +121,11 @@ function Tickets() {
                       </div>
                     </div>
                     <div className={cx('btn')}>
-                      {match.host === 1 && <div className={cx('btn-buy')}>Buy now</div>}
+                      {match.host === 1 && (
+                        <Link to={`http://localhost:3000/matches/${match.game_id}`} className={cx('btn-buy')}>
+                          Buy now
+                        </Link>
+                      )}
                       {match.host === 1 ? (
                         <div className={cx('description')}>Tickets available</div>
                       ) : (
