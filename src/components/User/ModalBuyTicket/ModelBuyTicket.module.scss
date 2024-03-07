@@ -1,0 +1,389 @@
+.wrap {
+  position: fixed;
+  box-sizing: border-box;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100000;
+  .ticket {
+    max-width: 770px;
+    background-color: #fff;
+    display: flex;
+    position: relative;
+    animation: totop 0.2s linear !important;
+    @keyframes totop {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .info-ticket {
+      padding: 2.4rem 2rem;
+      max-width: 416px;
+      .info-match {
+        .header-match {
+          display: flex;
+          align-items: center;
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          border: none !important;
+          .fixture {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-transform: capitalize;
+            font-weight: 700;
+            font-size: 1.7rem;
+            .first {
+              display: flex;
+              justify-content: flex-end;
+              align-items: center;
+              text-align: center;
+
+              img {
+                margin-left: 10px;
+                width: 35px;
+                height: 35px;
+              }
+            }
+            .vs {
+              margin: 0 12px;
+            }
+            .second {
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+              text-align: center;
+              img {
+                margin-right: 10px;
+                width: 35px;
+                height: 35px;
+              }
+            }
+          }
+        }
+        .body-match {
+          display: grid;
+          row-gap: 1.8rem;
+          column-gap: 4rem;
+          grid-template-columns: repeat(1, minmax(0, 1fr));
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          margin-top: 1.6rem;
+          padding-top: 1.6rem;
+          border: none;
+          border-top-color: rgb(229 229 229);
+          border-top-width: 1px;
+          border-top-style: dashed;
+
+          .body-match-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            div {
+              span {
+                display: block;
+                font-size: 1.2rem;
+                color: rgb(115 115 115);
+                font-weight: 600;
+              }
+              div {
+                color: rgb(38 38 38);
+                b {
+                  font-size: 1.5rem;
+                }
+                .list-seat {
+                  display: flex;
+                  font-weight: 700;
+                  font-size: 1.4rem;
+                  span {
+                    color: rgb(38 38 38);
+                  }
+                }
+              }
+              .name-province {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .province {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 11rem;
+                  height: 3.6rem;
+                  font-weight: 600;
+                  font-size: 1.4rem;
+                  line-height: 2rem;
+                  text-decoration: none;
+                  color: rgb(216 45 139);
+                  border: 1px solid rgb(216 45 139);
+                  border-radius: 4px;
+                  span {
+                    margin-left: 5px;
+                  }
+                }
+              }
+            }
+          }
+          .address {
+            grid-column: span 2 / span 2;
+            .description {
+              font-size: 1.3rem;
+              color: rgb(115 115 115);
+            }
+          }
+          .stadium {
+            position: relative;
+            align-items: center;
+          }
+        }
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        margin-top: 1.6rem;
+        padding-top: 1.6rem;
+        border: none;
+        border-top-color: rgb(229 229 229);
+        border-top-width: 1px;
+        border-top-style: dashed;
+        li {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+          font-size: 1.5rem;
+        }
+      }
+    }
+
+    // .payment {
+    //   .payment-qrCode {
+    //     background: url(https://homepage.momocdn.net/jk/momo2020/img/intro/qrcode-pattern.png) 10px 10px no-repeat,
+    //       linear-gradient(to top, rgb(193, 23, 124), rgb(225, 27, 144));
+    //     padding: 4.2rem 3.2rem;
+    //     text-align: center;
+    //     h4 {
+    //       font-size: 1.55rem;
+    //       line-height: 2.4rem;
+    //       margin-bottom: 1.8rem;
+    //       color: #fff;
+    //     }
+    //     .qr-container {
+    //       padding: 15px;
+    //       margin: 0 auto;
+    //       background-color: white;
+    //       width: 280px;
+    //       height: 280px;
+    //       border-radius: 15px;
+    //       .qr-scan {
+    //         position: relative;
+    //         display: flex;
+    //         align-items: center;
+    //         justify-content: center;
+    //         width: 250px;
+    //         height: 250px;
+    //         background-color: white;
+    //         margin: 0 auto;
+    //         overflow: hidden;
+    //         -webkit-box-align: center;
+    //         -webkit-box-pack: center;
+    //         .qr-radiant {
+    //           position: absolute;
+    //           opacity: 0.6;
+    //           width: 98%;
+    //           height: 98%;
+    //           top: 1%;
+    //           left: 1%;
+    //           z-index: 6;
+    //           transform: translate3d(0, -110%, 0);
+    //           animation: QRCodeScan 3s infinite cubic-bezier(0.45, 0.03, 0.81, 0.63);
+    //           @keyframes QRCodeScan {
+    //             0% {
+    //               -webkit-transform: translate3d(0, -110%, 0);
+    //               -moz-transform: translate3d(0, -110%, 0);
+    //               transform: translate3d(0, -110%, 0);
+    //             }
+    //             90% {
+    //               -webkit-transform: translate3d(0, 30%, 0);
+    //               -moz-transform: translate3d(0, 30%, 0);
+    //               transform: translate3d(0, 30%, 0);
+    //             }
+    //             100% {
+    //               -webkit-transform: translate3d(0, 30%, 0);
+    //               -moz-transform: translate3d(0, 30%, 0);
+    //               transform: translate3d(0, 30%, 0);
+    //             }
+    //           }
+    //           img {
+    //             position: absolute;
+    //             left: -50%;
+    //             transform: translateX(50%);
+    //             display: block;
+    //             width: 245px;
+    //             height: auto;
+    //           }
+    //         }
+    //         .qr-border {
+    //           position: absolute;
+    //           width: 100%;
+    //           height: 100%;
+    //           top: 0;
+    //           left: 2%;
+
+    //           z-index: 5;
+    //           opacity: 0.9;
+    //           pointer-events: none;
+    //           img {
+    //             position: absolute;
+    //             top: 0;
+    //             left: -50%;
+    //             transform: translateX(50%);
+    //             display: block;
+    //             width: 245px;
+    //             height: auto;
+    //           }
+    //         }
+    //         .qr-image {
+    //           text-align: center;
+    //           width: 250px;
+    //           padding: 1.6rem;
+    //           height: auto;
+    //           canvas {
+    //             display: block;
+    //             height: 215px;
+    //             width: 215px;
+    //           }
+    //           img {
+    //             position: absolute;
+    //             display: block;
+    //             width: 50px;
+    //             top: 50%;
+    //             left: 50%;
+    //             transform: translate(-50%, -50%);
+    //             z-index: 3;
+    //           }
+    //           .img1 {
+    //             margin-top: -3px;
+    //             width: 90%;
+    //             z-index: 2;
+    //           }
+    //         }
+    //       }
+    //     }
+
+    //     .description {
+    //       padding: 0;
+    //       margin-top: 1.5rem;
+    //       font-size: 1.4rem;
+    //       line-height: 2rem;
+    //       color: #fff;
+    //       text-align: center;
+    //       svg {
+    //         width: 2.8rem;
+    //         height: 2.8rem;
+    //         display: inline;
+    //         margin-right: 0.4rem;
+    //       }
+    //     }
+
+    //     .direct-payment {
+    //       padding: 0;
+    //       margin-top: 1.2rem;
+    //       // margin-left: 1rem;
+    //       display: flex;
+    //       justify-content: flex-start;
+    //       align-items: center;
+    //       font-size: 1.6rem;
+    //       color: #fff;
+    //       input {
+    //         margin-right: 6px;
+    //       }
+    //       .img-vnpay {
+    //         width: 30px;
+    //         height: 30px;
+    //         object-fit: cover;
+    //         border: 1px solid #e5e5e5;
+    //         border-radius: 4px;
+    //       }
+    //     }
+
+    //     .book-ticket {
+    //       margin-top: 1.5rem;
+    //       color: #fff;
+    //       background-color: rgba(221, 188, 63, 1);
+    //       font-weight: 700;
+    //       font-size: 1.4rem;
+    //       line-height: 2rem;
+    //       padding: 0.5rem 1.4rem;
+    //       border: 1px solid transparent;
+    //       border-radius: 0.4rem;
+    //       &:hover {
+    //         background-color: rgba(221, 188, 63, 0.8);
+    //       }
+    //     }
+    //   }
+    // }
+
+    .paypal {
+      height: 100%;
+      min-width: 354px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-color: #add8e6;
+      h2 {
+        padding: 0px 0 20px;
+        color: #333;
+        font-size: 2rem;
+        line-height: 2.8rem;
+        font-weight: 700;
+      }
+    }
+
+    .exit {
+      position: absolute;
+      right: 0;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      // margin-top: 1rem;
+      width: 4.8rem;
+      height: 4.8rem;
+      color: rgb(255, 255, 255, 0.9);
+      background-color: transparent;
+      border: none;
+      border-radius: 9999px;
+      cursor: pointer;
+      z-index: 10000;
+      &:hover {
+        background-color: rgba(250, 250, 250, 0.2);
+      }
+      svg {
+        display: block;
+        width: 2.4rem;
+        height: 2.4rem;
+      }
+    }
+  }
+}
+
+.color-red {
+  color: red;
+}

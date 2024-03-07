@@ -1,6 +1,6 @@
 .main-content {
   --placed-color: #404040;
-  --choice-color: #3bd6ff;
+  --choice-color: #fbad15;
   --vip-color: #722ed1;
   --regular-color: #579b41;
   --business-color: #f5222d;
@@ -189,16 +189,46 @@
     }
     .stadium-image {
       width: 70%;
-      height: 100%;
       display: flex;
       justify-content: center;
+      padding: 18px 0;
       img {
         width: 70%;
+        height: 85%;
       }
     }
     .map-seat {
       width: 70%;
       padding: 18px 14px;
+      .required {
+        position: fixed;
+        display: flex;
+        top: 50%;
+        left: 50%;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(252, 226, 11);
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-size: 1.4rem;
+        line-height: 1.6rem;
+        z-index: 1000;
+        animation: totop 0.2s linear !important;
+        @keyframes totop {
+          0% {
+            opacity: 0;
+            transform: translateY(-30px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .icon {
+          margin-left: 30px;
+          cursor: pointer;
+        }
+      }
       h3 {
         font-weight: 700;
         font-size: 2rem;
@@ -301,7 +331,7 @@
             background-color: var(--business-color);
           }
           .choice {
-            background-color: var(--choice-color) !important;
+            background-color: var(--choice-color);
           }
           span {
             font-size: 1.4rem;
@@ -321,8 +351,8 @@
           color: #fff;
           border: none;
           border-radius: 5px;
-          cursor: pointer;
           transition: background-color 0.3s ease;
+          cursor: pointer;
           width: 4%;
           &:hover {
             opacity: 0.7;
@@ -333,6 +363,11 @@
         }
         .placed {
           background-color: var(--placed-color);
+          &:hover {
+            opacity: 1;
+            cursor: default;
+          }
+          pointer-events: none;
         }
         .regular {
           background-color: var(--regular-color);

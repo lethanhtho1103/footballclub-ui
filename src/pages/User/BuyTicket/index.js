@@ -10,6 +10,7 @@ import { userService } from '~/services';
 import { useParams } from 'react-router-dom';
 import stadiumImage from '~/assets/images/stadium.jpg';
 import { UilAngleRight, UilTimes } from '@iconscout/react-unicons';
+import ModalBuyTicket from '~/components/User/ModalBuyTicket';
 
 const cx = classNames.bind(style);
 
@@ -17,12 +18,18 @@ function BuyTicket() {
   const [match, setMatch] = useState();
   const { game_id } = useParams();
   const [isShowSeats, setIsShowSeats] = useState(false);
+  const [isShowRequiredChoiceSeats, setIsShowRequiredChoiceSeats] = useState(false);
+  const [isShowModalBuyTicket, setIsShowModalBuyTicket] = useState(false);
   const [area, setArea] = useState(false);
   const [selectedSeats, setSelectedSeats] = useState([]);
 
   const getOneMatch = async () => {
     const res = await userService.getOneMatch(game_id);
     setMatch(res.match);
+  };
+
+  const handleClickX = () => {
+    setIsShowModalBuyTicket(false);
   };
 
   function extractHourFromTimeString(timeString) {
@@ -63,6 +70,17 @@ function BuyTicket() {
     }
   };
 
+  const handleShowModalBuyTicket = () => {
+    if (selectedSeats.length > 0) {
+      setIsShowModalBuyTicket(true);
+    } else {
+      setIsShowRequiredChoiceSeats(true);
+      setTimeout(() => {
+        setIsShowRequiredChoiceSeats(false);
+      }, 3000);
+    }
+  };
+
   useEffect(() => {
     getOneMatch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -71,6 +89,14 @@ function BuyTicket() {
     <div>
       <HeaderUser />
       <main className={cx('main-content')}>
+        {isShowModalBuyTicket && (
+          <ModalBuyTicket
+            handleClickX={handleClickX}
+            extractHourFromTimeString={extractHourFromTimeString}
+            match={match}
+            selectedSeats={selectedSeats}
+          />
+        )}
         <header className={cx('header')}>
           <div className={cx('background')}>
             <img src={bg1} alt="bg1"></img>
@@ -191,6 +217,14 @@ function BuyTicket() {
             </div>
             {isShowSeats ? (
               <div className={cx('map-seat')}>
+                {isShowRequiredChoiceSeats && (
+                  <div className={cx('required')}>
+                    <div>Please choose at least 1 seat.</div>
+                    <div className={cx('icon')} onClick={() => setIsShowRequiredChoiceSeats(false)}>
+                      <UilTimes />
+                    </div>
+                  </div>
+                )}
                 <h3>Choose a seat to watch football</h3>
                 <div className={cx('list-note')}>
                   <div className={cx('note-item')}>
@@ -252,13 +286,15 @@ function BuyTicket() {
                       <span>Temporary</span>
                       <div className={cx('temporary')}>$18.92</div>
                     </div>
-                    <button className={cx('btn-pay')}>Buy ticket</button>
+                    <button className={cx('btn-pay')} onClick={handleShowModalBuyTicket}>
+                      Buy ticket
+                    </button>
                   </div>
                 </div>
               </div>
             ) : (
               <div className={cx('stadium-image')}>
-                <img src={stadiumImage} alt="" />
+                <img src="https://www.seekpng.com/png/full/58-586729_man-city-seating-plan.png" alt="" />
               </div>
             )}
           </div>
