@@ -111,6 +111,15 @@ const userService = {
       console.error(error);
     }
   },
+
+  async getAllSeats() {
+    try {
+      const res = await axios.get('api/seats');
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
 };
 
 export default userService;

@@ -104,12 +104,15 @@
                 color: rgb(38 38 38);
                 b {
                   font-size: 1.5rem;
+                  span {
+                    font-weight: 700 !important;
+                  }
                 }
                 .list-seat {
                   display: flex;
-                  font-weight: 700;
-                  font-size: 1.4rem;
                   span {
+                    font-weight: 600;
+                    font-size: 1.4rem;
                     color: rgb(38 38 38);
                   }
                 }
@@ -167,6 +170,10 @@
           justify-content: space-between;
           align-items: flex-end;
           font-size: 1.5rem;
+          span {
+            color: rgb(115, 115, 115);
+            font-weight: 600;
+          }
         }
       }
     }

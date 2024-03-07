@@ -11,17 +11,27 @@ import { useParams } from 'react-router-dom';
 import stadiumImage from '~/assets/images/stadium.jpg';
 import { UilAngleRight, UilTimes } from '@iconscout/react-unicons';
 import ModalBuyTicket from '~/components/User/ModalBuyTicket';
+import Loader from '~/components/Loader';
 
 const cx = classNames.bind(style);
 
 function BuyTicket() {
   const [match, setMatch] = useState();
   const { game_id } = useParams();
+  const [isLoader, setIsLoader] = useState(false);
   const [isShowSeats, setIsShowSeats] = useState(false);
   const [isShowRequiredChoiceSeats, setIsShowRequiredChoiceSeats] = useState(false);
   const [isShowModalBuyTicket, setIsShowModalBuyTicket] = useState(false);
-  const [area, setArea] = useState(false);
+  const [area, setArea] = useState('');
+  const [seats, setSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
+
+  const seatData = [
+    { id: 'east', label: 'East stand', abbreviation: 'E', price: '$13.65', percent: '35/100' },
+    { id: 'west', label: 'West stand', abbreviation: 'W', price: '$13.65', percent: '35/100' },
+    { id: 'north', label: 'North bank', abbreviation: 'N', price: '$13.65', percent: '35/100' },
+    { id: 'block', label: 'Block end', abbreviation: 'S', price: '$13.65', percent: '35/100' },
+  ];
 
   const getOneMatch = async () => {
     const res = await userService.getOneMatch(game_id);
@@ -39,35 +49,42 @@ function BuyTicket() {
     var formattedTime = (hour < 10 ? '0' + hour : hour) + ':' + (minute < 10 ? '0' : '') + minute;
     return formattedTime;
   }
-  const buttonArray = Array.from({ length: 200 }, (_, index) => 'E' + (index + 1));
 
-  const getColorClass = (number) => {
-    const numericPart = parseInt(number.slice(1));
-    if (numericPart >= 1 && numericPart <= 100) {
-      return 'group-1';
-    } else if (numericPart >= 101 && numericPart <= 160) {
-      return 'group-2';
-    } else if (numericPart >= 161 && numericPart <= 200) {
-      return 'group-3';
+  const getColorClass = (type) => {
+    if (type === 'Normal') {
+      return 'Normal';
+    } else if (type === 'VIP') {
+      return 'VIP';
+    } else if (type === 'VVIP') {
+      return 'VVIP';
     }
   };
 
-  const handleGetAllSeat = () => {
-    setIsShowSeats(true);
-    setArea(true);
+  const handleShowSeatsOfArea = async (abbreviation) => {
+    setIsLoader(true);
+    setArea(abbreviation);
+    setTimeout(async () => {
+      setIsShowSeats(true);
+      const res = await userService.getAllSeats();
+      setSeats(res.seats.filter((area) => area.stand === abbreviation));
+      setIsLoader(false);
+    }, 500);
   };
 
-  const handleChangeSeat = (number) => {
-    // Kiểm tra xem ghế đã được chọn chưa
-    const isSeatSelected = selectedSeats.includes(number);
-    // Nếu ghế đã được chọn, loại bỏ khỏi mảng selectedSeats
-    if (isSeatSelected) {
-      const updatedSeats = selectedSeats.filter((seat) => seat !== number);
+  const handleChangeSeat = (seatObject) => {
+    const selectedSeatIndex = selectedSeats.findIndex((seat) => seat.seat_number === seatObject.seat_number);
+    if (selectedSeatIndex !== -1) {
+      const updatedSeats = [...selectedSeats];
+      updatedSeats.splice(selectedSeatIndex, 1);
       setSelectedSeats(updatedSeats);
     } else {
-      // Nếu ghế chưa được chọn, thêm vào mảng selectedSeats
-      setSelectedSeats([...selectedSeats, number]);
+      setSelectedSeats([...selectedSeats, seatObject]);
     }
+  };
+
+  const calculateTotalPrice = (seats) => {
+    const totalPrice = seats.reduce((sum, seat) => sum + parseFloat(seat.price), 0);
+    return totalPrice.toFixed(2); // Nếu bạn muốn giữ hai chữ số sau dấu thập phân
   };
 
   const handleShowModalBuyTicket = () => {
@@ -95,8 +112,10 @@ function BuyTicket() {
             extractHourFromTimeString={extractHourFromTimeString}
             match={match}
             selectedSeats={selectedSeats}
+            calculateTotalPrice={calculateTotalPrice}
           />
         )}
+        {isLoader && <Loader />}
         <header className={cx('header')}>
           <div className={cx('background')}>
             <img src={bg1} alt="bg1"></img>
@@ -129,91 +148,34 @@ function BuyTicket() {
           <div className={cx('container')}>
             <div className={cx('sidebar')}>
               <h3 className={cx('title')}>Choose by area</h3>
-              <div
-                className={cx('choose-area', {
-                  choice: area === true,
-                })}
-                onClick={handleGetAllSeat}
-              >
-                <div className={cx('area')}>
-                  <img src={stadiumImage} alt="" />
-                  <div className={cx('info')}>
-                    <div className={cx('firstLine')}>
-                      <span>E</span>
-                      <span>|</span>
-                      <span>East stand</span>
-                    </div>
-                    <div className={cx('secondLine')}>
-                      <span>from</span>
-                      $13.65
-                    </div>
-                  </div>
-                </div>
-                <div className={cx('percent')}>
-                  <span>35/100</span>
-                  <UilAngleRight />
-                </div>
-              </div>
-              <div className={cx('choose-area')}>
-                <div className={cx('area')}>
-                  <img src={stadiumImage} alt="" />
-                  <div className={cx('info')}>
-                    <div className={cx('firstLine')}>
-                      <span>W</span>
-                      <span>|</span>
-                      <span>West stand</span>
-                    </div>
-                    <div className={cx('secondLine')}>
-                      <span>from</span>
-                      $13.65
+              {seatData.map((data, index) => (
+                <div
+                  key={index}
+                  className={cx('choose-area', {
+                    choice: area === data.abbreviation,
+                  })}
+                  onClick={() => handleShowSeatsOfArea(data.abbreviation)}
+                >
+                  <div className={cx('area')}>
+                    <img src={stadiumImage} alt="" />
+                    <div className={cx('info')}>
+                      <div className={cx('firstLine')}>
+                        <span>{data.abbreviation}</span>
+                        <span>|</span>
+                        <span>{data.label}</span>
+                      </div>
+                      <div className={cx('secondLine')}>
+                        <span>from</span>
+                        {data.price}
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className={cx('percent')}>
-                  <span>35/100</span>
-                  <UilAngleRight />
-                </div>
-              </div>
-              <div className={cx('choose-area')}>
-                <div className={cx('area')}>
-                  <img src={stadiumImage} alt="" />
-                  <div className={cx('info')}>
-                    <div className={cx('firstLine')}>
-                      <span>N</span>
-                      <span>|</span>
-                      <span>North bank</span>
-                    </div>
-                    <div className={cx('secondLine')}>
-                      <span>from</span>
-                      $13.65
-                    </div>
+                  <div className={cx('percent')}>
+                    <span>{data.percent}</span>
+                    <UilAngleRight />
                   </div>
                 </div>
-                <div className={cx('percent')}>
-                  <span>35/100</span>
-                  <UilAngleRight />
-                </div>
-              </div>
-              <div className={cx('choose-area')}>
-                <div className={cx('area')}>
-                  <img src={stadiumImage} alt="" />
-                  <div className={cx('info')}>
-                    <div className={cx('firstLine')}>
-                      <span>S</span>
-                      <span>|</span>
-                      <span>Block end</span>
-                    </div>
-                    <div className={cx('secondLine')}>
-                      <span>from</span>
-                      $13.65
-                    </div>
-                  </div>
-                </div>
-                <div className={cx('percent')}>
-                  <span>35/100</span>
-                  <UilAngleRight />
-                </div>
-              </div>
+              ))}
             </div>
             {isShowSeats ? (
               <div className={cx('map-seat')}>
@@ -236,31 +198,31 @@ function BuyTicket() {
                     <span>Seat of your choice</span>
                   </div>
                   <div className={cx('note-item')}>
-                    <div className={cx('regular')}></div>
-                    <span>Regular seats</span>
+                    <div className={cx('normal')}></div>
+                    <span>Normal seats</span>
                   </div>
                   <div className={cx('note-item')}>
                     <div className={cx('vip')}></div>
                     <span>VIP seats</span>
                   </div>
                   <div className={cx('note-item')}>
-                    <div className={cx('business')}></div>
-                    <span>Business seats</span>
+                    <div className={cx('vvip')}></div>
+                    <span>VVIP seats</span>
                   </div>
                 </div>
                 <div className={cx('button-container')}>
-                  {buttonArray.map((number, index) => (
+                  {seats.map((seat, index) => (
                     <button
-                      key={number}
-                      onClick={() => handleChangeSeat(number)}
+                      key={seat.seat_id}
+                      onClick={() => handleChangeSeat(seat)}
                       className={cx('custom-button', {
-                        regular: getColorClass(number) === 'group-1',
-                        vip: getColorClass(number) === 'group-2',
-                        business: getColorClass(number) === 'group-3',
-                        choice: selectedSeats.includes(number),
+                        normal: getColorClass(seat.type) === 'Normal',
+                        vip: getColorClass(seat.type) === 'VIP',
+                        vvip: getColorClass(seat.type) === 'VVIP',
+                        choice: selectedSeats.some((selectedSeat) => selectedSeat.seat_id === seat.seat_id),
                       })}
                     >
-                      {number}
+                      {seat.seat_id}
                     </button>
                   ))}
                 </div>
@@ -271,7 +233,7 @@ function BuyTicket() {
                       <div className={cx('list-seat')}>
                         {selectedSeats.map((seat, index) => (
                           <div className={cx('seat-item')}>
-                            <span>{seat}</span>
+                            <span>{seat.seat_id}</span>
                             {index !== selectedSeats.length - 1 && <span>,&nbsp;</span>}
                           </div>
                         ))}
@@ -284,7 +246,7 @@ function BuyTicket() {
                   <div className={cx('payment')}>
                     <div className={cx('label')}>
                       <span>Temporary</span>
-                      <div className={cx('temporary')}>$18.92</div>
+                      <div className={cx('temporary')}>${calculateTotalPrice(selectedSeats)}</div>
                     </div>
                     <button className={cx('btn-pay')} onClick={handleShowModalBuyTicket}>
                       Buy ticket

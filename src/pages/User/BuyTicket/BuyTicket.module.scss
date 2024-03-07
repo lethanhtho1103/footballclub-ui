@@ -2,8 +2,8 @@
   --placed-color: #404040;
   --choice-color: #fbad15;
   --vip-color: #722ed1;
-  --regular-color: #579b41;
-  --business-color: #f5222d;
+  --normal-color: #579b41;
+  --vvip-color: #f5222d;
 
   .header {
     height: 285px;
@@ -309,9 +309,9 @@
           display: flex;
           align-items: center;
           .placed,
-          .regular,
+          .normal,
           .vip,
-          .business,
+          .vvip,
           .choice {
             width: 18px;
             height: 18px;
@@ -321,14 +321,14 @@
           .placed {
             background-color: var(--placed-color);
           }
-          .regular {
-            background-color: var(--regular-color);
+          .normal {
+            background-color: var(--normal-color);
           }
           .vip {
             background-color: var(--vip-color);
           }
-          .business {
-            background-color: var(--business-color);
+          .vvip {
+            background-color: var(--vvip-color);
           }
           .choice {
             background-color: var(--choice-color);
@@ -369,14 +369,14 @@
           }
           pointer-events: none;
         }
-        .regular {
-          background-color: var(--regular-color);
+        .normal {
+          background-color: var(--normal-color);
         }
         .vip {
           background-color: var(--vip-color);
         }
-        .business {
-          background-color: var(--business-color);
+        .vvip {
+          background-color: var(--vvip-color);
         }
       }
     }

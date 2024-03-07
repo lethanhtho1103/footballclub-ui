@@ -11,7 +11,7 @@ import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(style);
 
-function ModalBuyTicket({ handleClickX, extractHourFromTimeString, match, selectedSeats }) {
+function ModalBuyTicket({ handleClickX, extractHourFromTimeString, match, selectedSeats, calculateTotalPrice }) {
   const [isHidden, setIsHidden] = useState(false);
 
   const handleMouseLeave = () => {
@@ -108,7 +108,7 @@ function ModalBuyTicket({ handleClickX, extractHourFromTimeString, match, select
                     <b className={cx('list-seat')}>
                       {selectedSeats.map((seat, index) => (
                         <>
-                          <span>{seat}</span>
+                          <span>{seat.seat_id}</span>
                           {index !== selectedSeats.length - 1 && <span>,&nbsp;</span>}
                         </>
                       ))}
@@ -120,7 +120,7 @@ function ModalBuyTicket({ handleClickX, extractHourFromTimeString, match, select
                 <div></div>
                 <div>
                   <div>
-                    <b>$18.89</b>
+                    <b>${calculateTotalPrice(selectedSeats)}</b>
                   </div>
                 </div>
               </li>
@@ -134,7 +134,7 @@ function ModalBuyTicket({ handleClickX, extractHourFromTimeString, match, select
                 </div>
               </div>
               <div>
-                <b>$14</b>
+                <b>${calculateTotalPrice(selectedSeats)}</b>
               </div>
             </li>
             <li>
@@ -144,7 +144,7 @@ function ModalBuyTicket({ handleClickX, extractHourFromTimeString, match, select
                 </div>
               </div>
               <div>
-                <b>$.65</b>
+                <b>$12.65</b>
               </div>
             </li>
             <li>
