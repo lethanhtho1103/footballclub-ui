@@ -22,8 +22,9 @@ function Sidebar() {
           to="/admin/management/players"
           icon={<PlayerIcon />}
           subMenuItems={[
+            { label: 'Users', to: '/admin/management/users' },
             { label: 'Players', to: '/admin/management/players' },
-            { label: 'Coach', to: '/admin/management/coach' },
+            { label: 'Coaches', to: '/admin/management/coach' },
           ]}
         />
 
