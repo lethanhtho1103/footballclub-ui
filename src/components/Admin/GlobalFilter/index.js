@@ -6,7 +6,6 @@ import styles from './GlobalFilter.module.scss';
 const cx = classNames.bind(styles);
 
 function GlobalFilter({ preGlobalFilteredRows, globalFilter, setGlobalFilter }) {
-  const count = preGlobalFilteredRows.length;
   const [value, setValue] = useState(globalFilter);
   const onChange = useAsyncDebounce((value) => {
     setGlobalFilter(value.trim() || undefined);
@@ -21,7 +20,7 @@ function GlobalFilter({ preGlobalFilteredRows, globalFilter, setGlobalFilter }) 
           setValue(e.target.value);
           onChange(e.target.value);
         }}
-        placeholder={`${count} players`}
+        placeholder={`...`}
         style={{
           fontSize: '1.1rem',
           border: '0',
