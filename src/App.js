@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { publicRoutes, adminRoutes } from './routes';
 import { useContext } from 'react';
 import { InfoUserContext } from './Context/InfoUserContext';
+
 function App() {
   const { infoUser } = useContext(InfoUserContext);
   function renderRoutesBasedOnRole(role_id) {
@@ -19,6 +20,7 @@ function App() {
       return <Route key={index} path={route.path} element={<Page />} />;
     });
   }
+
   return (
     <Router>
       <div className="App">

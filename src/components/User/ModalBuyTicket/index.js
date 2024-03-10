@@ -6,8 +6,7 @@ import { baseUrl } from '~/axios';
 import cityLogo from '~/assets/images/manchester_city.webp';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
-// import vnpay from '../../assets/images/vnpay.png';
-// import Paypal from '../PayPal';
+import PayPalPayment from '~/components/User/PayPalPayment';
 
 const cx = classNames.bind(style);
 
@@ -137,7 +136,7 @@ function ModalBuyTicket({ handleClickX, extractHourFromTimeString, match, select
                 <b>${calculateTotalPrice(selectedSeats)}</b>
               </div>
             </li>
-            <li>
+            {/* <li>
               <div>
                 <div>
                   <span>Change</span>
@@ -146,7 +145,7 @@ function ModalBuyTicket({ handleClickX, extractHourFromTimeString, match, select
               <div>
                 <b>$12.65</b>
               </div>
-            </li>
+            </li> */}
             <li>
               <div>
                 <div>
@@ -160,16 +159,9 @@ function ModalBuyTicket({ handleClickX, extractHourFromTimeString, match, select
           </ul>
         </div>
         <div className={cx('payment')}>
-          {/* <a target="_blank" href="http://localhost:8888/order/create_payment_url" rel="northerner noreferrer">
-            Thanh toán tiền bằng ví VNPAY
-          </a> */}
           <div className={cx('paypal')}>
-            <h2>Thanh toán tiền bằng PayPal</h2>
-            {/* <Paypal
-              moneyTemporary={moneyTemporary}
-              handleBuyComboCornWater={handleBuyComboCornWater}
-              handleBuyTicket={handleBuyTicket}
-            /> */}
+            <h2>Pay with PayPal</h2>
+            <PayPalPayment cost={calculateTotalPrice(selectedSeats)} handleClickX={handleClickX} />
           </div>
         </div>
       </div>
