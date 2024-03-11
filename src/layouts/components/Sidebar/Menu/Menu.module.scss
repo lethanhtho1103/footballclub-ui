@@ -23,6 +23,9 @@
   &.active {
     color: #fff;
     background-color: #4b49ac;
+    border-left: 4px solid rgb(0 255 4);
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
     .collapse {
       display: block;
       transition: all 0.3s ease;

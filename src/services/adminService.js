@@ -9,7 +9,6 @@ const adminService = {
     return res.data;
   },
 
-
   //Player
   async createPlayer(formData, access_token) {
     try {
@@ -78,7 +77,7 @@ const adminService = {
   async getOneCoach(user_id) {
     try {
       const res = await axios.get(`api/coaches/id/${user_id}`);
-      return res.data.Coach;
+      return res.data;
     } catch (error) {
       console.log(error.message);
     }
