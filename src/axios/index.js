@@ -6,4 +6,6 @@ const instance = axios.create({
 
 export const baseUrl = 'http://localhost:8000';
 
+export const URL_API_PAYPAL = 'http://localhost:8000/api/paypal';
+
 export default instance;
