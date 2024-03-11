@@ -10,14 +10,21 @@ const adminService = {
   },
 
   //Player
-  async createPlayer(formData, access_token) {
+  async createPlayer(playerData) {
     try {
+      const formData = new FormData();
+
+      Object.entries(playerData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
       const res = await axios.post('/api/players', formData, {
         headers: {
-          Authorization: `Bearer ${access_token}`,
+          Authorization: `Bearer ${playerData.access_token}`,
           'Content-Type': 'multipart/form-data',
         },
       });
+
       return res.data;
     } catch (error) {
       console.error('Error creating player:', error);
@@ -59,20 +66,41 @@ const adminService = {
   },
 
   // Coach
-  async createCoach(formData, access_token) {
+  async createCoach(playerData) {
     try {
+      const formData = new FormData();
+
+      Object.entries(playerData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
       const res = await axios.post('/api/coaches', formData, {
         headers: {
-          Authorization: `Bearer ${access_token}`,
+          Authorization: `Bearer ${playerData.access_token}`,
           'Content-Type': 'multipart/form-data',
         },
       });
+
       return res.data;
     } catch (error) {
-      console.error('Error creating coach:', error);
+      console.error('Error creating player:', error);
       throw error;
     }
   },
+  // async createCoach(formData, access_token) {
+  //   try {
+  //     const res = await axios.post('/api/coaches', formData, {
+  //       headers: {
+  //         Authorization: `Bearer ${access_token}`,
+  //         'Content-Type': 'multipart/form-data',
+  //       },
+  //     });
+  //     return res.data;
+  //   } catch (error) {
+  //     console.error('Error creating coach:', error);
+  //     throw error;
+  //   }
+  // },
 
   async getOneCoach(user_id) {
     try {
