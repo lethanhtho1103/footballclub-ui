@@ -319,8 +319,9 @@
         }
         .footer {
           margin-top: 24px;
+          display: flex;
+          justify-content: center;
           .btn-buy {
-            width: 100%;
             color: #001838;
             background-color: #e6ff00;
             border: 1px solid #e6ff00;
@@ -329,6 +330,7 @@
             font-size: 13px;
             line-height: 17px;
             font-weight: 700;
+            text-decoration: none;
             cursor: pointer;
             &:hover {
               opacity: 0.7;

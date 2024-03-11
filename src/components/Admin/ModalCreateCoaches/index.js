@@ -3,12 +3,11 @@ import Button from 'react-bootstrap/Button';
 import ToastMassage from '../ToastMassage';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleExclamation, faBug } from '@fortawesome/free-solid-svg-icons';
 import style from './ModalCreateCoaches.module.scss';
 import classNames from 'classnames/bind';
 import adminService from '~/services/adminService';
 import Loader from '~/components/Loader';
+import TableErrors from '../TableErrors';
 
 const cx = classNames.bind(style);
 
@@ -21,6 +20,7 @@ function ModalCreateCoaches({ handleClose, handleGetAllCoaches, coach, access_to
   const [password, setPassword] = useState(coach?.password || '');
   const [date_of_birth, setDateOfBirth] = useState(coach?.date_of_birth || '');
   const [nationality, setNationality] = useState(coach?.nationality || '');
+  const [position, setPosition] = useState(coach?.position || '');
   const [image, setImage] = useState(coach?.image || null);
   const [flag, setFlag] = useState(coach?.flag || '');
   const [detail, setDetail] = useState(coach?.detail || '');
@@ -30,6 +30,7 @@ function ModalCreateCoaches({ handleClose, handleGetAllCoaches, coach, access_to
   const [passwordErr, setPasswordErr] = useState('');
   const [dateOfBirthErr, setDateOfBirthErr] = useState('');
   const [nationalityErr, setNationalityErr] = useState('');
+  const [positionErr, setPositionErr] = useState('');
   const [imageErr, setImageErr] = useState('');
   const [detailErr, setDetailErr] = useState('');
 
@@ -66,6 +67,10 @@ function ModalCreateCoaches({ handleClose, handleGetAllCoaches, coach, access_to
         }
         break;
       }
+      case 'position': {
+        setPosition(value);
+        break;
+      }
       case 'detail': {
         setDetail(value);
         break;
@@ -86,6 +91,7 @@ function ModalCreateCoaches({ handleClose, handleGetAllCoaches, coach, access_to
     setPassword(coach?.password || '');
     setDateOfBirth(coach?.date_of_birth || '');
     setNationality(coach?.nationality || '');
+    setPosition(coach?.position || '');
     setImage(coach?.image || null);
     setFlag(coach?.flag || '');
     setDetail(coach?.detail || '');
@@ -94,6 +100,7 @@ function ModalCreateCoaches({ handleClose, handleGetAllCoaches, coach, access_to
     setPasswordErr('');
     setDateOfBirthErr('');
     setNationalityErr('');
+    setPositionErr('');
     setImageErr('');
     setDetailErr('');
     setSelectedOption('');
@@ -138,19 +145,21 @@ function ModalCreateCoaches({ handleClose, handleGetAllCoaches, coach, access_to
     setDetailErr(errors.detail);
   };
 
-  const handleCreateCoach = async () => {
+  const createCoach = async () => {
     try {
-      const formData = new FormData();
-      formData.append('name', name);
-      formData.append('email', email);
-      formData.append('password', password);
-      formData.append('date_of_birth', date_of_birth);
-      formData.append('nationality', nationality);
-      formData.append('flag', flag);
-      formData.append('image', image);
-      formData.append('detail', detail);
-
-      const res = await adminService.createCoach(formData, access_token);
+      const playerData = {
+        name,
+        email,
+        password,
+        date_of_birth,
+        nationality,
+        flag,
+        position,
+        image,
+        detail,
+        access_token,
+      };
+      const res = await adminService.createCoach(playerData);
       if (res.user) {
         setDefaultValue();
         handleGetAllCoaches();
@@ -161,22 +170,23 @@ function ModalCreateCoaches({ handleClose, handleGetAllCoaches, coach, access_to
     }
   };
 
-  const handleUpdateCoach = async () => {
+  const updateCoach = async () => {
     try {
       const formData = new FormData();
       formData.append('name', name);
       formData.append('email', email);
       formData.append('date_of_birth', date_of_birth);
       formData.append('nationality', nationality);
+      formData.append('position', position);
       formData.append('flag', flag);
       if (coach?.image !== image) {
         formData.append('image', image);
       }
       formData.append('detail', detail);
-  
+
       const res = await adminService.updateCoach(userId, formData, access_token);
       if (res.coach) {
-        setDefaultValue(res.coach);
+        setDefaultValue(res.Coach);
         handleGetAllCoaches();
         setObToast({ content: res.message, isShow: true });
       }
@@ -188,7 +198,7 @@ function ModalCreateCoaches({ handleClose, handleGetAllCoaches, coach, access_to
   const handleCLickCreate = () => {
     setIsLoader(true);
     setTimeout(() => {
-      handleCreateCoach();
+      createCoach();
       setIsLoader(false);
     }, 1000);
   };
@@ -196,7 +206,7 @@ function ModalCreateCoaches({ handleClose, handleGetAllCoaches, coach, access_to
   const handleCLickUpdate = () => {
     setIsLoader(true);
     setTimeout(() => {
-      handleUpdateCoach();
+      updateCoach();
       setIsLoader(false);
     }, 1000);
   };
@@ -214,85 +224,16 @@ function ModalCreateCoaches({ handleClose, handleGetAllCoaches, coach, access_to
           handleClose();
         }}
       >
-        <div
-          className={cx('table-err', {
-            show:
-              nameErr ||
-              emailErr ||
-              passwordErr ||
-              dateOfBirthErr ||
-              nationalityErr ||
-              imageErr ||
-              detailErr,
-          })}
-        >
-          <h2>
-            <div className={cx('icon')}>
-              <FontAwesomeIcon icon={faBug} />
-            </div>
-            <span>Please check the entered data:</span>
-          </h2>
-          <div className={cx('wrap-err')}>
-            <ul>
-              {nameErr && (
-                <li>
-                  <label htmlFor="name">
-                    <FontAwesomeIcon icon={faCircleExclamation} />
-                    {nameErr}
-                  </label>
-                </li>
-              )}
-              {emailErr && (
-                <li>
-                  <label htmlFor="email">
-                    <FontAwesomeIcon icon={faCircleExclamation} />
-                    {emailErr}
-                  </label>
-                </li>
-              )}
-              {passwordErr && (
-                <li>
-                  <label htmlFor="password">
-                    <FontAwesomeIcon icon={faCircleExclamation} />
-                    {passwordErr}
-                  </label>
-                </li>
-              )}
-              {dateOfBirthErr && (
-                <li>
-                  <label htmlFor="date_of_birth">
-                    <FontAwesomeIcon icon={faCircleExclamation} />
-                    {dateOfBirthErr}
-                  </label>
-                </li>
-              )}
-              {nationalityErr && (
-                <li>
-                  <label htmlFor="nationality">
-                    <FontAwesomeIcon icon={faCircleExclamation} />
-                    {nationalityErr}
-                  </label>
-                </li>
-              )}
-              {imageErr && (
-                <li>
-                  <label htmlFor="image">
-                    <FontAwesomeIcon icon={faCircleExclamation} />
-                    {imageErr}
-                  </label>
-                </li>
-              )}
-              {detailErr && (
-                <li>
-                  <label htmlFor="detail">
-                    <FontAwesomeIcon icon={faCircleExclamation} />
-                    {detailErr}
-                  </label>
-                </li>
-              )}
-            </ul>
-          </div>
-        </div>
+        <TableErrors
+          nameErr={nameErr}
+          emailErr={emailErr}
+          passwordErr={passwordErr}
+          dateOfBirthErr={dateOfBirthErr}
+          nationalityErr={nationalityErr}
+          positionErr={positionErr}
+          imageErr={imageErr}
+          detailErr={detailErr}
+        />
         <Modal.Header closeButton>
           <h5 className={cx('modal-title')}>{coach ? 'Update coach' : 'Add coach'}</h5>
         </Modal.Header>
@@ -357,30 +298,58 @@ function ModalCreateCoaches({ handleClose, handleGetAllCoaches, coach, access_to
                 </label>
               </div>
             )}
-            <div
-              className={cx('form__group', 'field', 'section-type', {
-                err: checkErr('nationality'),
-              })}
-            >
-              <select
-                value={selectedOption}
-                name="nationality"
-                id="nationality"
-                className={cx('nationality')}
-                onChange={(e) => changeInput(e, 'nationality')}
-              >
-                <option value="">{nationality || coach?.nationality || 'Select nationality'}</option>
-                {countries.map((country, index) => (
-                  <option key={index} value={country.value.toLowerCase()}>
-                    {country.text}
-                  </option>
-                ))}
-              </select>
-              <label className={cx('form__label')} htmlFor="nationality">
-                <span>*</span> Nationality:
-              </label>
+            <div className={cx('row')}>
+              <div className={cx('col-md-6')}>
+                <div
+                  className={cx('form__group', 'field', 'section-type', {
+                    err: checkErr('nationality'),
+                  })}
+                >
+                  <select
+                    value={selectedOption}
+                    name="nationality"
+                    id="nationality"
+                    className={cx('nationality')}
+                    onChange={(e) => changeInput(e, 'nationality')}
+                  >
+                    <option value="">{nationality || coach?.nationality || 'Select nationality'}</option>
+                    {countries.map((country, index) => (
+                      <option key={index} value={country.value.toLowerCase()}>
+                        {country.text}
+                      </option>
+                    ))}
+                  </select>
+                  <label className={cx('form__label')} htmlFor="nationality">
+                    <span>*</span> Nationality:
+                  </label>
+                </div>
+              </div>
+              <div className={cx('col-md-6')}>
+                <div
+                  className={cx('form__group', 'field', 'section-type', {
+                    err: checkErr('position'),
+                  })}
+                >
+                  <select
+                    value={position}
+                    name="position"
+                    id="position"
+                    className={cx('position')}
+                    onChange={(e) => changeInput(e, 'position')}
+                  >
+                    <option value="">Select position</option>
+                    <option value="head">Head</option>
+                    <option value="assistant">Assistant</option>
+                    <option value="rehabilitation">Rehabilitation</option>
+                    <option value="fitness">Fitness</option>
+                  </select>
+                  <label className={cx('form__label')} htmlFor="position">
+                    <span>*</span> Position:
+                  </label>
+                </div>
+              </div>
             </div>
-            
+
             <div
               className={cx('form__group', 'field', {
                 err: checkErr('date_of_birth'),

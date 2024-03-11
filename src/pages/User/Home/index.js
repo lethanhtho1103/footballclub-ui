@@ -5,7 +5,7 @@ import HeaderUser from '~/components/User/HeaderUser';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faPlay } from '@fortawesome/free-solid-svg-icons';
-import etihad from '../../../assets/images/etihad.webp';
+import logoEtihad from '../../../assets/images/etihad.webp';
 import cityLogo from '~/assets/images/manchester_city.webp';
 import { baseUrl } from '~/axios';
 import { useEffect, useState } from 'react';
@@ -63,7 +63,7 @@ function Home() {
       </div>
       <main className={cx('main-content')}>
         <header className={cx('header-content')}>
-          <img src={etihad} alt="Etihad" />
+          <img src={logoEtihad} alt="Etihad" />
         </header>
         <div className={cx('section-content')}>
           <section className={cx('main-place')}>
@@ -172,7 +172,9 @@ function Home() {
                 </div>
               </div>
               <div className={cx('footer')}>
-                <button className={cx('btn-buy')}>Buy tickets</button>
+                <Link to={`matches/${matchFuture?.game_id}`} className={cx('btn-buy')}>
+                  Buy tickets
+                </Link>
               </div>
             </div>
             <div className={cx('border')}>

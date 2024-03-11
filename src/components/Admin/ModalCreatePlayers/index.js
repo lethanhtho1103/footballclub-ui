@@ -3,12 +3,11 @@ import Button from 'react-bootstrap/Button';
 import ToastMassage from '../ToastMassage';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleExclamation, faBug } from '@fortawesome/free-solid-svg-icons';
 import style from './ModalCreatePlayers.module.scss';
 import classNames from 'classnames/bind';
 import adminService from '~/services/adminService';
 import Loader from '~/components/Loader';
+import TableErrors from '../TableErrors';
 
 const cx = classNames.bind(style);
 
@@ -162,21 +161,22 @@ function ModalCreatePlayers({ handleClose, handleGetAllPlayers, player, access_t
     setDetailErr(errors.detail);
   };
 
-  const handleCreatePlayer = async () => {
+  const createPlayer = async () => {
     try {
-      const formData = new FormData();
-      formData.append('name', name);
-      formData.append('email', email);
-      formData.append('password', password);
-      formData.append('date_of_birth', date_of_birth);
-      formData.append('nationality', nationality);
-      formData.append('flag', flag);
-      formData.append('position', position);
-      formData.append('jersey_number', jersey_number);
-      formData.append('image', image);
-      formData.append('detail', detail);
-
-      const res = await adminService.createPlayer(formData, access_token);
+      const playerData = {
+        name,
+        email,
+        password,
+        date_of_birth,
+        nationality,
+        flag,
+        position,
+        jersey_number,
+        image,
+        detail,
+        access_token,
+      };
+      const res = await adminService.createPlayer(playerData);
       if (res.user) {
         setDefaultValue();
         handleGetAllPlayers();
@@ -187,7 +187,7 @@ function ModalCreatePlayers({ handleClose, handleGetAllPlayers, player, access_t
     }
   };
 
-  const handleUpdatePlayer = async () => {
+  const updatePlayer = async () => {
     try {
       const formData = new FormData();
       formData.append('name', name);
@@ -216,7 +216,7 @@ function ModalCreatePlayers({ handleClose, handleGetAllPlayers, player, access_t
   const handleCLickCreate = () => {
     setIsLoader(true);
     setTimeout(() => {
-      handleCreatePlayer();
+      createPlayer();
       setIsLoader(false);
     }, 1000);
   };
@@ -224,7 +224,7 @@ function ModalCreatePlayers({ handleClose, handleGetAllPlayers, player, access_t
   const handleCLickUpdate = () => {
     setIsLoader(true);
     setTimeout(() => {
-      handleUpdatePlayer();
+      updatePlayer();
       setIsLoader(false);
     }, 1000);
   };
@@ -242,103 +242,17 @@ function ModalCreatePlayers({ handleClose, handleGetAllPlayers, player, access_t
           handleClose();
         }}
       >
-        <div
-          className={cx('table-err', {
-            show:
-              nameErr ||
-              emailErr ||
-              passwordErr ||
-              dateOfBirthErr ||
-              nationalityErr ||
-              positionErr ||
-              jerseyNumberErr ||
-              imageErr ||
-              detailErr,
-          })}
-        >
-          <h2>
-            <div className={cx('icon')}>
-              <FontAwesomeIcon icon={faBug} />
-            </div>
-            <span>Please check the entered data:</span>
-          </h2>
-          <div className={cx('wrap-err')}>
-            <ul>
-              {nameErr && (
-                <li>
-                  <label htmlFor="name">
-                    <FontAwesomeIcon icon={faCircleExclamation} />
-                    {nameErr}
-                  </label>
-                </li>
-              )}
-              {emailErr && (
-                <li>
-                  <label htmlFor="email">
-                    <FontAwesomeIcon icon={faCircleExclamation} />
-                    {emailErr}
-                  </label>
-                </li>
-              )}
-              {passwordErr && (
-                <li>
-                  <label htmlFor="password">
-                    <FontAwesomeIcon icon={faCircleExclamation} />
-                    {passwordErr}
-                  </label>
-                </li>
-              )}
-              {dateOfBirthErr && (
-                <li>
-                  <label htmlFor="date_of_birth">
-                    <FontAwesomeIcon icon={faCircleExclamation} />
-                    {dateOfBirthErr}
-                  </label>
-                </li>
-              )}
-              {nationalityErr && (
-                <li>
-                  <label htmlFor="nationality">
-                    <FontAwesomeIcon icon={faCircleExclamation} />
-                    {nationalityErr}
-                  </label>
-                </li>
-              )}
-              {positionErr && (
-                <li>
-                  <label htmlFor="position">
-                    <FontAwesomeIcon icon={faCircleExclamation} />
-                    {positionErr}
-                  </label>
-                </li>
-              )}
-              {jerseyNumberErr && (
-                <li>
-                  <label htmlFor="jersey_number">
-                    <FontAwesomeIcon icon={faCircleExclamation} />
-                    {jerseyNumberErr}
-                  </label>
-                </li>
-              )}
-              {imageErr && (
-                <li>
-                  <label htmlFor="image">
-                    <FontAwesomeIcon icon={faCircleExclamation} />
-                    {imageErr}
-                  </label>
-                </li>
-              )}
-              {detailErr && (
-                <li>
-                  <label htmlFor="detail">
-                    <FontAwesomeIcon icon={faCircleExclamation} />
-                    {detailErr}
-                  </label>
-                </li>
-              )}
-            </ul>
-          </div>
-        </div>
+        <TableErrors
+          nameErr={nameErr}
+          emailErr={emailErr}
+          passwordErr={passwordErr}
+          dateOfBirthErr={dateOfBirthErr}
+          nationalityErr={nationalityErr}
+          positionErr={positionErr}
+          jerseyNumberErr={jerseyNumberErr}
+          imageErr={imageErr}
+          detailErr={detailErr}
+        />
         <Modal.Header closeButton>
           <h5 className={cx('modal-title')}>{player ? 'Update player' : 'Add Player'}</h5>
         </Modal.Header>

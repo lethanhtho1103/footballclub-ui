@@ -35,17 +35,18 @@ function TableShowCoaches() {
   const [isShowModalCreateCoaches, setIsShowModalCreateCoaches] = useState(false);
 
   const columns = [
-    { Header: 'Coach name', accessor: 'col2', filter: 'fuzzyText' },
-    { Header: 'Email', accessor: 'col3', filter: 'fuzzyText' },
-    { Header: 'Date of birth', accessor: 'col5', filter: 'fuzzyText' },
-    { Header: 'Nationality', accessor: 'col6', filter: 'fuzzyText' },
-    { Header: 'Actions', accessor: 'col8', disableSortBy: true },
+    { Header: 'Coach name', accessor: 'col1', filter: 'fuzzyText' },
+    { Header: 'Email', accessor: 'col2', filter: 'fuzzyText' },
+    { Header: 'Date of birth', accessor: 'col3', filter: 'fuzzyText' },
+    { Header: 'Nationality', accessor: 'col4', filter: 'fuzzyText' },
+    { Header: 'Position', accessor: 'col5', filter: 'fuzzyText' },
+    { Header: 'Actions', accessor: 'col6', disableSortBy: true },
   ];
 
   const convertToDataRow = (row) => {
     const dataRow = row.map((row, index) => {
       return {
-        col2: (
+        col1: (
           <div
             style={{
               display: 'flex',
@@ -66,9 +67,9 @@ function TableShowCoaches() {
             />
           </div>
         ),
-        col3: row.email,
-        col5: row.date_of_birth,
-        col6: (
+        col2: row.email,
+        col3: row.date_of_birth,
+        col4: (
           <div
             style={{
               display: 'flex',
@@ -90,12 +91,12 @@ function TableShowCoaches() {
             />
           </div>
         ),
-
-        col8: (
+        col5: row.position,
+        col6: (
           <div
             style={{
               display: 'flex',
-              justifyContent: 'space-around',
+              justifyContent: 'space-evenly',
             }}
           >
             <Button
@@ -151,7 +152,7 @@ function TableShowCoaches() {
     const res = await adminService.getOneCoach(user_id);
     setIsShowModalCreateCoaches(true);
     setUserId(user_id);
-    setCoach(res);
+    setCoach(res.coach);
   };
 
   const handleCloseModalCreateCoaches = () => {
