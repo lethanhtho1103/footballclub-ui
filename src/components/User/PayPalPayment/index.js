@@ -1,36 +1,32 @@
+import React from 'react';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 
 function PayPalPayment({ cost, handleClickX }) {
-  const serverUrl = 'http://localhost:8888';
-  const createOrder = (data) => {
-    // Order is created on the server and the order id is returned
-    return fetch(`${serverUrl}/my-server/create-paypal-order`, {
+  const serverUrl = 'http://localhost:8000';
+  const createOrder = () => {
+    return fetch(`${serverUrl}/api/paypal`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      // use the "body" param to optionally pass additional order information
-      // like product skus and quantities
       body: JSON.stringify({
         ticket: {
-          description: 'Pay for football tickets',
           cost: cost,
         },
       }),
     })
       .then((response) => response.json())
-      .then((order) => order.id);
+      .then((data) => data.orderId);
   };
+  
   const onApprove = (data) => {
-    // Order is captured on the server and the response is returned to the browser
-
-    return fetch(`${serverUrl}/my-server/capture-paypal-order`, {
+    return fetch(`${serverUrl}/api/success`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        orderID: data.orderID,
+        token: data.orderID,
       }),
     })
       .then((response) => {
@@ -39,13 +35,14 @@ function PayPalPayment({ cost, handleClickX }) {
       .then((data) => {
         handleClickX();
         console.log(data);
-        alert('Pay successful...');
+        alert('Payment successful');
       });
   };
+
   return (
     <PayPalButtons
-      createOrder={(data, actions) => createOrder(data, actions)}
-      onApprove={(data, actions) => onApprove(data, actions)}
+      createOrder={() => createOrder()}
+      onApprove={(data) => onApprove(data)}
     />
   );
 }

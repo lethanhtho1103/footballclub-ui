@@ -6,8 +6,7 @@ import { baseUrl } from '~/axios';
 import cityLogo from '~/assets/images/manchester_city.webp';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
-// import PayPalPayment from '~/components/User/PayPalPayment';
-import PaypalPaymentComponent  from '~/components/PaypalPaymentComponent';
+import PayPalPayment from '~/components/User/PayPalPayment';
 
 const cx = classNames.bind(style);
 
@@ -162,7 +161,7 @@ function ModalBuyTicket({ handleClickX, extractHourFromTimeString, match, select
                 <div className={cx('payment')}>
                     <div className={cx('paypal')}>
                         <h2>Pay with PayPal</h2>
-                        <PaypalPaymentComponent/>
+                        <PayPalPayment cost={calculateTotalPrice(selectedSeats)} handleClickX={handleClickX} />
                     </div>
                 </div>
             </div>
