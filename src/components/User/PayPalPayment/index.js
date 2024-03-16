@@ -1,9 +1,11 @@
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import { useContext } from 'react';
+import { BuyTicketContext } from '~/Context/BuyTicketContext';
 import { InfoUserContext } from '~/Context/InfoUserContext';
 import { userService } from '~/services';
-function PayPalPayment({ cost, handleClickX, selectedSeats, game_id, stand, handleBuyTicketSuccess }) {
+function PayPalPayment({ cost, stand, game_id }) {
   const { infoUser, access_token } = useContext(InfoUserContext);
+  const { handleClickX, selectedSeats, handleBuyTicketSuccess } = useContext(BuyTicketContext);
   const serverUrl = 'http://localhost:8000';
 
   const createOrder = () => {
@@ -32,7 +34,6 @@ function PayPalPayment({ cost, handleClickX, selectedSeats, game_id, stand, hand
         formData.append(`list_seats[${index}]`, seat);
       });
       const res = await userService.createTicket(formData, access_token);
-      console.log(res);
       if (res.message) {
         handleBuyTicketSuccess(res);
       }

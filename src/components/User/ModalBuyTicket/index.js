@@ -1,25 +1,18 @@
 import classNames from 'classnames/bind';
 import style from './ModelBuyTicket.module.scss';
 import { Button } from 'react-bootstrap';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { baseUrl } from '~/axios';
 import cityLogo from '~/assets/images/manchester_city.webp';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import PayPalPayment from '~/components/User/PayPalPayment';
+import { BuyTicketContext } from '~/Context/BuyTicketContext';
 
 const cx = classNames.bind(style);
 
-function ModalBuyTicket({
-  handleClickX,
-  extractHourFromTimeString,
-  match,
-  selectedSeats,
-  calculateTotalPrice,
-  game_id,
-  stand,
-  handleBuyTicketSuccess,
-}) {
+function ModalBuyTicket({ match, calculateTotalPrice, stand, game_id }) {
+  const { extractHourFromTimeString, selectedSeats, handleClickX } = useContext(BuyTicketContext);
   const [isHidden, setIsHidden] = useState(false);
 
   const handleMouseLeave = () => {
@@ -70,7 +63,7 @@ function ModalBuyTicket({
                 <div>
                   <span>TIME</span>
                   <div>
-                    <b>{extractHourFromTimeString(match.game_time)}</b>
+                    <b>{extractHourFromTimeString(match?.game_time)}</b>
                   </div>
                 </div>
               </li>
@@ -78,7 +71,7 @@ function ModalBuyTicket({
                 <div>
                   <span>DATE</span>
                   <div>
-                    <b>{match.game_date}</b>
+                    <b>{match?.game_date}</b>
                   </div>
                 </div>
               </li>
@@ -170,14 +163,7 @@ function ModalBuyTicket({
         <div className={cx('payment')}>
           <div className={cx('paypal')}>
             <h2>Pay with PayPal</h2>
-            <PayPalPayment
-              cost={calculateTotalPrice(selectedSeats)}
-              selectedSeats={selectedSeats}
-              game_id={game_id}
-              handleClickX={handleClickX}
-              stand={stand}
-              handleBuyTicketSuccess={handleBuyTicketSuccess}
-            />
+            <PayPalPayment cost={calculateTotalPrice(selectedSeats)} stand={stand} game_id={game_id} />
           </div>
         </div>
       </div>

@@ -1,14 +1,53 @@
-import React, { createContext, useEffect, useState } from 'react';
-
-import { userService } from '~/services';
+import React, { createContext, useState } from 'react';
 
 export const BuyTicketContext = createContext();
 
-export const InfoUserProvider = ({ children }) => {
-  const [infoUser, setInfoUser] = useState({});
+const BuyTicketProvider = ({ children }) => {
+  const [isShowSeats, setIsShowSeats] = useState(false);
+  const [isShowModalBuyTicket, setIsShowModalBuyTicket] = useState(false);
+  const [obToast, setObToast] = useState({
+    content: '',
+    isShow: false,
+  });
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  return <BuyTicketContext.Provider value={{ infoUser }}>{children}</BuyTicketContext.Provider>;
+  function extractHourFromTimeString(timeString) {
+    var dateObject = new Date('1970-01-01T' + timeString + 'Z');
+    var hour = dateObject.getUTCHours();
+    var minute = dateObject.getUTCMinutes();
+    var formattedTime = (hour < 10 ? '0' + hour : hour) + ':' + (minute < 10 ? '0' : '') + minute;
+    return formattedTime;
+  }
+
+  const [selectedSeats, setSelectedSeats] = useState([]);
+
+  const handleBuyTicketSuccess = (res) => {
+    setObToast({ content: res.message, isShow: true });
+    setIsShowSeats(false);
+    setSelectedSeats([]);
+  };
+  const handleClickX = () => {
+    setIsShowModalBuyTicket(false);
+  };
+
+  return (
+    <BuyTicketContext.Provider
+      value={{
+        selectedSeats,
+        isShowSeats,
+        obToast,
+        isShowModalBuyTicket,
+        setIsShowSeats,
+        setObToast,
+        setIsShowModalBuyTicket,
+        handleClickX,
+        extractHourFromTimeString,
+        setSelectedSeats,
+        handleBuyTicketSuccess,
+      }}
+    >
+      {children}
+    </BuyTicketContext.Provider>
+  );
 };
+
+export default BuyTicketProvider;
