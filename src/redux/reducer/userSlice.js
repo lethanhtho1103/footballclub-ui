@@ -9,15 +9,9 @@ const userSlice = createSlice({
     role_id: null,
   },
   reducers: {
-    toggleUserLogin(state, actions) {
-      if (actions.payload === true) {
-        state.isLogInEd = actions.payload;
-      } else {
-        state.isLogInEd = !state.isLogInEd;
-      }
-    },
     saveUserLogin(state, actions) {
       state.userData = actions.payload;
+      state.isLogInEd = true;
       state.access_token = actions.payload.access_token;
     },
 
@@ -28,6 +22,7 @@ const userSlice = createSlice({
     logOutUser(state, actions) {
       state.access_token = '';
       state.role_id = '';
+      state.isLogInEd = false;
     },
   },
 });

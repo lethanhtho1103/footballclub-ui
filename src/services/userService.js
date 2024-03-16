@@ -112,12 +112,28 @@ const userService = {
     }
   },
 
-  async getAllSeats() {
+  async getAllSeats(game_id, stand) {
     try {
-      const res = await axios.get('api/seats');
+      // const res = await axios.get(`api/seats/${game_id}/${stand}`);
+      const res = await axios.get(`api/seats`);
       return res.data;
     } catch (error) {
       console.error(error);
+    }
+  },
+
+  async createTicket(formData, access_token) {
+    try {
+      const res = await axios.post('/api/tickets/create', formData, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.error('Error creating player:', error);
+      throw error;
     }
   },
 };

@@ -1,0 +1,264 @@
+.wrapper {
+  background-color: #f5f5f5;
+}
+.row {
+  padding: 8.5rem 2.2rem 4rem;
+  max-width: 113rem;
+  margin-left: auto;
+  margin-right: auto;
+  .side-bar {
+    padding-right: 3rem;
+    .info-user {
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 2rem 1rem 1.6rem;
+      .user-avatar {
+        width: 4.8rem;
+        height: 4.8rem;
+        color: #fff;
+        background-color: #004c3f;
+        font-weight: 700;
+        font-size: 2.4rem;
+        line-height: 3.2rem;
+        border-radius: 9999px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .user-name {
+        display: flex;
+        flex-direction: column;
+        margin-left: 1.6rem;
+        div {
+          font-size: 1.5rem;
+          color: rgb(38 38 38);
+          font-weight: 600;
+          margin-bottom: 2px;
+        }
+        span {
+          font-size: 1.4rem;
+          line-height: 1.6rem;
+          color: #888;
+          cursor: pointer;
+          i {
+            margin-left: 4px;
+          }
+        }
+      }
+    }
+    .user-money-refund {
+      font-size: 1.4rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgb(229, 229, 229);
+      span {
+        font-weight: 600;
+      }
+    }
+    .menu-bar {
+      padding: 2.4rem 1.2rem;
+      list-style: none;
+      margin: 0;
+      li {
+        display: flex;
+        align-items: center;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        color: rgba(0, 0, 0, 0.87);
+        margin-bottom: 1.5rem;
+        cursor: pointer;
+        &:hover {
+          span {
+            color: #ee4d2d;
+          }
+        }
+        div {
+          margin-right: 10px;
+        }
+        .booked-tickets {
+          color: #ee4d2d;
+        }
+        .icon-user {
+          color: #4475c0;
+        }
+        .icon-ticket {
+          color: #ee4d2d;
+        }
+        .icon-bell {
+          color: #f2ae0c;
+        }
+      }
+    }
+  }
+  .my-ticket {
+    min-height: 612px;
+
+    .no-ticket {
+      box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+      border-radius: 0.125rem;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      .image {
+        background-position: 50%;
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 100px;
+        height: 100px;
+        background-image: url(https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/5fafbb923393b712b96488590b8f781f.png);
+      }
+      .title {
+        margin: 20px 0 0;
+        font-size: 18px;
+        line-height: 1.4;
+        color: rgba(0, 0, 0, 0.8);
+        font-weight: 400;
+      }
+    }
+    .list-ticket {
+      padding: 12px 24px;
+      background-color: #fff;
+      margin-bottom: 16px;
+      .ticket-item {
+        padding: 12px 12px;
+        .info-web {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          // padding-bottom: 14px;
+          .location {
+            display: flex;
+            align-items: center;
+            a {
+              font-size: 1.8rem;
+              font-weight: 600;
+              margin-right: 12px;
+              text-decoration: none;
+              color: #000;
+              span {
+                color: var(--pri-color);
+              }
+            }
+          }
+          .success {
+            display: flex;
+            align-items: center;
+            div {
+              font-size: 1.4rem;
+              font-weight: 600;
+              line-height: 24px;
+              padding-left: 8px;
+              border-left: 1px solid #e5e5e5;
+              color: #26aa99;
+
+              text-transform: uppercase;
+            }
+            .province {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 10rem;
+              height: 3.2rem;
+              font-weight: 600;
+              font-size: 1.5rem;
+              line-height: 2rem;
+              text-decoration: none;
+              // color: #26aa99;
+              // border: 1px solid #26aa99;
+              border-color: var(--pri-color);
+              color: var(--pri-color);
+              border-radius: 8px;
+              // margin-right: 8px;
+              span {
+                margin-left: 5px;
+              }
+            }
+          }
+        }
+        .cancel-ticket {
+          margin-top: 8px;
+          font-size: 1.4rem;
+          font-weight: 400;
+          color: rgb(119, 119, 119);
+          text-align: center;
+          font-style: italic;
+        }
+        .info-ticket {
+          display: flex;
+          align-items: flex-start;
+          padding: 16px 0;
+          margin-top: 12px;
+          border-bottom: 1px dashed #e5e5e5;
+          border-top: 1px dashed #e5e5e5;
+          img {
+            width: 80px;
+            height: 120px;
+            border-radius: 4px;
+            margin-right: 20px;
+            object-fit: cover;
+          }
+          .info-film {
+            .name {
+              font-size: 1.6rem;
+              line-height: 2.2rem;
+              font-weight: 600;
+            }
+            .date {
+              padding-top: 4px;
+              display: flex;
+              align-items: center;
+              span {
+                color: rgba(0, 0, 0, 0.54);
+                margin-right: 6px;
+                font-size: 1.4rem;
+              }
+              div {
+                font-weight: 500;
+                font-size: 1.5rem;
+              }
+            }
+          }
+        }
+        .total-amount {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          background-color: #fffefb;
+          div {
+            svg {
+              margin-right: 4px;
+            }
+            span {
+              color: #ee4d2d;
+              margin-left: 2px;
+              font-weight: 600;
+            }
+          }
+          .btn {
+            padding: 7px 12px;
+            // border-color: var(--pri-color);
+            // color: var(--pri-color);
+            background-color: transparent;
+            border-radius: 8px;
+            color: #26aa99;
+            border: 1px solid #26aa99;
+            font-size: 1.4rem;
+            font-weight: 500;
+            text-decoration: none;
+            &:hover {
+              opacity: 0.7;
+              border-color: var(--pri-color/0.7);
+            }
+          }
+        }
+      }
+    }
+  }
+}

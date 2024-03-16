@@ -83,7 +83,6 @@ function LoginUser() {
 
   const saveUserLogin = (data) => {
     dispatch(userSlice.actions.saveUserLogin(data));
-    dispatch(userSlice.actions.toggleUserLogin(true));
   };
 
   const accessToken = useSelector(accessTokenSelector);

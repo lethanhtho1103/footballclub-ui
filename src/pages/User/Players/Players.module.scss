@@ -73,7 +73,7 @@
             margin-left: 0;
             margin-bottom: 32px;
             width: 229px;
-            margin-right: 19px;
+            margin-right: 18px;
             box-shadow: 0 4px 16px 0 rgba(0, 24, 56, 0.2);
             .header {
               position: relative;
@@ -156,7 +156,7 @@
               cursor: pointer;
             }
           }
-          .member-item:nth-child(4n):nth-last-child(-n + 5) {
+          .member-item:nth-child(4n) {
             // margin-bottom: 0;
             margin-right: 0;
           }
