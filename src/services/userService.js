@@ -47,12 +47,14 @@ const userService = {
   },
 
   async getOnePlayer({ name }) {
-    if (name) {
-      const res = await axios.get(`/api/players/${name}`);
-      return res.data;
+    try {
+      if (name) {
+        const res = await axios.get(`/api/players/${name}`);
+        return res.data;
+      }
+    } catch (error) {
+      console.log(error);
     }
-
-    return 'Thiếu tham số truyền vào';
   },
 
   async getInfoUser({ access_token }) {
@@ -114,8 +116,7 @@ const userService = {
 
   async getAllSeats(game_id, stand) {
     try {
-      // const res = await axios.get(`api/seats/${game_id}/${stand}`);
-      const res = await axios.get(`api/seats`);
+      const res = await axios.get(`api/seats/${game_id}/${stand}`);
       return res.data;
     } catch (error) {
       console.error(error);
@@ -134,6 +135,15 @@ const userService = {
     } catch (error) {
       console.error('Error creating player:', error);
       throw error;
+    }
+  },
+
+  async getAllTicketPurchases(user_id) {
+    try {
+      const res = await axios.get(`/api/tickets/user/${user_id}`);
+      return res.data;
+    } catch (error) {
+      console.log('Get all ticket purchase errors:', error);
     }
   },
 };
