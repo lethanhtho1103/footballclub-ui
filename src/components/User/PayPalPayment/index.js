@@ -7,7 +7,6 @@ function PayPalPayment({ cost, stand, game_id }) {
   const { infoUser, access_token } = useContext(InfoUserContext);
   const { handleClickX, selectedSeats, handleBuyTicketSuccess } = useContext(BuyTicketContext);
   const serverUrl = 'http://localhost:8000';
-
   const createOrder = () => {
     return fetch(`${serverUrl}/api/paypal`, {
       method: 'POST',

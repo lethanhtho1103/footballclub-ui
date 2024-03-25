@@ -1,0 +1,209 @@
+.list-ticket {
+  padding: 12px 24px;
+  background-color: #fff;
+  margin-bottom: 16px;
+  .ticket-item {
+    padding: 12px 12px;
+
+    .info-web {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 8px;
+      .title {
+        display: flex;
+        align-items: center;
+        a {
+          img {
+            width: 52px;
+            height: 52px;
+          }
+          margin-right: 12px;
+        }
+        span {
+          font-size: 1.8rem;
+          font-weight: 600;
+          color: var(--ticket-color);
+        }
+      }
+      .success {
+        display: flex;
+        align-items: center;
+        div {
+          font-size: 1.4rem;
+          font-weight: 600;
+          line-height: 24px;
+          padding-left: 8px;
+          border-left: 1px solid #e5e5e5;
+          // color: var(--ticket-color);
+          color: #26aa99;
+          text-transform: uppercase;
+        }
+        .province {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 10rem;
+          height: 3.2rem;
+          font-weight: 600;
+          font-size: 1.5rem;
+          line-height: 2rem;
+          text-decoration: none;
+          border-color: var(--ticket-color);
+          color: var(--ticket-color);
+          border-radius: 8px;
+          span {
+            margin-left: 5px;
+          }
+          &:hover {
+            opacity: 0.7;
+          }
+        }
+      }
+    }
+    .wrapper {
+      padding: 14px 0;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      flex-direction: column;
+      border-bottom: 1px dashed #e5e5e5;
+      background-color: #f5f5f5;
+      .premier {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+          width: 36px;
+          height: 36px;
+        }
+        .tournaments {
+          display: flex;
+          align-items: center;
+          img {
+            width: 32px;
+            height: 32px;
+            margin-right: 4px;
+          }
+          span {
+            font-size: 2rem;
+            font-weight: 600;
+          }
+        }
+      }
+      time {
+        padding-top: 8px;
+        font-size: 1.7rem;
+        line-height: 2rem;
+      }
+      .stadium {
+        padding-top: 8px;
+        font-size: 1.7rem;
+        line-height: 2rem;
+
+        text-transform: uppercase;
+      }
+      .list-seats {
+        padding-top: 8px;
+        .seat-item {
+          display: flex;
+          justify-content: center;
+          .stand {
+            padding-right: 6px;
+            font-size: 1.7rem;
+            line-height: 2rem;
+          }
+          .seat {
+            padding-left: 6px;
+            font-size: 1.7rem;
+            line-height: 2rem;
+          }
+        }
+        .seat-item + .seat-item {
+          padding-top: 8px;
+        }
+      }
+      .content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 8px;
+        width: 100%;
+        .first {
+          width: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          img {
+            margin-left: 8px;
+            width: 52px;
+            height: 52px;
+          }
+          .name {
+            font-size: 17px;
+            line-height: 21px;
+            font-weight: 600;
+            text-align: right;
+          }
+        }
+        .vs {
+          font-size: 2rem;
+          margin: 0 8px;
+        }
+        .second {
+          width: 50%;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          img {
+            margin-right: 8px;
+            width: 52px;
+            height: 52px;
+          }
+          .name {
+            text-align: left;
+            font-size: 17px;
+            line-height: 21px;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+    .total-amount {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #fffefb;
+      margin-top: 8px;
+      div {
+        font-size: 1.7rem;
+        svg {
+          margin-right: 4px;
+        }
+        span {
+          color: #ee4d2d;
+          margin-left: 2px;
+          font-weight: 600;
+        }
+      }
+      .btn {
+        padding: 7px 12px;
+        // border-color: var(--pri-color);
+        // color: var(--pri-color);
+        background-color: transparent;
+        border-radius: 8px;
+        color: var(--ticket-color);
+        border: 1px solid var(--ticket-color);
+        font-size: 1.4rem;
+        font-weight: 500;
+        text-decoration: none;
+        &:hover {
+          opacity: 0.7;
+          border-color: var(--pri-color/0.7);
+        }
+      }
+    }
+  }
+}

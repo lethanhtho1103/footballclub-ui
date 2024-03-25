@@ -331,7 +331,7 @@
             background-color: var(--vvip-color);
           }
           .choice {
-            background-color: var(--choice-color);
+            background-color: var(--choice-color) !important;
           }
           span {
             font-size: 1.4rem;
@@ -362,13 +362,13 @@
           background-color: var(--choice-color) !important;
         }
         .placed {
-          background-color: var(--placed-color);
+          background-color: var(--placed-color) !important;
           &:hover {
             opacity: 1;
             cursor: default;
           }
-          pointer-events: none;
         }
+
         .normal {
           background-color: var(--normal-color);
         }
