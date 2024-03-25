@@ -17,8 +17,12 @@ import CoachManagement from '~/pages/Admin/Coach';
 import PlayersManagement from '~/pages/Admin/Players';
 import MyTicket from '~/pages/User/MyTicket';
 import TicketPurchase from '~/pages/User/BuyTicket';
-
+import Test from '~/test';
 const publicRoutes = [
+  {
+    path: '/test',
+    component: Test,
+  },
   {
     path: '/',
     component: Home,
@@ -63,6 +67,7 @@ const publicRoutes = [
     path: '/manchester-city-history',
     component: History,
   },
+
   // {
   //   path: '*',
   //   component: InvalidUser_404,
