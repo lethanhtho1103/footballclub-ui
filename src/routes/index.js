@@ -15,8 +15,9 @@ import Statistical from '~/pages/Admin/Statistical';
 import MatchesManagement from '~/pages/Admin/MatchesManager';
 import CoachManagement from '~/pages/Admin/Coach';
 import PlayersManagement from '~/pages/Admin/Players';
+import TicketPurchase from '~/pages/User/TicketPurchase';
 import MyTicket from '~/pages/User/MyTicket';
-import TicketPurchase from '~/pages/User/BuyTicket';
+
 import Test from '~/test';
 const publicRoutes = [
   {
