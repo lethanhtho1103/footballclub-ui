@@ -43,6 +43,9 @@ function ModalCreateClubs({ handleClose, handleGetAllClubs, club, access_token, 
 
   const setDefaultValue = (club) => {
     setName(club?.name || '');
+    setImage(club?.image || null);
+
+    setNameErr('');
     setImageErr('');
   };
 
@@ -73,7 +76,7 @@ function ModalCreateClubs({ handleClose, handleGetAllClubs, club, access_token, 
         access_token,
       };
       const res = await adminService.createClub(clubData);
-      if (res.user) {
+      if (res.club) {
         setDefaultValue();
         handleGetAllClubs();
         setObToast({ content: res.message, isShow: true });
@@ -91,8 +94,8 @@ function ModalCreateClubs({ handleClose, handleGetAllClubs, club, access_token, 
         formData.append('image', image);
       }
       const res = await adminService.updateClub(clubId, formData, access_token);
-      if (res.Club) {
-        setDefaultValue(res.Club);
+      if (res.club) {
+        setDefaultValue(res.club);
         handleGetAllClubs();
         setObToast({ content: res.message, isShow: true });
       }
@@ -110,6 +113,7 @@ function ModalCreateClubs({ handleClose, handleGetAllClubs, club, access_token, 
   };
 
   const handleCLickUpdate = () => {
+    
     setIsLoader(true);
     setTimeout(() => {
       updateClub();
