@@ -17,6 +17,8 @@ import CoachManagement from '~/pages/Admin/Coach';
 import PlayersManagement from '~/pages/Admin/Players';
 import TicketPurchase from '~/pages/User/TicketPurchase';
 import MyTicket from '~/pages/User/MyTicket';
+import ClubsManagement from '~/pages/Admin/Clubs';
+// import ContractsManagement from '~/pages/Admin/Contracts';
 
 import Test from '~/test';
 const publicRoutes = [
@@ -83,6 +85,18 @@ const adminRoutes = [
   // {
   //   path: '/admin/users-management',
   //   component: UsersManagement,
+  // },
+  {
+    path: '/admin/management/clubs',
+    component: ClubsManagement,
+  },
+  // {
+  //   path: '/admin/management/matches',
+  //   component: MatchesManagement,
+  // },
+  // {
+  //   path: '/admin/management/contracts',
+  //   component: ContractsManagement,
   // },
   {
     path: '/admin/management/coach',

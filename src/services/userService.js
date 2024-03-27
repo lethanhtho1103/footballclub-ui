@@ -19,6 +19,15 @@ const userService = {
     return res.data;
   },
 
+  async getAllClubs() {
+    try {
+      const res = await axios.get('/api/clubs');
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
   async getAllPlayers() {
     try {
       const res = await axios.get('/api/players');

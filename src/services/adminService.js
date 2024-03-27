@@ -134,6 +134,62 @@ const adminService = {
     });
     return res.data;
   },
+
+  //Clubs 
+  async createClub(clubData) {
+    try {
+      const formData = new FormData();
+
+      Object.entries(clubData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      const res = await axios.post('/api/clubs', formData, {
+        headers: {
+          Authorization: `Bearer ${clubData.access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      return res.data;
+    } catch (error) {
+      console.error('Error creating club:', error);
+      throw error;
+    }
+  },
+
+  async getOneClub(club_id) {
+    try {
+      const res = await axios.get(`api/clubs/${club_id}`);
+      return res.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+
+  async updateClub(club_id, formData, access_token) {
+    try {
+      const res = await axios.post(`/api/clubs/${club_id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.error('Error update club:', error);
+      throw error;
+    }
+  },
+
+  async deleteClub(club_id, access_token) {
+    const res = await axios.delete(`api/clubs/${club_id}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    return res.data;
+  },
 };
 
 export default adminService;
