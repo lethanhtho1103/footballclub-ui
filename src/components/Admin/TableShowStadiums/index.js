@@ -4,7 +4,7 @@ import style from './TableShowStadiums.module.scss';
 import { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { UilTimes, UilEditAlt, UilPlus } from '@iconscout/react-unicons';
-import { userService } from '~/services';
+// import { userService } from '~/services';
 import ModalCreateStadiums from '../ModalCreateStadiums';
 import adminService from '~/services/adminService';
 import ToastMassage from '../ToastMassage';
@@ -111,7 +111,7 @@ function TableShowStadiums() {
         const res = await adminService.getOneStadium(stadium_id);
         setIsShowModalCreateStadiums(true);
         setStadiumId(stadium_id);
-        setStadium(res);
+        setStadium(res.stadium);
     };
 
     const handleCloseModalCreateStadiums = () => {
