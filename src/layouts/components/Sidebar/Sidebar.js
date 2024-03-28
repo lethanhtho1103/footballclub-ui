@@ -31,10 +31,11 @@ function Sidebar() {
 
         <MenuItem 
           title="Matches Management" 
-          to="/admin/matches-management" 
+          to="/admin/management/clubs" 
           icon={<BallIcon />}
           subMenuItems={[
             { label: 'Clubs', to: '/admin/management/clubs' },
+            { label: 'Stadiums', to: '/admin/management/stadiums' },
             { label: 'Matches', to: '/admin/management/matches' },
           ]}
         />

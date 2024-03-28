@@ -18,6 +18,7 @@ import PlayersManagement from '~/pages/Admin/Players';
 import TicketPurchase from '~/pages/User/TicketPurchase';
 import MyTicket from '~/pages/User/MyTicket';
 import ClubsManagement from '~/pages/Admin/Clubs';
+import StadiumsManagement from '~/pages/Admin/Stadiums';
 // import ContractsManagement from '~/pages/Admin/Contracts';
 
 import Test from '~/test';
@@ -89,6 +90,10 @@ const adminRoutes = [
   {
     path: '/admin/management/clubs',
     component: ClubsManagement,
+  },
+  {
+    path: '/admin/management/stadiums',
+    component: StadiumsManagement,
   },
   // {
   //   path: '/admin/management/matches',

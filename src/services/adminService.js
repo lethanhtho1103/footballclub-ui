@@ -190,6 +190,72 @@ const adminService = {
     });
     return res.data;
   },
+
+  // Stadiums
+  async getAllStadiums() {
+    try {
+      const res = await axios.get('/api/stadiums');
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async createStadium(stadiumData) {
+    try {
+      const formData = new FormData();
+
+      Object.entries(stadiumData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      const res = await axios.post('/api/stadiums', formData, {
+        headers: {
+          Authorization: `Bearer ${stadiumData.access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      return res.data;
+    } catch (error) {
+      console.error('Error creating stadium:', error);
+      throw error;
+    }
+  },
+
+  async getOneStadium(stadium_id) {
+    try {
+      const res = await axios.get(`api/stadiums/${stadium_id}`);
+      return res.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+
+  async updateStadium(stadium_id, formData, access_token) {
+    try {
+      const res = await axios.post(`/api/stadiums/${stadium_id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.error('Error update stadium:', error);
+      throw error;
+    }
+  },
+
+  async deleteStadium(stadium_id, access_token) {
+    const res = await axios.delete(`api/stadiums/${stadium_id}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    return res.data;
+  },
+
 };
 
 export default adminService;
