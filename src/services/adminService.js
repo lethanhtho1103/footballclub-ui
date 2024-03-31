@@ -8,6 +8,15 @@ const adminService = {
     });
     return res.data;
   },
+  // User
+  async getAllUser() {
+    try {
+      const res = await axios.get(`api/users/all`);
+      return res.data.users;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
 
   //Player
   async createPlayer(playerData) {
@@ -256,6 +265,80 @@ const adminService = {
     return res.data;
   },
 
+  // Contracts
+
+  async getAllContracts() {
+    try {
+      const res = await axios.get('/api/contracts');
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async createContract(contractData) {
+    try {
+      const formData = new FormData();
+
+      Object.entries(contractData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      const res = await axios.post('/api/contracts', formData, {
+        headers: {
+          Authorization: `Bearer ${contractData.access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      return res.data;
+    } catch (error) {
+      console.error('Error creating contract:', error);
+      throw error;
+    }
+  },
+
+  async getOneContract(contract_id) {
+    try {
+      const res = await axios.get(`api/contracts/${contract_id}`);
+      return res.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+
+  async getOneContractByType(contract_type) {
+    try {
+      const res = await axios.get(`api/contracts/type/${contract_type}`);
+      return res.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+
+  async updateContract(contract_id, formData, access_token) {
+    try {
+      const res = await axios.post(`/api/contracts/${contract_id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.error('Error update contract:', error);
+      throw error;
+    }
+  },
+
+  async deleteContract(contract_id, access_token) {
+    const res = await axios.delete(`api/contracts/${contract_id}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    return res.data;
+  },
 };
 
 export default adminService;

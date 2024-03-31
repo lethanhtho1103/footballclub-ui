@@ -19,7 +19,7 @@ import TicketPurchase from '~/pages/User/TicketPurchase';
 import MyTicket from '~/pages/User/MyTicket';
 import ClubsManagement from '~/pages/Admin/Clubs';
 import StadiumsManagement from '~/pages/Admin/Stadiums';
-// import ContractsManagement from '~/pages/Admin/Contracts';
+import ContractsManagement from '~/pages/Admin/Contracts';
 
 import Test from '~/test';
 const publicRoutes = [
@@ -99,10 +99,10 @@ const adminRoutes = [
   //   path: '/admin/management/matches',
   //   component: MatchesManagement,
   // },
-  // {
-  //   path: '/admin/management/contracts',
-  //   component: ContractsManagement,
-  // },
+  {
+    path: '/admin/management/contracts',
+    component: ContractsManagement,
+  },
   {
     path: '/admin/management/coach',
     component: CoachManagement,
