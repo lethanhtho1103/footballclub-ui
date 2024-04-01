@@ -19,12 +19,13 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
   const [expiration_date, setExpirationDate] = useState(contract?.expiration_date || '');
   const [salary, setSalary] = useState(contract?.salary || '');
   const [pdf, setPdf] = useState(contract?.pdf || null);
-
+  const [type, setType] = useState(contract?.type || ''); // Thêm state cho type
   const [userIdErr, setUserIdErr] = useState('');
   const [dateCreatedErr, setDateCreatedErr] = useState('');
   const [expirationDateErr, setExpirationDateErr] = useState('');
   const [salaryErr, setSalaryErr] = useState('');
   const [pdfErr, setPdfErr] = useState('');
+  const [typeErr, setTypeErr] = useState(''); // State lưu trữ lỗi liên quan đến type
 
   const [obToast, setObToast] = useState({
     content: '',
@@ -50,6 +51,10 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
         setSalary(value);
         break;
       }
+      case 'type': { // Thêm xử lý cho type
+        setType(value);
+        break;
+      }
       default: {
         break;
       }
@@ -61,16 +66,17 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
   };
 
   const setDefaultValue = (contract) => {
-
-    setUserId(contract?.date_created || '');
+    setUserId(contract?.user_id || '');
     setDateCreated(contract?.date_created || '');
     setExpirationDate(contract?.expiration_date || '');
     setSalary(contract?.salary || '');
     setPdf(contract?.pdf || null);
+    setType(contract?.type || ''); // Thêm type
     setUserIdErr('');
     setExpirationDateErr('');
     setSalaryErr('');
     setPdfErr('');
+    setTypeErr(''); // Reset typeErr
   };
 
   const checkErr = (type) => {
@@ -90,6 +96,9 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
       case 'pdf': {
         return pdfErr?.length > 0;
       }
+      case 'type': { // Thêm xử lý cho type
+        return typeErr?.length > 0;
+      }
       default: {
         break;
       }
@@ -102,6 +111,7 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
     setExpirationDateErr(errors.expiration_date);
     setSalaryErr(errors.salary);
     setPdfErr(errors.pdf);
+    setTypeErr(errors.type); // Thêm xử lý cho type
   };
 
   const createContract = async () => {
@@ -113,6 +123,7 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
         salary,
         pdf,
         access_token,
+        type // Thêm type
       };
       const res = await adminService.createContract(contractData);
       if (res.contract) {
@@ -132,6 +143,7 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
       formData.append('date_created', date_created);
       formData.append('expiration_date', expiration_date);
       formData.append('salary', salary);
+      formData.append('type', type); // Thêm type
       if (contract?.pdf !== pdf) {
         formData.append('pdf', pdf);
       }
@@ -181,6 +193,7 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
           expirationDateErr={expirationDateErr}
           salaryErr={salaryErr}
           pdfErr={pdfErr}
+          typeErr={typeErr} // Thêm typeErr
         />
         <Modal.Header closeButton>
           <h5 className={cx('modal-title')}>{contract ? 'Update contract' : 'Add Contract'}</h5>
@@ -204,6 +217,27 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
               ></input>
               <label className={cx('form__label')} htmlFor="user_id">
                 <span>*</span> user_id:
+              </label>
+            </div>
+            <div
+              className={cx('form__group', 'field', {
+                err: checkErr('type'), // Thêm xử lý cho type
+              })}
+            >
+              <select
+                id="type"
+                className={cx('form__field')}
+                value={type}
+                onChange={(e) => changeInput(e, 'type')}
+              >
+                <option value="">Select Type</option>
+                <option value="advertisement">Advertisement</option>
+                <option value="individual">Individual</option>
+                <option value="sponsorship">Sponsorship</option>
+                <option value="rental">Rental</option>
+              </select>
+              <label className={cx('form__label')} htmlFor="type">
+                <span>*</span> Type:
               </label>
             </div>
             <div

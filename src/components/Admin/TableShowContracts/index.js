@@ -41,6 +41,7 @@ function TableShowContracts() {
     { Header: 'Date created', accessor: 'col4', filter: 'fuzzyText' },
     { Header: 'Expiration date', accessor: 'col5', filter: 'fuzzyText' },
     { Header: 'Salary', accessor: 'col6', filter: 'fuzzyText' },
+    { Header: 'PDF', accessor: 'col7', filter: 'fuzzyText' },
     { Header: 'Actions', accessor: 'col8', disableSortBy: true },
   ];
 
@@ -77,6 +78,10 @@ function TableShowContracts() {
             style: 'currency',
             currency: 'USD'
           }).format(row.salary)
+        ),
+        col7: (
+          // Bam vao hien cai PDF co in an xuat ra 
+          <a href={row.pdf}>PDF</a>
         ),
         col8: (
           <div
@@ -137,7 +142,7 @@ function TableShowContracts() {
     const res = await adminService.getOneContract(contract_id);
     setIsShowModalCreateContracts(true);
     setContractId(contract_id);
-    setContract(res);
+    setContract(res.contract);
   };
 
   const handleCloseModalCreateContracts = () => {
