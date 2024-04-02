@@ -214,8 +214,8 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
                 onChange={(e) => changeInput(e, 'user_id')}
               >
                 <option value="">Select User</option>
-                {users.map((user) => (
-                  <option key={user.id} value={user.id} style={{ backgroundImage: `url(${`${baseUrl}${user.image}`})` }}>
+                {users.slice(1).map((user) => (
+                  <option key={user.id} value={user.user_id} style={{ backgroundImage: `url(${baseUrl}${user.image}` }}>
                     {user.name}
                   </option>
                 ))}
