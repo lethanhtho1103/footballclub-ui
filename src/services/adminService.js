@@ -145,6 +145,15 @@ const adminService = {
   },
 
   //Clubs 
+  async getAllClubs() {
+    try {
+      const res = await axios.get('/api/clubs');
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
   async createClub(clubData) {
     try {
       const formData = new FormData();
@@ -339,6 +348,81 @@ const adminService = {
     });
     return res.data;
   },
+
+  // Matches
+  async getAllMatches() {
+    try {
+      const res = await axios.get('/api/matches');
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async createMatch(matchData) {
+    try {
+      const formData = new FormData();
+
+      Object.entries(matchData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      const res = await axios.post('/api/matches', formData, {
+        headers: {
+          Authorization: `Bearer ${matchData.access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      return res.data;
+    } catch (error) {
+      console.error('Error creating match:', error);
+      throw error;
+    }
+  },
+
+  async getOneMatch(match_id) {
+    try {
+      const res = await axios.get(`api/matches/${match_id}`);
+      return res.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+
+  async getOneMatchByType(match_type) {
+    try {
+      const res = await axios.get(`api/matches/type/${match_type}`);
+      return res.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+
+  async updateMatch(match_id, formData, access_token) {
+    try {
+      const res = await axios.post(`/api/matches/${match_id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.error('Error update match:', error);
+      throw error;
+    }
+  },
+
+  async deleteMatch(match_id, access_token) {
+    const res = await axios.delete(`api/matches/${match_id}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    return res.data;
+  },
+
 };
 
 export default adminService;
