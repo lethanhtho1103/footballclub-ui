@@ -8,10 +8,11 @@ import classNames from 'classnames/bind';
 import adminService from '~/services/adminService';
 import Loader from '~/components/Loader';
 import TableErrors from '../TableErrors';
+import { baseUrl } from '~/axios';
 
 const cx = classNames.bind(style);
 
-function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, access_token , contractId, users}) {
+function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, access_token, contractId, users }) {
   const [isLoader, setIsLoader] = useState(false);
 
   const [user_id, setUserId] = useState(contract?.user_id || '');
@@ -205,20 +206,25 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
                 err: checkErr('user_id'),
               })}
             >
-              <input
+              <select
                 required=""
-                placeholder="user_id"
                 id="user_id"
                 className={cx('form__field')}
-                autoComplete="off"
-                type="input"
                 value={user_id}
                 onChange={(e) => changeInput(e, 'user_id')}
-              ></input>
+              >
+                <option value="">Select User</option>
+                {users.map((user) => (
+                  <option key={user.id} value={user.id} style={{ backgroundImage: `url(${`${baseUrl}${user.image}`})` }}>
+                    {user.name}
+                  </option>
+                ))}
+              </select>
               <label className={cx('form__label')} htmlFor="user_id">
-                <span>*</span> user_id:
+                <span>*</span> User:
               </label>
             </div>
+
             <div
               className={cx('form__group', 'field', {
                 err: checkErr('type'), // Thêm xử lý cho type
