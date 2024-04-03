@@ -29,9 +29,9 @@ function Sidebar() {
           ]}
         />
 
-        <MenuItem 
-          title="Matches Management" 
-          to="/admin/management/clubs" 
+        <MenuItem
+          title="Matches Management"
+          to="/admin/management/clubs"
           icon={<BallIcon />}
           subMenuItems={[
             { label: 'Clubs', to: '/admin/management/clubs' },

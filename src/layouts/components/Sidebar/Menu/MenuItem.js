@@ -88,10 +88,20 @@ function MenuItem({ to, title, icon, subMenuItems }) {
       <div className={cx('nav-link')}>
         <span className={cx('icon')}>{icon}</span>
         <span className={cx('title')}>{title}</span>
-        <div className={cx('menu-arrow')}>{isSubmenuActive ? <UilAngleDown /> : <UilAngleRight />}</div>
+        {subMenuItems && (
+          <div
+            className={cx('menu-arrow')}
+            onClick={(e) => {
+              e.preventDefault();
+              setSubmenuActive(!isSubmenuActive);
+            }}
+          >
+            {isSubmenuActive ? <UilAngleDown /> : <UilAngleRight />}
+          </div>
+        )}
       </div>
 
-      {subMenuItems && (
+      {isSubmenuActive && subMenuItems && (
         <div className={cx('collapse')}>
           <ul>
             {subMenuItems.map((item, index) => (
