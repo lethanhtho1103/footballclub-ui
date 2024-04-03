@@ -11,6 +11,13 @@ import { baseUrl } from '~/axios';
 const cx = classNames.bind(style);
 
 function TicketUser({ ticket }) {
+  function extractHourFromTimeString(timeString) {
+    var dateObject = new Date('1970-01-01T' + timeString + 'Z');
+    var hour = dateObject.getUTCHours();
+    var minute = dateObject.getUTCMinutes();
+    var formattedTime = (hour < 10 ? '0' + hour : hour) + ':' + (minute < 10 ? '0' : '') + minute;
+    return formattedTime;
+  }
   // const [detailTicket, setDetailTicket] = useState({});
   // const [isShowModalDetailTicket, setIsShowModalDetailTicket] = useState(false);
 
@@ -69,7 +76,9 @@ function TicketUser({ ticket }) {
               <div className={cx('name')}>{ticket.club_away.name}</div>
             </div>
           </div>
-          <time>Time: 22:00 - Date: 22-12-2002</time>
+          <time>
+            Time: {extractHourFromTimeString(ticket.game_time)} - Date: {ticket.game_date}
+          </time>
 
           <div className={cx('stadium')}>{ticket.stadium.name}</div>
           <div className={cx('list-seats')}>

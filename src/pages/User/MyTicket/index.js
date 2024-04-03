@@ -4,8 +4,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faUser } from '@fortawesome/free-regular-svg-icons';
 import { faPen, faTicket } from '@fortawesome/free-solid-svg-icons';
-import { useContext, useEffect, useState } from 'react';
-
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { InfoUserContext } from '~/Context/InfoUserContext';
 import HeaderUser from '~/components/User/HeaderUser';
@@ -21,11 +20,14 @@ function MyTicket() {
 
   const handleGetAllTicketPurchase = async () => {
     const res = await userService.getAllTicketPurchases(infoUser.user_id);
-    console.log(res.tickets);
     if (res.tickets) {
       setAllTicketPurchases(res.tickets);
     }
   };
+
+  const memoizedAllTicketPurchases = useMemo(() => {
+    return allTicketPurchases.map((ticket) => <TicketUser key={ticket.id} ticket={ticket} />);
+  }, [allTicketPurchases]);
 
   const navigate = useNavigate();
 
@@ -78,17 +80,13 @@ function MyTicket() {
               </ul>
             </Col>
             <Col md={9} className={cx('my-ticket')}>
-              {allTicketPurchases?.length === 0 ? (
+              {allTicketPurchases?.length > 0 ? (
+                <>{memoizedAllTicketPurchases}</>
+              ) : (
                 <div className={cx('no-ticket')}>
                   <div className={cx('image')}></div>
                   <div className={cx('title')}>Chưa có vé nào</div>
                 </div>
-              ) : (
-                <>
-                  {allTicketPurchases.map((ticket, index) => (
-                    <TicketUser ticket={ticket} />
-                  ))}
-                </>
               )}
             </Col>
           </Row>
