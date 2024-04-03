@@ -8,6 +8,15 @@ const adminService = {
     });
     return res.data;
   },
+  // User
+  async getAllUser() {
+    try {
+      const res = await axios.get(`api/users/all`);
+      return res.data.users;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
 
   //Player
   async createPlayer(playerData) {
@@ -134,6 +143,286 @@ const adminService = {
     });
     return res.data;
   },
+
+  //Clubs 
+  async getAllClubs() {
+    try {
+      const res = await axios.get('/api/clubs');
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async createClub(clubData) {
+    try {
+      const formData = new FormData();
+
+      Object.entries(clubData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      const res = await axios.post('/api/clubs', formData, {
+        headers: {
+          Authorization: `Bearer ${clubData.access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      return res.data;
+    } catch (error) {
+      console.error('Error creating club:', error);
+      throw error;
+    }
+  },
+
+  async getOneClub(club_id) {
+    try {
+      const res = await axios.get(`api/clubs/${club_id}`);
+      return res.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+
+  async updateClub(club_id, formData, access_token) {
+    try {
+      const res = await axios.post(`/api/clubs/${club_id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.error('Error update club:', error);
+      throw error;
+    }
+  },
+
+  async deleteClub(club_id, access_token) {
+    const res = await axios.delete(`api/clubs/${club_id}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    return res.data;
+  },
+
+  // Stadiums
+  async getAllStadiums() {
+    try {
+      const res = await axios.get('/api/stadiums');
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async createStadium(stadiumData) {
+    try {
+      const formData = new FormData();
+
+      Object.entries(stadiumData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      const res = await axios.post('/api/stadiums', formData, {
+        headers: {
+          Authorization: `Bearer ${stadiumData.access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      return res.data;
+    } catch (error) {
+      console.error('Error creating stadium:', error);
+      throw error;
+    }
+  },
+
+  async getOneStadium(stadium_id) {
+    try {
+      const res = await axios.get(`api/stadiums/${stadium_id}`);
+      return res.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+
+  async updateStadium(stadium_id, formData, access_token) {
+    try {
+      const res = await axios.post(`/api/stadiums/${stadium_id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.error('Error update stadium:', error);
+      throw error;
+    }
+  },
+
+  async deleteStadium(stadium_id, access_token) {
+    const res = await axios.delete(`api/stadiums/${stadium_id}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    return res.data;
+  },
+
+  // Contracts
+
+  async getAllContracts() {
+    try {
+      const res = await axios.get('/api/contracts');
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async createContract(contractData) {
+    try {
+      const formData = new FormData();
+
+      Object.entries(contractData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      const res = await axios.post('/api/contracts', formData, {
+        headers: {
+          Authorization: `Bearer ${contractData.access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      return res.data;
+    } catch (error) {
+      console.error('Error creating contract:', error);
+      throw error;
+    }
+  },
+
+  async getOneContract(contract_id) {
+    try {
+      const res = await axios.get(`api/contracts/${contract_id}`);
+      return res.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+
+  async getOneContractByType(contract_type) {
+    try {
+      const res = await axios.get(`api/contracts/type/${contract_type}`);
+      return res.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+
+  async updateContract(contract_id, formData, access_token) {
+    try {
+      const res = await axios.post(`/api/contracts/${contract_id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.error('Error update contract:', error);
+      throw error;
+    }
+  },
+
+  async deleteContract(contract_id, access_token) {
+    const res = await axios.delete(`api/contracts/${contract_id}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    return res.data;
+  },
+
+  // Matches
+  async getAllMatches() {
+    try {
+      const res = await axios.get('/api/matches');
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async createMatch(matchData) {
+    try {
+      const formData = new FormData();
+
+      Object.entries(matchData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      const res = await axios.post('/api/matches', formData, {
+        headers: {
+          Authorization: `Bearer ${matchData.access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      return res.data;
+    } catch (error) {
+      console.error('Error creating match:', error);
+      throw error;
+    }
+  },
+
+  async getOneMatch(match_id) {
+    try {
+      const res = await axios.get(`api/matches/${match_id}`);
+      return res.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+
+  async getOneMatchByType(match_type) {
+    try {
+      const res = await axios.get(`api/matches/type/${match_type}`);
+      return res.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+
+  async updateMatch(match_id, formData, access_token) {
+    try {
+      const res = await axios.post(`/api/matches/${match_id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.error('Error update match:', error);
+      throw error;
+    }
+  },
+
+  async deleteMatch(match_id, access_token) {
+    const res = await axios.delete(`api/matches/${match_id}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    return res.data;
+  },
+
 };
 
 export default adminService;

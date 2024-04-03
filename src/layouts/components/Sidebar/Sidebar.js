@@ -25,10 +25,20 @@ function Sidebar() {
             { label: 'Users', to: '/admin/management/users' },
             { label: 'Players', to: '/admin/management/players' },
             { label: 'Coaches', to: '/admin/management/coach' },
+            { label: 'Contracts', to: '/admin/management/contracts' },
           ]}
         />
 
-        <MenuItem title="Matches Management" to="/admin/matches-management" icon={<BallIcon />} />
+        <MenuItem 
+          title="Matches Management" 
+          to="/admin/management/clubs" 
+          icon={<BallIcon />}
+          subMenuItems={[
+            { label: 'Clubs', to: '/admin/management/clubs' },
+            { label: 'Stadiums', to: '/admin/management/stadiums' },
+            { label: 'Matches', to: '/admin/management/matches' },
+          ]}
+        />
         <MenuItem title="Statistical" to="/admin/statistical" icon={<Statistical />} />
       </Menu>
       {/* <SuggestedAccounts label="Suggest Account" />

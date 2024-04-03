@@ -12,13 +12,22 @@ import Tickets from '~/pages/User/Tickets';
 import Results from '~/pages/User/Results';
 import Statistical from '~/pages/Admin/Statistical';
 // import UsersManagement from '~/pages/Admin/UsersManagement';
-import MatchesManagement from '~/pages/Admin/MatchesManager';
+// import MatchesManagement from '~/pages/Admin/MatchesManager';
+import MatchesManagement from '~/pages/Admin/Matches';
 import CoachManagement from '~/pages/Admin/Coach';
 import PlayersManagement from '~/pages/Admin/Players';
-import MyTicket from '~/pages/User/MyTicket';
 import TicketPurchase from '~/pages/User/TicketPurchase';
+import MyTicket from '~/pages/User/MyTicket';
+import ClubsManagement from '~/pages/Admin/Clubs';
+import StadiumsManagement from '~/pages/Admin/Stadiums';
+import ContractsManagement from '~/pages/Admin/Contracts';
 
+import Test from '~/test';
 const publicRoutes = [
+  {
+    path: '/test',
+    component: Test,
+  },
   {
     path: '/',
     component: Home,
@@ -63,6 +72,7 @@ const publicRoutes = [
     path: '/manchester-city-history',
     component: History,
   },
+
   // {
   //   path: '*',
   //   component: InvalidUser_404,
@@ -79,6 +89,22 @@ const adminRoutes = [
   //   component: UsersManagement,
   // },
   {
+    path: '/admin/management/clubs',
+    component: ClubsManagement,
+  },
+  {
+    path: '/admin/management/stadiums',
+    component: StadiumsManagement,
+  },
+  {
+    path: '/admin/management/matches',
+    component: MatchesManagement,
+  },
+  {
+    path: '/admin/management/contracts',
+    component: ContractsManagement,
+  },
+  {
     path: '/admin/management/coach',
     component: CoachManagement,
   },
@@ -86,10 +112,10 @@ const adminRoutes = [
     path: '/admin/management/players',
     component: PlayersManagement,
   },
-  {
-    path: '/admin/matches-management',
-    component: MatchesManagement,
-  },
+  // {
+  //   path: '/admin/matches-management',
+  //   component: MatchesManagement,
+  // },
   {
     path: '/admin/statistical',
     component: Statistical,
