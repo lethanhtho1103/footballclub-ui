@@ -225,14 +225,16 @@ function ModalCreateCoaches({ handleClose, handleGetAllCoaches, coach, access_to
         }}
       >
         <TableErrors
-          nameErr={nameErr}
-          emailErr={emailErr}
-          passwordErr={passwordErr}
-          dateOfBirthErr={dateOfBirthErr}
-          nationalityErr={nationalityErr}
-          positionErr={positionErr}
-          imageErr={imageErr}
-          detailErr={detailErr}
+          errors={{
+            name: nameErr,
+            email: emailErr,
+            password: passwordErr,
+            date_of_birth: dateOfBirthErr,
+            nationality: nationalityErr,
+            position: positionErr,
+            image: imageErr,
+            detail: detailErr,
+          }}
         />
         <Modal.Header closeButton>
           <h5 className={cx('modal-title')}>{coach ? 'Update coach' : 'Add coach'}</h5>

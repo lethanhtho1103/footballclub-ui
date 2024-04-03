@@ -44,7 +44,6 @@ function ModalCreateClubs({ handleClose, handleGetAllClubs, club, access_token, 
   const setDefaultValue = (club) => {
     setName(club?.name || '');
     setImage(club?.image || null);
-
     setNameErr('');
     setImageErr('');
   };
@@ -113,7 +112,6 @@ function ModalCreateClubs({ handleClose, handleGetAllClubs, club, access_token, 
   };
 
   const handleCLickUpdate = () => {
-    
     setIsLoader(true);
     setTimeout(() => {
       updateClub();
@@ -134,10 +132,7 @@ function ModalCreateClubs({ handleClose, handleGetAllClubs, club, access_token, 
           handleClose();
         }}
       >
-        <TableErrors
-          nameErr={nameErr}
-          imageErr={imageErr}
-        />
+        <TableErrors errors={{ name: nameErr, image: imageErr }} />
         <Modal.Header closeButton>
           <h5 className={cx('modal-title')}>{club ? 'Update club' : 'Add club'}</h5>
         </Modal.Header>
@@ -162,7 +157,7 @@ function ModalCreateClubs({ handleClose, handleGetAllClubs, club, access_token, 
                 <span>*</span> Name:
               </label>
             </div>
-            
+
             <div
               className={cx('form__group', 'field', {
                 err: checkErr('image'),

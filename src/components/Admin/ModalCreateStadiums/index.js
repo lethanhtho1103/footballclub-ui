@@ -163,10 +163,12 @@ function ModalCreateStadiums({ handleClose, handleGetAllStadiums, access_token, 
         }}
       >
         <TableErrors
-          nameErr={nameErr}
-          addressErr={addressErr}
-          capacityErr={capacityErr}
-          imageErr={imageErr}
+          errors={{
+            name: nameErr,
+            address: addressErr,
+            capacity: capacityErr,
+            image: imageErr,
+          }}
         />
         <Modal.Header closeButton>
           <h5 className={cx('modal-title')}>{stadium ? 'Update stadium' : 'Add stadium'}</h5>

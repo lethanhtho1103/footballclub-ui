@@ -9,13 +9,10 @@ import Loader from '~/components/Loader';
 import TableErrors from '../TableErrors';
 import ToastMassage from '../ToastMassage';
 
-
-
 const cx = classNames.bind(style);
 
 function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_token, matchId, clubs, stadiums }) {
   const [isLoader, setIsLoader] = useState(false);
-
   const [stadiumId, setStadiumId] = useState(match?.stadium.stadium_id || '');
   const [clubId, setClubId] = useState(match?.club.club_id || '');
   const [gameDate, setGameDate] = useState(match?.game_date || '');
@@ -234,16 +231,18 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
         }}
       >
         <TableErrors
-          stadiumIdErr={stadiumIdErr}
-          clubIdErr={clubIdErr}
-          gameDateErr={gameDateErr}
-          gameTimeErr={gameTimeErr}
-          goalsScoredErr={goalsScoredErr}
-          goalsConcededErr={goalsConcededErr}
-          resultErr={resultErr}
-          stateErr={stateErr}
-          hostErr={hostErr}
-          remainingSeatsErr={remainingSeatsErr}
+          errors={{
+            stadiumId: stadiumIdErr,
+            clubId: clubIdErr,
+            gameDate: gameDateErr,
+            gameTime: gameTimeErr,
+            goalsScored: goalsScoredErr,
+            goalsConceded: goalsConcededErr,
+            result: resultErr,
+            state: stateErr,
+            host: hostErr,
+            remainingSeats: remainingSeatsErr,
+          }}
         />
         <Modal.Header closeButton>
           <h5 className={cx('modal-title')}>{match ? 'Update match' : 'Add match'}</h5>
@@ -273,7 +272,6 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
                 <span>*</span> Stadium:
               </label>
             </div>
-
             <div
               className={cx('form__group', 'field', {
                 err: checkErr('clubId'),
@@ -316,7 +314,6 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
                 <span>*</span> Game Date:
               </label>
             </div>
-
             <div
               className={cx('form__group', 'field', {
                 err: checkErr('gameTime'),
@@ -337,7 +334,6 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
                 <span>*</span> Game Time:
               </label>
             </div>
-
             <div
               className={cx('form__group', 'field', {
                 err: checkErr('result'),
@@ -465,7 +461,6 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
             </div>
           </Form>
         </Modal.Body>
-
         <Modal.Footer>
           <Button
             className={cx('btn')}
@@ -478,9 +473,13 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
             Cancel
           </Button>
           {match ? (
-            <Button className={cx('btn')} variant="primary" onClick={handleCLickUpdate}>Update</Button>
+            <Button className={cx('btn')} variant="primary" onClick={handleCLickUpdate}>
+              Update
+            </Button>
           ) : (
-            <Button className={cx('btn')} variant="primary" onClick={handleCLickCreate}>Create</Button>
+            <Button className={cx('btn')} variant="primary" onClick={handleCLickCreate}>
+              Create
+            </Button>
           )}
         </Modal.Footer>
       </Modal>

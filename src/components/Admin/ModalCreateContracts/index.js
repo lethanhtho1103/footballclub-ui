@@ -52,7 +52,8 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
         setSalary(value);
         break;
       }
-      case 'type': { // Thêm xử lý cho type
+      case 'type': {
+        // Thêm xử lý cho type
         setType(value);
         break;
       }
@@ -97,7 +98,8 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
       case 'pdf': {
         return pdfErr?.length > 0;
       }
-      case 'type': { // Thêm xử lý cho type
+      case 'type': {
+        // Thêm xử lý cho type
         return typeErr?.length > 0;
       }
       default: {
@@ -124,7 +126,7 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
         salary,
         pdf,
         access_token,
-        type // Thêm type
+        type, // Thêm type
       };
       const res = await adminService.createContract(contractData);
       if (res.contract) {
@@ -189,12 +191,14 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
         }}
       >
         <TableErrors
-          userIdErr={userIdErr}
-          dateCreatedErr={dateCreatedErr}
-          expirationDateErr={expirationDateErr}
-          salaryErr={salaryErr}
-          pdfErr={pdfErr}
-          typeErr={typeErr} // Thêm typeErr
+          errors={{
+            user_id: userIdErr,
+            date_created: dateCreatedErr,
+            expiration_date: expirationDateErr,
+            salary: salaryErr,
+            pdf: pdfErr,
+            type: typeErr,
+          }}
         />
         <Modal.Header closeButton>
           <h5 className={cx('modal-title')}>{contract ? 'Update contract' : 'Add Contract'}</h5>
@@ -224,18 +228,12 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
                 <span>*</span> User:
               </label>
             </div>
-
             <div
               className={cx('form__group', 'field', {
-                err: checkErr('type'), // Thêm xử lý cho type
+                err: checkErr('type'),
               })}
             >
-              <select
-                id="type"
-                className={cx('form__field')}
-                value={type}
-                onChange={(e) => changeInput(e, 'type')}
-              >
+              <select id="type" className={cx('form__field')} value={type} onChange={(e) => changeInput(e, 'type')}>
                 <option value="">Select Type</option>
                 <option value="advertisement">Advertisement</option>
                 <option value="individual">Individual</option>

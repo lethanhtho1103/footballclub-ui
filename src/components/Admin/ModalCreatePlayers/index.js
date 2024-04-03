@@ -243,15 +243,17 @@ function ModalCreatePlayers({ handleClose, handleGetAllPlayers, player, access_t
         }}
       >
         <TableErrors
-          nameErr={nameErr}
-          emailErr={emailErr}
-          passwordErr={passwordErr}
-          dateOfBirthErr={dateOfBirthErr}
-          nationalityErr={nationalityErr}
-          positionErr={positionErr}
-          jerseyNumberErr={jerseyNumberErr}
-          imageErr={imageErr}
-          detailErr={detailErr}
+          errors={{
+            name: nameErr,
+            email: emailErr,
+            password: passwordErr,
+            date_of_birth: dateOfBirthErr,
+            nationality: nationalityErr,
+            position: positionErr,
+            jersey_number: jerseyNumberErr,
+            image: imageErr,
+            detail: detailErr,
+          }}
         />
         <Modal.Header closeButton>
           <h5 className={cx('modal-title')}>{player ? 'Update player' : 'Add Player'}</h5>
