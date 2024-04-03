@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import style from './ModalCreateMatches.module.scss';
+import style from '../FormInputGroup/FormInputGroup.module.scss';
 import classNames from 'classnames/bind';
 import adminService from '~/services/adminService';
 import Loader from '~/components/Loader';
 import TableErrors from '../TableErrors';
 import ToastMassage from '../ToastMassage';
+import FormInputGroup from '../FormInputGroup';
+import SelectInput from '../SelectInput';
 
 const cx = classNames.bind(style);
 
@@ -109,33 +111,6 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
     setStateErr('');
     setHostErr('');
     setRemainingSeatsErr('');
-  };
-
-  const checkErr = (type) => {
-    switch (type) {
-      case 'stadiumId':
-        return stadiumIdErr?.length > 0;
-      case 'clubId':
-        return clubIdErr?.length > 0;
-      case 'gameDate':
-        return gameDateErr?.length > 0;
-      case 'gameTime':
-        return gameTimeErr?.length > 0;
-      case 'goalsScored':
-        return goalsScoredErr?.length > 0;
-      case 'goalsConceded':
-        return goalsConcededErr?.length > 0;
-      case 'result':
-        return resultErr?.length > 0;
-      case 'state':
-        return stateErr?.length > 0;
-      case 'host':
-        return hostErr?.length > 0;
-      case 'remainingSeats':
-        return remainingSeatsErr?.length > 0;
-      default:
-        break;
-    }
   };
 
   const validateErrors = (errors) => {
@@ -249,138 +224,75 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
         </Modal.Header>
         <Modal.Body className={cx('modal-body')}>
           <Form>
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('stadiumId'),
-              })}
-            >
-              <select
-                required=""
-                id="stadiumId"
-                className={cx('form__field')}
-                value={stadiumId}
-                onChange={(e) => changeInput(e, 'stadiumId')}
-              >
-                <option value="">Select Stadium</option>
-                {stadiums.map((stadium) => (
-                  <option key={stadium.stadium_id} value={stadium.stadium_id}>
-                    {stadium.name}
-                  </option>
-                ))}
-              </select>
-              <label className={cx('form__label')} htmlFor="stadiumId">
-                <span>*</span> Stadium:
-              </label>
-            </div>
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('clubId'),
-              })}
-            >
-              <select
-                required=""
-                id="clubId"
-                className={cx('form__field')}
-                value={clubId}
-                onChange={(e) => changeInput(e, 'clubId')}
-              >
-                <option value="">Select Club</option>
-                {clubs.slice(1).map((club) => (
-                  <option key={club.club_id} value={club.club_id}>
-                    {club.name}
-                  </option>
-                ))}
-              </select>
-              <label className={cx('form__label')} htmlFor="clubId">
-                <span>*</span> Club:
-              </label>
-            </div>
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('gameDate'),
-              })}
-            >
-              <input
-                required=""
-                placeholder="Game Date"
-                id="gameDate"
-                className={cx('form__field')}
-                autoComplete="off"
-                type="date"
-                value={gameDate}
-                onChange={(e) => changeInput(e, 'gameDate')}
-              ></input>
-              <label className={cx('form__label')} htmlFor="gameDate">
-                <span>*</span> Game Date:
-              </label>
-            </div>
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('gameTime'),
-              })}
-            >
-              <input
-                required=""
-                placeholder="Game Time"
-                id="gameTime"
-                className={cx('form__field')}
-                autoComplete="off"
-                type="time"
-                step="1"
-                value={gameTime}
-                onChange={(e) => changeInput(e, 'gameTime')}
-              />
-              <label className={cx('form__label')} htmlFor="gameTime">
-                <span>*</span> Game Time:
-              </label>
-            </div>
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('result'),
-              })}
-            >
-              <select
-                required=""
-                id="result"
-                className={cx('form__field')}
-                value={result}
-                onChange={(e) => changeInput(e, 'result')}
-              >
-                <option value="">Select Result</option>
-                <option value="win">Win</option>
-                <option value="draw">Draw</option>
-                <option value="loss">Loss</option>
-              </select>
-              <label className={cx('form__label')} htmlFor="result">
-                <span>*</span> Result:
-              </label>
-            </div>
+            <SelectInput
+              id="stadium"
+              label="Stadium"
+              options={stadiums.map((stadium) => ({
+                value: stadium.stadium_id,
+                label: stadium.name,
+              }))}
+              value={stadiumId}
+              onChange={(e) => changeInput(e, 'stadiumId')}
+              error={stadiumIdErr?.length > 0}
+            />
+            <SelectInput
+              id="club"
+              label="Club"
+              options={clubs.slice(1).map((club) => ({
+                value: club.club_id,
+                label: club.name,
+              }))}
+              value={clubId}
+              onChange={(e) => changeInput(e, 'clubId')}
+              error={clubIdErr?.length > 0}
+            />
+            <FormInputGroup
+              id="gameDate"
+              label="Game Date"
+              type="date"
+              value={gameDate}
+              onChange={(e) => changeInput(e, 'gameDate')}
+              error={gameDateErr?.length > 0}
+            />
+            <FormInputGroup
+              id="gameTime"
+              label="Game Time"
+              type="time"
+              value={gameTime}
+              onChange={(e) => changeInput(e, 'gameTime')}
+              error={gameTimeErr?.length > 0}
+            />
+
+            <SelectInput
+              label="Result"
+              id="result"
+              options={[
+                { value: '', label: 'Select Result' },
+                { value: 'win', label: 'Win' },
+                { value: 'draw', label: 'Draw' },
+                { value: 'loss', label: 'Loss' },
+              ]}
+              value={result}
+              onChange={(e) => changeInput(e, 'result')}
+              error={resultErr?.length > 0}
+            />
+            <SelectInput
+              label="State"
+              id="state"
+              options={[
+                { value: '', label: 'Select State' },
+                { value: 'upcoming', label: 'Upcoming' },
+                { value: 'in_progress', label: 'In Progress' },
+                { value: 'finished', label: 'Finished' },
+              ]}
+              value={state}
+              onChange={(e) => changeInput(e, 'state')}
+              error={stateErr?.length > 0}
+            />
 
             <div
               className={cx('form__group', 'field', {
-                err: checkErr('state'),
-              })}
-            >
-              <select
-                required=""
-                id="state"
-                className={cx('form__field')}
-                value={state}
-                onChange={(e) => changeInput(e, 'state')}
-              >
-                <option value="">Select State</option>
-                <option value="upcoming">Upcoming</option>
-                <option value="in_progress">In Progress</option>
-                <option value="finished">Finished</option>
-              </select>
-              <label className={cx('form__label')} htmlFor="state">
-                <span>*</span> State:
-              </label>
-            </div>
-
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('host'),
+                err: hostErr?.length > 0,
               })}
             >
               <input
@@ -398,67 +310,28 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
                 <span>*</span> Host:
               </label> */}
             </div>
-
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('goalsScored'),
-              })}
-            >
-              <input
-                required=""
-                placeholder="Goals Scored"
-                id="goalsScored"
-                className={cx('form__field')}
-                autoComplete="off"
-                type="number"
-                value={goalsScored}
-                onChange={(e) => changeInput(e, 'goalsScored')}
-              ></input>
-              <label className={cx('form__label')} htmlFor="goalsScored">
-                <span>*</span> Goals Scored:
-              </label>
-            </div>
-
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('goalsConceded'),
-              })}
-            >
-              <input
-                required=""
-                placeholder="Goals Conceded"
-                id="goalsConceded"
-                className={cx('form__field')}
-                autoComplete="off"
-                type="number"
-                value={goalsConceded}
-                onChange={(e) => changeInput(e, 'goalsConceded')}
-              ></input>
-              <label className={cx('form__label')} htmlFor="goalsConceded">
-                <span>*</span> Goals Conceded:
-              </label>
-            </div>
-
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('remainingSeats'),
-              })}
-            >
-              <input
-                required=""
-                placeholder="Remaining Seats"
-                id="remainingSeats"
-                className={cx('form__field')}
-                autoComplete="off"
-                type="number"
-                hidden
-                value={remainingSeats}
-                onChange={(e) => changeInput(e, 'remainingSeats')}
-              ></input>
-              {/* <label className={cx('form__label')} htmlFor="remainingSeats">
-                <span>*</span> Remaining Seats:
-              </label> */}
-            </div>
+            <FormInputGroup
+              id="goalsScored"
+              label="Goals Scored"
+              type="number"
+              value={goalsScored}
+              onChange={(e) => changeInput(e, 'goalsScored')}
+            />
+            <FormInputGroup
+              id="goalsConceded"
+              label="Goals Conceded"
+              type="number"
+              value={goalsConceded}
+              onChange={(e) => changeInput(e, 'goalsConceded')}
+            />
+            {/* <FormInputGroup
+              id="remainingSeats"
+              label="Remaining Seats"
+              type="number"
+              value={remainingSeats}
+              onChange={(e) => changeInput(e, 'remainingSeats')}
+              hidden
+            /> */}
           </Form>
         </Modal.Body>
         <Modal.Footer>

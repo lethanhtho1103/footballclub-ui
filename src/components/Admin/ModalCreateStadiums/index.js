@@ -3,11 +3,13 @@ import Button from 'react-bootstrap/Button';
 import ToastMassage from '../ToastMassage';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import style from './ModalCreateStadiums.module.scss';
+import style from '../FormInputGroup/FormInputGroup.module.scss';
 import classNames from 'classnames/bind';
 import adminService from '~/services/adminService';
 import Loader from '~/components/Loader';
 import TableErrors from '../TableErrors';
+import FormInputGroup from '../FormInputGroup';
+import FileInput from '../FileInput/FileInput';
 
 const cx = classNames.bind(style);
 
@@ -59,31 +61,10 @@ function ModalCreateStadiums({ handleClose, handleGetAllStadiums, access_token, 
     setAddress(stadium?.address || '');
     setCapacity(stadium?.capacity || '');
     setImage(stadium?.image || null);
-
     setNameErr('');
     setAddressErr('');
     setCapacityErr('');
     setImageErr('');
-  };
-
-  const checkErr = (type) => {
-    switch (type) {
-      case 'name': {
-        return nameErr?.length > 0;
-      }
-      case 'address': {
-        return addressErr?.length > 0;
-      }
-      case 'capacity': {
-        return capacityErr?.length > 0;
-      }
-      case 'image': {
-        return imageErr?.length > 0;
-      }
-      default: {
-        break;
-      }
-    }
   };
 
   const validateErrors = (errors) => {
@@ -175,75 +156,36 @@ function ModalCreateStadiums({ handleClose, handleGetAllStadiums, access_token, 
         </Modal.Header>
         <Modal.Body className={cx('modal-body')}>
           <Form>
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('name'),
-              })}
-            >
-              <input
-                required=""
-                placeholder="Name"
-                id="name"
-                className={cx('form__field')}
-                autoComplete="off"
-                type="input"
-                value={name}
-                onChange={(e) => changeInput(e, 'name')}
-              ></input>
-              <label className={cx('form__label')} htmlFor="name">
-                <span>*</span> Name:
-              </label>
-            </div>
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('address'),
-              })}
-            >
-              <input
-                required=""
-                placeholder="address"
-                id="address"
-                className={cx('form__field')}
-                autoComplete="off"
-                type="input"
-                value={address}
-                onChange={(e) => changeInput(e, 'address')}
-              ></input>
-              <label className={cx('form__label')} htmlFor="address">
-                <span>*</span>Address:
-              </label>
-            </div>
+            <FormInputGroup
+              label="Name"
+              type="text"
+              placeholder="Name"
+              value={name}
+              id="name"
+              onChange={(e) => changeInput(e, 'name')}
+              error={nameErr?.length > 0}
+            />
+            <FormInputGroup
+              label="Address"
+              type="text"
+              placeholder="address"
+              value={address}
+              id="address"
+              onChange={(e) => changeInput(e, 'address')}
+              error={addressErr?.length > 0}
+            />
             <div className={cx('col-md-6')}>
-              <div
-                className={cx('form__group', 'field', {
-                  err: checkErr('capacity'),
-                })}
-              >
-                <input
-                  required=""
-                  onChange={(e) => changeInput(e, 'capacity')}
-                  value={capacity}
-                  name="capacity"
-                  placeholder="capacity"
-                  id="capacity"
-                  className={cx('form__field')}
-                  type="number"
-                ></input>
-                <label className={cx('form__label')} htmlFor="capacity">
-                  <span>*</span> Capacity:
-                </label>
-              </div>
+              <FormInputGroup
+                label="Capacity"
+                type="number"
+                placeholder="capacity"
+                value={capacity}
+                id="capacity"
+                onChange={(e) => changeInput(e, 'capacity')}
+                error={capacityErr?.length > 0}
+              />
             </div>
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('image'),
-              })}
-            >
-              <input onChange={handleChangeImage} id="image" className={cx('form__field')} type="file"></input>
-              <label className={cx('form__label')} htmlFor="image">
-                <span>*</span> Select file image:
-              </label>
-            </div>
+            <FileInput label="Select file image" onChange={handleChangeImage} error={imageErr?.length > 0} />
           </Form>
         </Modal.Body>
         <Modal.Footer>

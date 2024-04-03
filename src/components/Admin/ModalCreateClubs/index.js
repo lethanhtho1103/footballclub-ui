@@ -3,11 +3,13 @@ import Button from 'react-bootstrap/Button';
 import ToastMassage from '../ToastMassage';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import style from './ModalCreateClubs.module.scss';
+import style from '../FormInputGroup/FormInputGroup.module.scss';
 import classNames from 'classnames/bind';
 import adminService from '~/services/adminService';
 import Loader from '~/components/Loader';
 import TableErrors from '../TableErrors';
+import FormInputGroup from '../FormInputGroup';
+import FileInput from '../FileInput/FileInput';
 
 const cx = classNames.bind(style);
 
@@ -46,20 +48,6 @@ function ModalCreateClubs({ handleClose, handleGetAllClubs, club, access_token, 
     setImage(club?.image || null);
     setNameErr('');
     setImageErr('');
-  };
-
-  const checkErr = (type) => {
-    switch (type) {
-      case 'name': {
-        return nameErr?.length > 0;
-      }
-      case 'image': {
-        return imageErr?.length > 0;
-      }
-      default: {
-        break;
-      }
-    }
   };
 
   const validateErrors = (errors) => {
@@ -138,36 +126,17 @@ function ModalCreateClubs({ handleClose, handleGetAllClubs, club, access_token, 
         </Modal.Header>
         <Modal.Body className={cx('modal-body')}>
           <Form>
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('name'),
-              })}
-            >
-              <input
-                required=""
-                placeholder="Name"
-                id="name"
-                className={cx('form__field')}
-                autoComplete="off"
-                type="input"
-                value={name}
-                onChange={(e) => changeInput(e, 'name')}
-              ></input>
-              <label className={cx('form__label')} htmlFor="name">
-                <span>*</span> Name:
-              </label>
-            </div>
-
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('image'),
-              })}
-            >
-              <input onChange={handleChangeImage} id="image" className={cx('form__field')} type="file"></input>
-              <label className={cx('form__label')} htmlFor="image">
-                <span>*</span> Select file image:
-              </label>
-            </div>
+            <FormInputGroup
+              id="name"
+              label="Name"
+              type="text"
+              value={name}
+              onChange={(e) => changeInput(e, 'name')}
+              required
+              placeholder="Enter your name"
+              error={nameErr?.length > 0}
+            />
+            <FileInput label="Select file image" onChange={handleChangeImage} error={imageErr?.length > 0} />
           </Form>
         </Modal.Body>
         <Modal.Footer>

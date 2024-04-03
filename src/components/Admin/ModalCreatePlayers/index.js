@@ -3,11 +3,14 @@ import Button from 'react-bootstrap/Button';
 import ToastMassage from '../ToastMassage';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import style from './ModalCreatePlayers.module.scss';
+import style from '../FormInputGroup/FormInputGroup.module.scss';
 import classNames from 'classnames/bind';
 import adminService from '~/services/adminService';
 import Loader from '~/components/Loader';
 import TableErrors from '../TableErrors';
+import FormInputGroup from '../FormInputGroup';
+import FileInput from '../FileInput/FileInput';
+import SelectInput from '../SelectInput';
 
 const cx = classNames.bind(style);
 
@@ -112,41 +115,6 @@ function ModalCreatePlayers({ handleClose, handleGetAllPlayers, player, access_t
     setImageErr('');
     setDetailErr('');
     setSelectedOption('');
-  };
-
-  const checkErr = (type) => {
-    switch (type) {
-      case 'name': {
-        return nameErr?.length > 0;
-      }
-      case 'email': {
-        return emailErr?.length > 0;
-      }
-      case 'password': {
-        return passwordErr?.length > 0;
-      }
-      case 'date_of_birth': {
-        return dateOfBirthErr?.length > 0;
-      }
-      case 'nationality': {
-        return nationalityErr?.length > 0;
-      }
-      case 'position': {
-        return positionErr?.length > 0;
-      }
-      case 'jersey_number': {
-        return jerseyNumberErr?.length > 0;
-      }
-      case 'image': {
-        return imageErr?.length > 0;
-      }
-      case 'detail': {
-        return detailErr?.length > 0;
-      }
-      default: {
-        break;
-      }
-    }
   };
 
   const validateErrors = (errors) => {
@@ -260,138 +228,74 @@ function ModalCreatePlayers({ handleClose, handleGetAllPlayers, player, access_t
         </Modal.Header>
         <Modal.Body className={cx('modal-body')}>
           <Form>
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('name'),
-              })}
-            >
-              <input
-                required=""
-                placeholder="Name"
-                id="name"
-                className={cx('form__field')}
-                autoComplete="off"
-                type="input"
-                value={name}
-                onChange={(e) => changeInput(e, 'name')}
-              ></input>
-              <label className={cx('form__label')} htmlFor="name">
-                <span>*</span> Name:
-              </label>
-            </div>
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('email'),
-              })}
-            >
-              <input
-                required=""
-                placeholder="Email"
-                id="email"
-                className={cx('form__field')}
-                autoComplete="off"
-                type="input"
-                value={email}
-                onChange={(e) => changeInput(e, 'email')}
-              ></input>
-              <label className={cx('form__label')} htmlFor="email">
-                <span>*</span> Email Address:
-              </label>
-            </div>
+            <FormInputGroup
+              id="name"
+              label="Name"
+              type="input"
+              value={name}
+              onChange={(e) => changeInput(e, 'name')}
+              placeholder="Name"
+              error={nameErr?.length > 0} // Kiểm tra lỗi trực tiếp
+            />
+            <FormInputGroup
+              id="email"
+              label="Email Address"
+              type="input"
+              value={email}
+              onChange={(e) => changeInput(e, 'email')}
+              placeholder="Email"
+              error={emailErr?.length > 0} // Kiểm tra lỗi trực tiếp
+            />
             {!player && (
-              <div
-                className={cx('form__group', 'field', {
-                  err: checkErr('password'),
-                })}
-              >
-                <input
-                  required=""
-                  placeholder="Password"
-                  id="password"
-                  className={cx('form__field')}
-                  autoComplete="off"
-                  type="password"
-                  value={password}
-                  onChange={(e) => changeInput(e, 'password')}
-                ></input>
-                <label className={cx('form__label')} htmlFor="password">
-                  <span>*</span> Password:
-                </label>
-              </div>
+              <FormInputGroup
+                id="password"
+                label="Password"
+                type="password"
+                value={password}
+                onChange={(e) => changeInput(e, 'password')}
+                placeholder="Password"
+                error={passwordErr?.length > 0} // Kiểm tra lỗi trực tiếp
+              />
             )}
-            <div
-              className={cx('form__group', 'field', 'section-type', {
-                err: checkErr('nationality'),
-              })}
-            >
-              <select
-                value={selectedOption}
-                name="nationality"
-                id="nationality"
-                className={cx('nationality')}
-                onChange={(e) => changeInput(e, 'nationality')}
-              >
-                <option value="">{nationality || player?.nationality || 'Select nationality'}</option>
-                {countries.map((country, index) => (
-                  <option key={index} value={country.value.toLowerCase()}>
-                    {country.text}
-                  </option>
-                ))}
-              </select>
-              <label className={cx('form__label')} htmlFor="nationality">
-                <span>*</span> Nationality:
-              </label>
-            </div>
+            <SelectInput
+              label="Nationality"
+              id="nationality"
+              options={countries.map((country, index) => ({ value: country.value.toLowerCase(), label: country.text }))}
+              value={selectedOption}
+              onChange={(e) => changeInput(e, 'nationality')}
+              error={nationalityErr?.length > 0}
+            />
             <div className={cx('row')}>
               <div className={cx('col-md-6')}>
-                <div
-                  className={cx('form__group', 'field', {
-                    err: checkErr('jersey_number'),
-                  })}
-                >
-                  <input
-                    required=""
-                    onChange={(e) => changeInput(e, 'jersey_number')}
-                    value={jersey_number}
-                    name="jersey_number"
-                    placeholder="jersey_number"
-                    id="jersey_number"
-                    className={cx('form__field')}
-                    type="number"
-                  ></input>
-                  <label className={cx('form__label')} htmlFor="jersey_number">
-                    <span>*</span> Jersey number:
-                  </label>
-                </div>
+                <FormInputGroup
+                  id="jersey_number"
+                  label="Jersey number"
+                  type="number"
+                  value={jersey_number}
+                  onChange={(e) => changeInput(e, 'jersey_number')}
+                  placeholder="Jersey number"
+                  error={jerseyNumberErr?.length > 0} // Kiểm tra lỗi trực tiếp
+                />
               </div>
               <div className={cx('col-md-6')}>
-                <div
-                  className={cx('form__group', 'field', 'section-type', {
-                    err: checkErr('position'),
-                  })}
-                >
-                  <select
-                    value={position}
-                    name="position"
-                    id="position"
-                    className={cx('position')}
-                    onChange={(e) => changeInput(e, 'position')}
-                  >
-                    <option value="">Select position</option>
-                    <option value="Goalkeeper">Goalkeeper</option>
-                    <option value="Defender">Defender</option>
-                    <option value="Midfielder">Midfielder</option>
-                    <option value="Forward">Forward</option>
-                  </select>
-                  <label className={cx('form__label')} htmlFor="position">
-                    <span>*</span> Position:
-                  </label>
-                </div>
+                <SelectInput
+                  label="Position"
+                  id="position"
+                  options={[
+                    { value: 'Goalkeeper', label: 'Goalkeeper' },
+                    { value: 'Defender', label: 'Defender' },
+                    { value: 'Midfielder', label: 'Midfielder' },
+                    { value: 'Forward', label: 'Forward' },
+                  ]}
+                  value={position}
+                  onChange={(e) => changeInput(e, 'position')}
+                  error={positionErr?.length > 0}
+                />
               </div>
             </div>
             <div
               className={cx('form__group', 'field', {
-                err: checkErr('date_of_birth'),
+                err: dateOfBirthErr?.length > 0,
               })}
             >
               <input
@@ -406,33 +310,16 @@ function ModalCreatePlayers({ handleClose, handleGetAllPlayers, player, access_t
                 <span>*</span> Date of birth
               </label>
             </div>
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('image'),
-              })}
-            >
-              <input onChange={handleChangeImage} id="image" className={cx('form__field')} type="file"></input>
-              <label className={cx('form__label')} htmlFor="image">
-                <span>*</span> Select file image:
-              </label>
-            </div>
-            <div
-              className={cx('form__group', 'field', 'detail-err', {
-                err: checkErr('detail'),
-              })}
-            >
-              <textarea
-                onChange={(e) => changeInput(e, 'detail')}
-                id="detail"
-                name="detail"
-                value={detail}
-                className={cx('form__field', 'detail')}
-                autoComplete="off"
-              ></textarea>
-              <label className={cx('form__label')} htmlFor="detail">
-                Detail:
-              </label>
-            </div>
+            <FileInput label="Select file image" onChange={handleChangeImage} error={imageErr?.length > 0} />
+            <FormInputGroup
+              id="detail"
+              label="Detail"
+              type="textarea"
+              value={detail}
+              onChange={(e) => changeInput(e, 'detail')}
+              placeholder="Detail"
+              error={detailErr?.length > 0}
+            />
           </Form>
         </Modal.Body>
         <Modal.Footer>

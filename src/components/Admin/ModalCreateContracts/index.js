@@ -3,12 +3,14 @@ import Button from 'react-bootstrap/Button';
 import ToastMassage from '../ToastMassage';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import style from './ModalCreateContracts.module.scss';
+import style from '../FormInputGroup/FormInputGroup.module.scss';
 import classNames from 'classnames/bind';
 import adminService from '~/services/adminService';
 import Loader from '~/components/Loader';
 import TableErrors from '../TableErrors';
 import { baseUrl } from '~/axios';
+import FormInputGroup from '../FormInputGroup';
+import SelectInput from '../SelectInput';
 
 const cx = classNames.bind(style);
 
@@ -79,33 +81,6 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
     setSalaryErr('');
     setPdfErr('');
     setTypeErr(''); // Reset typeErr
-  };
-
-  const checkErr = (type) => {
-    switch (type) {
-      case 'user_id': {
-        return userIdErr?.length > 0;
-      }
-      case 'date_created': {
-        return dateCreatedErr?.length > 0;
-      }
-      case 'expiration_date': {
-        return expirationDateErr?.length > 0;
-      }
-      case 'salary': {
-        return salaryErr?.length > 0;
-      }
-      case 'pdf': {
-        return pdfErr?.length > 0;
-      }
-      case 'type': {
-        // Thêm xử lý cho type
-        return typeErr?.length > 0;
-      }
-      default: {
-        break;
-      }
-    }
   };
 
   const validateErrors = (errors) => {
@@ -205,112 +180,63 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
         </Modal.Header>
         <Modal.Body className={cx('modal-body')}>
           <Form>
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('user_id'),
-              })}
-            >
-              <select
-                required=""
-                id="user_id"
-                className={cx('form__field')}
-                value={user_id}
-                onChange={(e) => changeInput(e, 'user_id')}
-              >
-                <option value="">Select User</option>
-                {users.slice(1).map((user) => (
-                  <option key={user.id} value={user.user_id} style={{ backgroundImage: `url(${baseUrl}${user.image}` }}>
-                    {user.name}
-                  </option>
-                ))}
-              </select>
-              <label className={cx('form__label')} htmlFor="user_id">
-                <span>*</span> User:
-              </label>
-            </div>
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('type'),
-              })}
-            >
-              <select id="type" className={cx('form__field')} value={type} onChange={(e) => changeInput(e, 'type')}>
-                <option value="">Select Type</option>
-                <option value="advertisement">Advertisement</option>
-                <option value="individual">Individual</option>
-                <option value="sponsorship">Sponsorship</option>
-                <option value="rental">Rental</option>
-              </select>
-              <label className={cx('form__label')} htmlFor="type">
-                <span>*</span> Type:
-              </label>
-            </div>
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('date_created'),
-              })}
-            >
-              <input
-                required=""
-                placeholder="Date Created"
-                id="date_created"
-                className={cx('form__field')}
-                autoComplete="off"
-                type="date"
-                value={date_created}
-                onChange={(e) => changeInput(e, 'date_created')}
-              ></input>
-              <label className={cx('form__label')} htmlFor="date_created">
-                <span>*</span> Date Created:
-              </label>
-            </div>
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('expiration_date'),
-              })}
-            >
-              <input
-                required=""
-                placeholder="Expiration Date"
-                id="expiration_date"
-                className={cx('form__field')}
-                autoComplete="off"
-                type="date"
-                value={expiration_date}
-                onChange={(e) => changeInput(e, 'expiration_date')}
-              ></input>
-              <label className={cx('form__label')} htmlFor="expiration_date">
-                <span>*</span> Expiration Date:
-              </label>
-            </div>
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('salary'),
-              })}
-            >
-              <input
-                required=""
-                placeholder="Salary"
-                id="salary"
-                className={cx('form__field')}
-                autoComplete="off"
-                type="number"
-                value={salary}
-                onChange={(e) => changeInput(e, 'salary')}
-              ></input>
-              <label className={cx('form__label')} htmlFor="salary">
-                <span>*</span> Salary:
-              </label>
-            </div>
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('pdf'),
-              })}
-            >
-              <input onChange={handleChangePdf} id="pdf" className={cx('form__field')} type="file"></input>
-              <label className={cx('form__label')} htmlFor="pdf">
-                <span>*</span> Select PDF file:
-              </label>
-            </div>
+            <SelectInput
+              id="user_id"
+              label="User"
+              options={users.slice(1).map((user) => ({
+                value: user.user_id,
+                label: user.name,
+                style: { backgroundImage: `url(${baseUrl}${user.image}` },
+              }))}
+              value={user_id}
+              onChange={(e) => changeInput(e, 'user_id')}
+              error={userIdErr?.length > 0}
+            />
+            <SelectInput
+              label="Type"
+              id="type"
+              options={[
+                { value: 'advertisement', label: 'Advertisement' },
+                { value: 'individual', label: 'Individual' },
+                { value: 'sponsorship', label: 'Sponsorship' },
+                { value: 'rental', label: 'Rental' },
+              ]}
+              value={type}
+              onChange={(e) => changeInput(e, 'type')}
+              error={typeErr?.length > 0}
+            />
+            <FormInputGroup
+              id="date_created"
+              label="Date Created"
+              type="date"
+              value={date_created}
+              onChange={(e) => changeInput(e, 'date_created')}
+              error={dateCreatedErr?.length > 0}
+            />
+            <FormInputGroup
+              id="expiration_date"
+              label="Expiration Date"
+              type="date"
+              value={expiration_date}
+              onChange={(e) => changeInput(e, 'expiration_date')}
+              error={expirationDateErr?.length > 0}
+            />
+            <FormInputGroup
+              id="salary"
+              label="Salary"
+              type="number"
+              value={salary}
+              placeholder="salary"
+              onChange={(e) => changeInput(e, 'salary')}
+              error={salaryErr?.length > 0}
+            />
+            <FormInputGroup
+              id="pdf"
+              label="Select PDF file"
+              type="file"
+              onChange={handleChangePdf}
+              error={pdfErr?.length > 0}
+            />
           </Form>
         </Modal.Body>
         <Modal.Footer>

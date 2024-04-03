@@ -3,11 +3,14 @@ import Button from 'react-bootstrap/Button';
 import ToastMassage from '../ToastMassage';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import style from './ModalCreateCoaches.module.scss';
+import style from '../FormInputGroup/FormInputGroup.module.scss';
 import classNames from 'classnames/bind';
 import adminService from '~/services/adminService';
 import Loader from '~/components/Loader';
 import TableErrors from '../TableErrors';
+import FormInputGroup from '../FormInputGroup';
+import FileInput from '../FileInput/FileInput';
+import SelectInput from '../SelectInput';
 
 const cx = classNames.bind(style);
 
@@ -106,41 +109,13 @@ function ModalCreateCoaches({ handleClose, handleGetAllCoaches, coach, access_to
     setSelectedOption('');
   };
 
-  const checkErr = (type) => {
-    switch (type) {
-      case 'name': {
-        return nameErr?.length > 0;
-      }
-      case 'email': {
-        return emailErr?.length > 0;
-      }
-      case 'password': {
-        return passwordErr?.length > 0;
-      }
-      case 'date_of_birth': {
-        return dateOfBirthErr?.length > 0;
-      }
-      case 'nationality': {
-        return nationalityErr?.length > 0;
-      }
-      case 'image': {
-        return imageErr?.length > 0;
-      }
-      case 'detail': {
-        return detailErr?.length > 0;
-      }
-      default: {
-        break;
-      }
-    }
-  };
-
   const validateErrors = (errors) => {
     setNameErr(errors.name);
     setEmailErr(errors.email);
     setPasswordErr(errors.password);
     setDateOfBirthErr(errors.date_of_birth);
     setNationalityErr(errors.nationality);
+    setPositionErr(errors.position);
     setImageErr(errors.image);
     setDetailErr(errors.detail);
   };
@@ -241,161 +216,90 @@ function ModalCreateCoaches({ handleClose, handleGetAllCoaches, coach, access_to
         </Modal.Header>
         <Modal.Body className={cx('modal-body')}>
           <Form>
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('name'),
-              })}
-            >
-              <input
-                required=""
-                placeholder="Name"
-                id="name"
-                className={cx('form__field')}
-                autoComplete="off"
-                type="input"
-                value={name}
-                onChange={(e) => changeInput(e, 'name')}
-              ></input>
-              <label className={cx('form__label')} htmlFor="name">
-                <span>*</span> Name:
-              </label>
-            </div>
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('email'),
-              })}
-            >
-              <input
-                required=""
-                placeholder="Email"
-                id="email"
-                className={cx('form__field')}
-                autoComplete="off"
-                type="input"
-                value={email}
-                onChange={(e) => changeInput(e, 'email')}
-              ></input>
-              <label className={cx('form__label')} htmlFor="email">
-                <span>*</span> Email Address:
-              </label>
-            </div>
+            <FormInputGroup
+              id="name"
+              label="Name"
+              type="text"
+              value={name}
+              onChange={(e) => changeInput(e, 'name')}
+              required
+              placeholder="Enter your name"
+              error={nameErr?.length > 0}
+            />
+            <FormInputGroup
+              id="email"
+              label="Email Address"
+              type="email"
+              value={email}
+              onChange={(e) => changeInput(e, 'email')}
+              required
+              placeholder="Enter your email address"
+              error={emailErr?.length > 0}
+            />
             {!coach && (
-              <div
-                className={cx('form__group', 'field', {
-                  err: checkErr('password'),
-                })}
-              >
-                <input
-                  required=""
-                  placeholder="Password"
-                  id="password"
-                  className={cx('form__field')}
-                  autoComplete="off"
-                  type="password"
-                  value={password}
-                  onChange={(e) => changeInput(e, 'password')}
-                ></input>
-                <label className={cx('form__label')} htmlFor="password">
-                  <span>*</span> Password:
-                </label>
-              </div>
+              <FormInputGroup
+                id="password"
+                label="Password"
+                type="password"
+                value={password}
+                onChange={(e) => changeInput(e, 'password')}
+                required
+                placeholder="Enter your password"
+                error={passwordErr?.length > 0}
+              />
             )}
             <div className={cx('row')}>
               <div className={cx('col-md-6')}>
-                <div
-                  className={cx('form__group', 'field', 'section-type', {
-                    err: checkErr('nationality'),
-                  })}
-                >
-                  <select
-                    value={selectedOption}
-                    name="nationality"
-                    id="nationality"
-                    className={cx('nationality')}
-                    onChange={(e) => changeInput(e, 'nationality')}
-                  >
-                    <option value="">{nationality || coach?.nationality || 'Select nationality'}</option>
-                    {countries.map((country, index) => (
-                      <option key={index} value={country.value.toLowerCase()}>
-                        {country.text}
-                      </option>
-                    ))}
-                  </select>
-                  <label className={cx('form__label')} htmlFor="nationality">
-                    <span>*</span> Nationality:
-                  </label>
-                </div>
+                <SelectInput
+                  id="nationality"
+                  label="Nationality"
+                  options={countries.map((country) => ({
+                    value: country.value.toLowerCase(),
+                    label: country.text,
+                  }))}
+                  value={selectedOption}
+                  onChange={(e) => changeInput(e, 'nationality')}
+                  error={nationalityErr?.length > 0}
+                />
               </div>
               <div className={cx('col-md-6')}>
-                <div
-                  className={cx('form__group', 'field', 'section-type', {
-                    err: checkErr('position'),
-                  })}
-                >
-                  <select
-                    value={position}
-                    name="position"
-                    id="position"
-                    className={cx('position')}
-                    onChange={(e) => changeInput(e, 'position')}
-                  >
-                    <option value="">Select position</option>
-                    <option value="head">Head</option>
-                    <option value="assistant">Assistant</option>
-                    <option value="rehabilitation">Rehabilitation</option>
-                    <option value="fitness">Fitness</option>
-                  </select>
-                  <label className={cx('form__label')} htmlFor="position">
-                    <span>*</span> Position:
-                  </label>
-                </div>
+                <SelectInput
+                  id="position"
+                  label="Position"
+                  options={[
+                    { value: 'head', label: 'Head' },
+                    { value: 'assistant', label: 'Assistant' },
+                    { value: 'rehabilitation', label: 'Rehabilitation' },
+                    { value: 'fitness', label: 'Fitness' },
+                  ]}
+                  value={position}
+                  onChange={(e) => changeInput(e, 'position')}
+                  error={positionErr?.length > 0}
+                />
               </div>
             </div>
 
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('date_of_birth'),
-              })}
-            >
-              <input
-                onChange={(e) => changeInput(e, 'date_of_birth')}
-                id="date_of_birth"
-                className={cx('form__field')}
-                type="date"
-                value={date_of_birth}
-                autoComplete="off"
-              ></input>
-              <label className={cx('form__label')} htmlFor="date_of_birth">
-                <span>*</span> Date of birth
-              </label>
-            </div>
-            <div
-              className={cx('form__group', 'field', {
-                err: checkErr('image'),
-              })}
-            >
-              <input onChange={handleChangeImage} id="image" className={cx('form__field')} type="file"></input>
-              <label className={cx('form__label')} htmlFor="image">
-                <span>*</span> Select file image:
-              </label>
-            </div>
-            <div
-              className={cx('form__group', 'field', 'detail-err', {
-                err: checkErr('detail'),
-              })}
-            >
-              <textarea
-                onChange={(e) => changeInput(e, 'detail')}
-                id="detail"
-                name="detail"
-                value={detail}
-                className={cx('form__field', 'detail')}
-                autoComplete="off"
-              ></textarea>
-              <label className={cx('form__label')} htmlFor="detail">
-                Detail:
-              </label>
-            </div>
+            <FormInputGroup
+              id="date_of_birth"
+              label="Date of birth"
+              type="date"
+              value={date_of_birth}
+              onChange={(e) => changeInput(e, 'date_of_birth')}
+              placeholder="Select your date of birth"
+              error={dateOfBirthErr?.length > 0}
+            />
+            <FileInput label="Select file image" onChange={handleChangeImage} error={imageErr?.length > 0} />
+            <FormInputGroup
+              id="detail"
+              label="Detail"
+              type="textarea"
+              value={detail}
+              onChange={(e) => changeInput(e, 'detail')}
+              className={cx('detail')}
+              autoComplete="off"
+              placeholder="Enter details"
+              error={detailErr?.length > 0}
+            />
           </Form>
         </Modal.Body>
         <Modal.Footer>
