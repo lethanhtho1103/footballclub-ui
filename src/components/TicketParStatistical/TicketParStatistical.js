@@ -1,13 +1,13 @@
-import UserParChart from '../UserParChart/UserParChart';
+import TicketParChart from '../TicketParChart/TicketParChart';
 import { useState } from 'react';
 
 // Scss
-import styles from './UserParStatistical.module.scss';
+import styles from './TicketParStatistical.module.scss';
 import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);
 
-function UserParStatistical() {
+function TicketParStatistical() {
   const currentYear = new Date().getFullYear();
   const startYear = 2010;
   const [selectedYear, setSelectedYear] = useState(currentYear);
@@ -43,9 +43,9 @@ function UserParStatistical() {
           {yearOptions}
         </select>
       </div>
-      <UserParChart year={selectedYear} />
+      <TicketParChart year={selectedYear} />
     </div>
   );
 }
 
-export default UserParStatistical;
+export default TicketParStatistical;

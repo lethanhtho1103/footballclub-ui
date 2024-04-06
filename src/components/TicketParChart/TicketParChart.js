@@ -14,7 +14,7 @@ import {
 import adminService from '~/services/adminService';
 
 // scss
-import styles from './UserParChart.module.scss';
+import styles from './TicketParChart.module.scss';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -22,7 +22,7 @@ import TableShowTicketMonth from '../Admin/TableShowTicketMonth';
 const cx = classNames.bind(styles);
 
 ChartJS.register(ChartDataLabels, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
-function UserParChart({ year = new Date().getFullYear() - 1 }) {
+function TicketParChart({ year = new Date().getFullYear() - 1 }) {
   const [dataPar, setDataPar] = useState([]);
   const [month, setMonth] = useState(0);
   const options = {
@@ -162,4 +162,4 @@ function UserParChart({ year = new Date().getFullYear() - 1 }) {
   );
 }
 
-export default UserParChart;
+export default TicketParChart;

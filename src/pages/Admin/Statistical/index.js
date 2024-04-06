@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { UilEstate } from '@iconscout/react-unicons';
-// import NavLeft from '~/components/NavLeft';
 import { useSelector } from 'react-redux';
 import { isLoginSelector } from '~/redux/selector';
 import classNames from 'classnames/bind';
@@ -9,8 +7,7 @@ import styles from './Statistical.module.scss';
 import { AdminLayout } from '~/layouts';
 
 import { Tab, Tabs } from 'react-bootstrap';
-import UserParStatistical from '~/components/UserParStatistical/UserParStatistical';
-// import CornWaterStatistical from '~/components/CornWaterStatistical/CornWaterStatistical';
+import TicketParStatistical from '~/components/TicketParStatistical/TicketParStatistical';
 
 const cx = classNames.bind(styles);
 
@@ -51,17 +48,8 @@ function Statistical() {
               })}
               title="Ticket revenue"
             >
-              <UserParStatistical />
+              <TicketParStatistical />
             </Tab>
-            {/* <Tab
-              eventKey="post"
-              title="Doanh thu bắp nước"
-              tabClassName={cx({
-                active: activeTab === 'post',
-              })}
-            >
-              <CornWaterStatistical />
-            </Tab> */}
           </Tabs>
         </div>
       </div>
