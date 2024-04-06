@@ -14,7 +14,6 @@ import Loader from '~/components/Loader';
 import { useSelector } from 'react-redux';
 import { accessTokenSelector } from '~/redux/selector';
 
-
 const cx = classNames.bind(style);
 
 function TableShowMatches() {
@@ -47,66 +46,64 @@ function TableShowMatches() {
     { Header: 'Host', accessor: 'host', filter: 'fuzzyText' },
     { Header: 'Remaining Seats', accessor: 'remaining_seats', filter: 'fuzzyText' },
     { Header: 'Actions', accessor: 'col8', disableSortBy: true },
-];
+  ];
 
-
-const convertToDataRow = (row) => {
-  const dataRow = row.map((row, index) => {
-    return {
-      match_id: row.game_id,
-      stadium: row.stadium.name,
-      rival_team: row.club.name,
-      game_time: row.game_time + row.game_date,
-      goals_scored: row.goals_scored,
-      goals_conceded: row.goals_conceded,
-      result: row.result,
-      state: row.state,
-      host: row.host,
-      remaining_seats: row.remaining_seats,
-      col8: (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-around',
-          }}
-        >
-          <Button
+  const convertToDataRow = (row) => {
+    const dataRow = row.map((row, index) => {
+      return {
+        match_id: row.game_id,
+        stadium: row.stadium.name,
+        rival_team: row.club.name,
+        game_time: row.game_time + row.game_date,
+        goals_scored: row.goals_scored,
+        goals_conceded: row.goals_conceded,
+        result: row.result,
+        state: row.state,
+        host: row.host,
+        remaining_seats: row.remaining_seats,
+        col8: (
+          <div
             style={{
-              padding: '4px 10px',
-              backgroundColor: '#5E5DF0',
-              color: '#fff',
-              borderRadius: '8px',
-              borderColor: '#5E5DF0',
+              display: 'flex',
+              justifyContent: 'space-around',
             }}
-            onMouseOver={(e) => (e.target.style.opacity = 0.8)}
-            onMouseOut={(e) => (e.target.style.opacity = 1)}
-            onClick={() => handleUpdateMatch(row.game_id)} // Sử dụng match_id thay vì match_id
           >
-            <UilEditAlt size={18} />
-          </Button>
-          <Button
-            style={{
-              padding: '4px 8px',
-              backgroundColor: '#FF4742',
-              color: '#fff',
-              borderRadius: '8px',
-              borderColor: '#FF4742',
-            }}
-            onMouseOver={(e) => (e.target.style.opacity = 0.8)}
-            onMouseOut={(e) => (e.target.style.opacity = 1)}
-            onClick={() => handleShowDeleteConfirmationDialog(row.game_id, row.name)} // Sử dụng match_id thay vì match_id
-          >
-            <UilTimes size={18} />
-          </Button>
-        </div>
-      ),
-    };
-  });
-  setRow(dataRow);
-};
+            <Button
+              style={{
+                padding: '4px 10px',
+                backgroundColor: '#5E5DF0',
+                color: '#fff',
+                borderRadius: '8px',
+                borderColor: '#5E5DF0',
+              }}
+              onMouseOver={(e) => (e.target.style.opacity = 0.8)}
+              onMouseOut={(e) => (e.target.style.opacity = 1)}
+              onClick={() => handleUpdateMatch(row.game_id)} // Sử dụng match_id thay vì match_id
+            >
+              <UilEditAlt size={18} />
+            </Button>
+            <Button
+              style={{
+                padding: '4px 8px',
+                backgroundColor: '#FF4742',
+                color: '#fff',
+                borderRadius: '8px',
+                borderColor: '#FF4742',
+              }}
+              onMouseOver={(e) => (e.target.style.opacity = 0.8)}
+              onMouseOut={(e) => (e.target.style.opacity = 1)}
+              onClick={() => handleShowDeleteConfirmationDialog(row.game_id, row.name)} // Sử dụng match_id thay vì match_id
+            >
+              <UilTimes size={18} />
+            </Button>
+          </div>
+        ),
+      };
+    });
+    setRow(dataRow);
+  };
 
-
-  // 
+  //
   const handleGetAllStadiums = async () => {
     const res = await adminService.getAllStadiums();
     setStadiums(res.stadiums);
@@ -117,7 +114,7 @@ const convertToDataRow = (row) => {
     setClubs(res.clubs);
   };
   //
-  
+
   const handleGetAllMatches = async () => {
     const res = await adminService.getAllMatches();
     convertToDataRow(res.matches);

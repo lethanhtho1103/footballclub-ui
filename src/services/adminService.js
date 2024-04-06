@@ -144,7 +144,7 @@ const adminService = {
     return res.data;
   },
 
-  //Clubs 
+  //Clubs
   async getAllClubs() {
     try {
       const res = await axios.get('/api/clubs');
@@ -275,7 +275,6 @@ const adminService = {
   },
 
   // Contracts
-
   async getAllContracts() {
     try {
       const res = await axios.get('/api/contracts');
@@ -423,6 +422,24 @@ const adminService = {
     return res.data;
   },
 
+  //Statistical
+  async getStatisticalByYear(year) {
+    try {
+      const res = await axios.get(`/api/revenue-per-month?year=${year}`);
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async getStatisticalByMonth(month, year) {
+    try {
+      const res = await axios.get(`api/gameTickets?month=${month}&year=${year}`);
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
 };
 
 export default adminService;

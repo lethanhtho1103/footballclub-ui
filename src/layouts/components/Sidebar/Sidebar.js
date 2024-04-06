@@ -28,7 +28,6 @@ function Sidebar() {
             { label: 'Contracts', to: '/admin/management/contracts' },
           ]}
         />
-
         <MenuItem
           title="Matches Management"
           to="/admin/management/clubs"
