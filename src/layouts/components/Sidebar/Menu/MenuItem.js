@@ -58,7 +58,6 @@
 
 // export default MenuItem;
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { NavLink, useLocation } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import style from './Menu.module.scss';
@@ -124,17 +123,5 @@ function MenuItem({ to, title, icon, subMenuItems }) {
     </NavLink>
   );
 }
-
-MenuItem.propTypes = {
-  to: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  icon: PropTypes.node.isRequired,
-  subMenuItems: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      to: PropTypes.string.isRequired,
-    }),
-  ),
-};
 
 export default MenuItem;

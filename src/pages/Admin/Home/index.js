@@ -8,6 +8,7 @@ const cx = classNames.bind(style);
 
 function Home() {
   const links = [
+    { name: 'DASHBOARD', to: '/admin/dashboard' },
     { name: 'USERS MANAGEMENT', to: '/admin/management/players' },
     { name: 'MATCHES MANAGEMENT', to: '/admin/matches-management' },
     { name: 'STATISTICAL', to: '/admin/statistical' },

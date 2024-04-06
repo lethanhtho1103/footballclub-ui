@@ -1,0 +1,62 @@
+.contentPage {
+  padding: 30px 20px 20px 20px;
+  background-color: #eae2e24a;
+  padding-bottom: 50px;
+  border-radius: 10px;
+  height: 100%;
+}
+
+.listCard {
+  border-radius: 10px;
+}
+
+.cardInfo {
+  display: grid;
+  grid-template-columns: 80px auto;
+  padding: 10px;
+  border: 1px solid rgba(194, 194, 197, 0.574);
+  height: 120px;
+  width: 250px;
+  margin: 10px auto;
+  border-radius: 10px;
+  transition: 0.2s;
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.cardInfo:hover {
+  transform: scale(1.02);
+  box-shadow: 0px 0px 5px #e67524f2;
+}
+
+.leftCard {
+  display: flex;
+  margin: auto;
+
+  .iconCard {
+    border-radius: 50%;
+    font-size: 26px;
+    color: #ffb21e;
+    background-color: #fef1cf;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.rightCard {
+  margin: auto 0px auto 2px;
+
+  .numberCard {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .nameCard {
+    font-size: 20px;
+    color: #fff;
+  }
+}

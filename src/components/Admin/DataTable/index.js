@@ -16,13 +16,10 @@ function DataTable({ data, columns }) {
     return matchSorter(rows, filterValue, { keys: [(row) => row.values[id]] });
   }
 
-  // Let the table remove the filter if the string is empty
   fuzzyTextFilterFn.autoRemove = (val) => !val;
   const filterTypes = useMemo(
     () => ({
-      // Add a new fuzzyTextFilterFn filter type.
       fuzzyText: fuzzyTextFilterFn,
-      // Or, override the default text filter to use
       text: (rows, id, filterValue) => {
         return rows.filter((row) => {
           const rowValue = row.values[id];

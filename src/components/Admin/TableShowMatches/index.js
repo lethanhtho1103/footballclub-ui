@@ -65,7 +65,7 @@ function TableShowMatches() {
           <div
             style={{
               display: 'flex',
-              justifyContent: 'space-around',
+              justifyContent: 'space-between',
             }}
           >
             <Button
@@ -75,6 +75,7 @@ function TableShowMatches() {
                 color: '#fff',
                 borderRadius: '8px',
                 borderColor: '#5E5DF0',
+                marginRight: '8px',
               }}
               onMouseOver={(e) => (e.target.style.opacity = 0.8)}
               onMouseOut={(e) => (e.target.style.opacity = 1)}

@@ -45,22 +45,29 @@ function TableShowClubs() {
         col1: row.club_id,
         col2: row.name,
         col3: (
-          <img
-            src={row.image?.length > 9 ? `${baseUrl}${row.image}` : noAvatar}
-            alt=""
+          <div
             style={{
-              width: '48px',
-              height: '48px',
-              display: 'block',
-              borderRadius: '50%',
+              display: 'flex',
+              justifyContent: 'center',
             }}
-          />
+          >
+            <img
+              src={row.image?.length > 9 ? `${baseUrl}${row.image}` : noAvatar}
+              alt=""
+              style={{
+                width: '48px',
+                height: '48px',
+                display: 'block',
+                borderRadius: '50%',
+              }}
+            />
+          </div>
         ),
         col4: (
           <div
             style={{
               display: 'flex',
-              justifyContent: 'space-around',
+              justifyContent: 'space-evenly',
             }}
           >
             <Button

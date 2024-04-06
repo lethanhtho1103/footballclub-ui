@@ -41,31 +41,6 @@
     color: #333;
     font-weight: 600;
     line-height: 24px;
-
-    .btn-actions {
-      margin-top: 10px;
-      margin-bottom: 10px;
-      .btn-add {
-        display: flex;
-        align-items: center;
-        background-color: #c2fbd7;
-        border-radius: 100px;
-        color: green;
-        cursor: pointer;
-        padding: 7px 20px;
-        text-align: center;
-        text-decoration: none;
-        transition: all 250ms;
-        border: 0;
-        font-size: 16px;
-        user-select: none;
-        -webkit-user-select: none;
-        touch-action: manipulation;
-        &:hover {
-          transform: scale(1.01) translateY(-2px);
-        }
-      }
-    }
   }
 
   .table {

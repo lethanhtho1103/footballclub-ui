@@ -23,6 +23,7 @@ import StadiumsManagement from '~/pages/Admin/Stadiums';
 import ContractsManagement from '~/pages/Admin/Contracts';
 
 import Test from '~/test';
+import Dashboard from '~/pages/Admin/Dashboard';
 const publicRoutes = [
   {
     path: '/test',
@@ -83,6 +84,10 @@ const adminRoutes = [
   {
     path: '/admin',
     component: Admin,
+  },
+  {
+    path: '/admin/dashboard',
+    component: Dashboard,
   },
   // {
   //   path: '/admin/users-management',
