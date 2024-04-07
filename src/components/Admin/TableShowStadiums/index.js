@@ -3,8 +3,7 @@ import classNames from 'classnames/bind';
 import style from './TableShowStadiums.module.scss';
 import { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { UilTimes, UilEditAlt, UilPlus } from '@iconscout/react-unicons';
-// import { userService } from '~/services';
+import { UilTimes, UilEditAlt } from '@iconscout/react-unicons';
 import ModalCreateStadiums from '../ModalCreateStadiums';
 import adminService from '~/services/adminService';
 import ToastMassage from '../ToastMassage';
@@ -230,8 +229,8 @@ function TableShowStadiums() {
                     setStadium(null);
                   }}
                 >
-                  <UilPlus size={16} />
-                  <span>Add stadium</span>
+                  <span class="material-symbols-outlined">stadium</span>
+                  <span style={{ marginLeft: '4px' }}>Add stadium</span>
                 </Button>
               </div>
             </div>

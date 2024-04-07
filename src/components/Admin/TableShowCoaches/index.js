@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import style from './TableShowCoaches.module.scss';
 import { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { UilTimes, UilEditAlt, UilPlus } from '@iconscout/react-unicons';
+import { UilTimes, UilEditAlt } from '@iconscout/react-unicons';
 import { userService } from '~/services';
 import ModalCreateCoaches from '../ModalCreateCoaches';
 import adminService from '~/services/adminService';
@@ -276,8 +276,8 @@ function TableShowCoaches() {
                     setCoach(null);
                   }}
                 >
-                  <UilPlus size={16} />
-                  <span>Add coach</span>
+                  <span class="material-symbols-outlined">person_add</span>
+                  <span style={{ marginLeft: '4px' }}>Add player</span>
                 </Button>
               </div>
             </div>

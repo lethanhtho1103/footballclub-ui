@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import style from './TableShowPlayers.module.scss';
 import { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { UilTimes, UilEditAlt, UilPlus } from '@iconscout/react-unicons';
+import { UilTimes, UilEditAlt } from '@iconscout/react-unicons';
 import { userService } from '~/services';
 import ModalCreatePlayers from '../ModalCreatePlayers';
 import adminService from '~/services/adminService';
@@ -269,8 +269,8 @@ function TableShowPlayers() {
                     setPlayer(null);
                   }}
                 >
-                  <UilPlus size={16} />
-                  <span>Add player</span>
+                  <span class="material-symbols-outlined">person_add</span>
+                  <span style={{ marginLeft: '4px' }}>Add player</span>
                 </Button>
               </div>
             </div>

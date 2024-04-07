@@ -12,7 +12,6 @@ import Tickets from '~/pages/User/Tickets';
 import Results from '~/pages/User/Results';
 import Statistical from '~/pages/Admin/Statistical';
 // import UsersManagement from '~/pages/Admin/UsersManagement';
-// import MatchesManagement from '~/pages/Admin/MatchesManager';
 import MatchesManagement from '~/pages/Admin/Matches';
 import CoachManagement from '~/pages/Admin/Coach';
 import PlayersManagement from '~/pages/Admin/Players';
@@ -24,6 +23,7 @@ import ContractsManagement from '~/pages/Admin/Contracts';
 
 import Test from '~/test';
 import Dashboard from '~/pages/Admin/Dashboard';
+import TicketsManagement from '~/pages/Admin/TicketsManagement';
 const publicRoutes = [
   {
     path: '/test',
@@ -100,6 +100,10 @@ const adminRoutes = [
   {
     path: '/admin/management/stadiums',
     component: StadiumsManagement,
+  },
+  {
+    path: '/admin/tickets-management',
+    component: TicketsManagement,
   },
   {
     path: '/admin/management/matches',

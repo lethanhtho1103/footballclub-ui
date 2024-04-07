@@ -1,11 +1,8 @@
 import classNames from 'classnames/bind';
 import styles from './Sidebar.module.scss';
 import Menu, { MenuItem } from './Menu';
-import { BallIcon, Statistical, PlayerIcon } from '~/components/Admin/Icons';
 import { Link } from 'react-router-dom';
 import logo from '~/assets/images/logo.svg';
-
-// import SuggestedAccounts from '~/components/SuggestedAccounts';
 
 const cx = classNames.bind(styles);
 
@@ -26,7 +23,7 @@ function Sidebar() {
       <MenuItem
         title="Users Management"
         to="/admin/management/players"
-        icon={<PlayerIcon />}
+        icon={<span class="material-symbols-outlined">group</span>}
         subMenuItems={[
           { label: 'Users', to: '/admin/management/users' },
           { label: 'Players', to: '/admin/management/players' },
@@ -37,17 +34,25 @@ function Sidebar() {
       <MenuItem
         title="Matches Management"
         to="/admin/management/clubs"
-        icon={<BallIcon />}
+        icon={<span class="material-symbols-outlined">sports_soccer</span>}
         subMenuItems={[
           { label: 'Clubs', to: '/admin/management/clubs' },
           { label: 'Stadiums', to: '/admin/management/stadiums' },
           { label: 'Matches', to: '/admin/management/matches' },
         ]}
       />
-      <MenuItem title="Statistical" to="/admin/statistical" icon={<Statistical />} />
-
-      {/* <SuggestedAccounts label="Suggest Account" />
-      <SuggestedAccounts label="Following accounts" /> */}
+      <Menu>
+        <MenuItem
+          title="Tickets Management"
+          to="/admin/tickets-management"
+          icon={<span class="material-symbols-outlined">local_activity</span>}
+        />
+      </Menu>
+      <MenuItem
+        title="Statistical"
+        to="/admin/statistical"
+        icon={<span class="material-symbols-outlined">monitoring</span>}
+      />
     </div>
   );
 }

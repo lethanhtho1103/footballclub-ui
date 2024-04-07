@@ -3,8 +3,7 @@ import classNames from 'classnames/bind';
 import style from './TableShowContracts.module.scss';
 import { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { UilTimes, UilEditAlt, UilPlus } from '@iconscout/react-unicons';
-// import { userService } from '~/services';
+import { UilTimes, UilEditAlt } from '@iconscout/react-unicons';
 import ModalCreateContracts from '../ModalCreateContracts';
 import adminService from '~/services/adminService';
 import ToastMassage from '../ToastMassage';
@@ -13,7 +12,6 @@ import { baseUrl } from '~/axios';
 import noAvatar from '~/assets/images/no-avatar.png';
 import { useSelector } from 'react-redux';
 import { accessTokenSelector } from '~/redux/selector';
-
 
 const cx = classNames.bind(style);
 
@@ -73,14 +71,12 @@ function TableShowContracts() {
         col3: row.type,
         col4: row.date_created,
         col5: row.expiration_date,
-        col6: (
-          new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD'
-          }).format(row.salary)
-        ),
+        col6: new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        }).format(row.salary),
         col7: (
-          // Bam vao hien cai PDF co in an xuat ra 
+          // Bam vao hien cai PDF co in an xuat ra
           <a href={row.pdf}>PDF</a>
         ),
         col8: (
@@ -125,14 +121,14 @@ function TableShowContracts() {
     setRow(dataRow);
   };
 
-  // 
+  //
   const handleGetAllUsers = async () => {
     const res = await adminService.getAllUser();
     setUsers(res);
   };
 
   //
-  
+
   const handleGetAllContracts = async () => {
     const res = await adminService.getAllContracts();
     convertToDataRow(res.contracts);
@@ -261,8 +257,8 @@ function TableShowContracts() {
                     setContract(null);
                   }}
                 >
-                  <UilPlus size={16} />
-                  <span>Add contract</span>
+                  <span class="material-symbols-outlined">add_ad</span>
+                  <span style={{ marginLeft: '4px' }}>Add contract</span>
                 </Button>
               </div>
             </div>
@@ -285,7 +281,7 @@ function TableShowContracts() {
               access_token={access_token}
               contract={contract}
               contractId={contractId}
-              users = {users}
+              users={users}
             />
           )}
         </div>

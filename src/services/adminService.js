@@ -440,6 +440,16 @@ const adminService = {
       console.error(error);
     }
   },
+
+  // Tickets
+  async getAllTickets() {
+    try {
+      const res = await axios.get('api/tickets');
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
 };
 
 export default adminService;

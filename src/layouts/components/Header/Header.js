@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './Header.module.scss';
 import Image from '~/components/Admin/Images';
 import Menu from '~/components/Admin/Popper/Menu';
-import { Notification } from '~/components/Admin/Icons';
 import { useDispatch } from 'react-redux';
 import { userSlice } from '~/redux/reducer';
 import { useContext } from 'react';
@@ -83,7 +82,9 @@ function Header() {
           <>
             <Tippy delay={[0, 50]} content="Notification" placement="bottom">
               <button className={cx('action-btn')}>
-                <Notification />
+                <span class="material-symbols-outlined" style={{ fontSize: '3.2rem' }}>
+                  notifications
+                </span>{' '}
                 <span className={cx('badge')}>11</span>
               </button>
             </Tippy>

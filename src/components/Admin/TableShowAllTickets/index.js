@@ -1,6 +1,6 @@
 import DataTable from '~/components/Admin/DataTable';
 import classNames from 'classnames/bind';
-import style from './TableShowTicketMonth.module.scss';
+import style from './TableShowAllTickets.module.scss';
 import { useEffect, useState } from 'react';
 import { baseUrl } from '~/axios';
 import noAvatar from '~/assets/images/no-avatar.png';
@@ -8,33 +8,27 @@ import adminService from '~/services/adminService';
 
 const cx = classNames.bind(style);
 
-function TableShowTicketMonth({ month, year }) {
+function TableShowAllTickets({ month, year }) {
   const [row, setRow] = useState([]);
 
   const columns = [
     { Header: 'STT', accessor: 'col1', filter: 'fuzzyText' },
     { Header: 'Tournaments', accessor: 'col2', filter: 'fuzzyText' },
-    { Header: 'Rival club', accessor: 'col3', filter: 'fuzzyText' },
+    { Header: 'Club Away', accessor: 'col3', filter: 'fuzzyText' },
     { Header: 'Game Date', accessor: 'col4', filter: 'fuzzyText' },
-    { Header: 'Ticket sold', accessor: 'col5', filter: 'fuzzyText' },
-    { Header: 'Revenue', accessor: 'col6', filter: 'fuzzyText' },
-    { Header: 'Actions', accessor: 'col7', disableSortBy: true },
+    { Header: 'Game Time', accessor: 'col5', filter: 'fuzzyText' },
+    { Header: 'Name', accessor: 'col6', filter: 'fuzzyText' },
+    { Header: 'Seats', accessor: 'col7', filter: 'fuzzyText' },
+    { Header: 'Price', accessor: 'col8', filter: 'fuzzyText' },
   ];
 
-  const monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
+  function convertTimeFormat(timeString) {
+    var timeParts = timeString.split(':');
+    var hour = timeParts[0];
+    var minute = timeParts[1];
+    var formattedTime = hour + ':' + minute;
+    return formattedTime;
+  }
 
   const convertToDataRow = (row) => {
     const dataRow = row.map((row, index) => {
@@ -50,7 +44,7 @@ function TableShowTicketMonth({ month, year }) {
             }}
           >
             <img
-              src={row.image?.length > 9 ? `${baseUrl}${row.opponent_team_image}` : noAvatar}
+              src={row.image?.length > 9 ? `${baseUrl}${row.club_away.image}` : noAvatar}
               alt=""
               style={{
                 width: '48px',
@@ -59,27 +53,28 @@ function TableShowTicketMonth({ month, year }) {
                 borderRadius: '50%',
               }}
             />
-            <div style={{ width: '100%', textAlign: 'center' }}>{row.opponent_team}</div>
+            <div style={{ width: '100%', textAlign: 'center' }}>{row.club_away.name}</div>
           </div>
         ),
         col4: row.game_date,
-        col5: row.tickets_sold,
-        col6: row.revenue,
-        col7: 'Show detail',
+        col5: convertTimeFormat(row.game_time),
+        col6: 'Thọ',
+        col7: row.seats.map((seat) => seat.seat_id).join(', '),
+        col8: row.price,
       };
     });
     setRow(dataRow);
   };
 
-  const handleGetAllMatchOfMonth = async () => {
-    const res = await adminService.getStatisticalByMonth(month, year);
-    convertToDataRow(res.matches);
+  const handleGetAllTickets = async () => {
+    const res = await adminService.getAllTickets();
+    convertToDataRow(res.tickets);
   };
 
   useEffect(() => {
-    handleGetAllMatchOfMonth();
+    handleGetAllTickets();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [month, year]);
+  }, []);
 
   return (
     <>
@@ -90,7 +85,7 @@ function TableShowTicketMonth({ month, year }) {
       >
         <div className={cx('container-content')}>
           <div className={cx('wrap-table')}>
-            <h2 className={cx('title')}>{monthNames[month - 1]} match list</h2>
+            <h2 className={cx('title')}>List of tickets</h2>
             <div className={cx('table')}>
               <DataTable columns={columns} data={row} />
             </div>
@@ -101,4 +96,4 @@ function TableShowTicketMonth({ month, year }) {
   );
 }
 
-export default TableShowTicketMonth;
+export default TableShowAllTickets;
