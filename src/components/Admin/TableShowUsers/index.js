@@ -6,11 +6,14 @@ import { Button } from 'react-bootstrap';
 import adminService from '~/services/adminService';
 import { baseUrl } from '~/axios';
 import noAvatar from '~/assets/images/no-avatar.png';
+import ModalDetailTicket from '../ModalDetailTicket';
 
 const cx = classNames.bind(style);
 
 function TableShowUsers() {
   const [row, setRow] = useState([]);
+  const [isShowModalDetailTicket, setIsShowModalDetailTicket] = useState(false);
+  const [userId, setUserId] = useState('');
   const columns = [
     { Header: 'User_id', accessor: 'col1', filter: 'fuzzyText' },
     { Header: 'Name', accessor: 'col2', filter: 'fuzzyText' },
@@ -83,6 +86,10 @@ function TableShowUsers() {
             }}
             onMouseOver={(e) => (e.target.style.opacity = 0.8)}
             onMouseOut={(e) => (e.target.style.opacity = 1)}
+            onClick={() => {
+              setIsShowModalDetailTicket(true);
+              setUserId(row.user_id);
+            }}
           >
             Show detail
           </Button>
@@ -97,6 +104,10 @@ function TableShowUsers() {
     convertToDataRow(res.users);
   };
 
+  const handleClickX = () => {
+    setIsShowModalDetailTicket(false);
+  };
+
   useEffect(() => {
     handleGetAllUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -104,6 +115,7 @@ function TableShowUsers() {
 
   return (
     <>
+      {isShowModalDetailTicket && <ModalDetailTicket toggleX={handleClickX} userId={userId} />}
       <div
         className={cx('wrap', {
           show: true,
