@@ -22,7 +22,7 @@ function Sidebar() {
       </Menu>
       <MenuItem
         title="Users Management"
-        to="/admin/management/players"
+        to="/admin/management/users"
         icon={<span class="material-symbols-outlined">group</span>}
         subMenuItems={[
           { label: 'Users', to: '/admin/management/users' },

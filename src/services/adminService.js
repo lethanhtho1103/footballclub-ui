@@ -8,11 +8,32 @@ const adminService = {
     });
     return res.data;
   },
-  // User
+
+  // Dashboard
+  async getDashboard() {
+    try {
+      const res = await axios.get('api/count-all-users');
+      return res.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+
+  // Users
   async getAllUser() {
     try {
-      const res = await axios.get(`api/users/all`);
+      const res = await axios.get('api/users/all');
       return res.data.users;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+
+  // Accounts-users
+  async getAllAccountUsers() {
+    try {
+      const res = await axios.get('api/users');
+      return res.data;
     } catch (error) {
       console.log(error.message);
     }

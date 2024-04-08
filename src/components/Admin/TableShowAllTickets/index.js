@@ -58,7 +58,7 @@ function TableShowAllTickets({ month, year }) {
         ),
         col4: row.game_date,
         col5: convertTimeFormat(row.game_time),
-        col6: 'Thọ',
+        col6: row.user_name,
         col7: row.seats.map((seat) => seat.seat_id).join(', '),
         col8: row.price,
       };

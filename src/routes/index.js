@@ -23,7 +23,8 @@ import ContractsManagement from '~/pages/Admin/Contracts';
 
 import Test from '~/test';
 import Dashboard from '~/pages/Admin/Dashboard';
-import TicketsManagement from '~/pages/Admin/TicketsManagement';
+import TicketsManagement from '~/pages/Admin/Tickets';
+import UsersManagement from '~/pages/Admin/Users';
 const publicRoutes = [
   {
     path: '/test',
@@ -89,10 +90,6 @@ const adminRoutes = [
     path: '/admin/dashboard',
     component: Dashboard,
   },
-  // {
-  //   path: '/admin/users-management',
-  //   component: UsersManagement,
-  // },
   {
     path: '/admin/management/clubs',
     component: ClubsManagement,
@@ -114,6 +111,10 @@ const adminRoutes = [
     component: ContractsManagement,
   },
   {
+    path: '/admin/management/users',
+    component: UsersManagement,
+  },
+  {
     path: '/admin/management/coach',
     component: CoachManagement,
   },
@@ -121,10 +122,7 @@ const adminRoutes = [
     path: '/admin/management/players',
     component: PlayersManagement,
   },
-  // {
-  //   path: '/admin/matches-management',
-  //   component: MatchesManagement,
-  // },
+
   {
     path: '/admin/statistical',
     component: Statistical,
