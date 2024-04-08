@@ -8,7 +8,7 @@ import adminService from '~/services/adminService';
 
 const cx = classNames.bind(style);
 
-function TableShowAllTickets({ month, year }) {
+function TableShowAllTickets() {
   const [row, setRow] = useState([]);
 
   const columns = [

@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import style from './BuyTicket.module.scss';
 import FooterUser from '~/components/User/FooterUser';
 import HeaderUser from '~/components/User/HeaderUser';
-import bg1 from '~/assets/images/bg1.webp';
+import bg1 from '~/assets/images/bg.jpg';
 import { baseUrl } from '~/axios';
 import cityLogo from '~/assets/images/manchester_city.webp';
 import { useContext, useEffect, useState } from 'react';
@@ -129,7 +129,7 @@ function BuyTicket() {
             <div className={cx('competition')}>Premier League</div>
             <div className={cx('venue')}>
               <time>{match?.game_date}</time>
-              <p>{match?.stadium.name} Stadium</p>
+              <p>{match?.stadium.name}</p>
             </div>
             <div className={cx('fixture')}>
               <div className={cx('first')}>

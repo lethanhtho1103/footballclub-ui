@@ -1,11 +1,13 @@
 import { AdminLayout } from '~/layouts';
-import classNames from 'classnames/bind';
-import styles from './Dashboard.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding, faUserTie } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import adminService from '~/services/adminService';
-
+import cityLogo from '~/assets/images/manchester_city.webp';
+import { baseUrl } from '~/axios';
+import bg1 from '~/assets/images/bg.jpg';
+import classNames from 'classnames/bind';
+import styles from './Dashboard.module.scss';
 const cx = classNames.bind(styles);
 
 function Dashboard() {
@@ -21,6 +23,35 @@ function Dashboard() {
   }, []);
   return (
     <AdminLayout>
+      <header className={cx('header')}>
+        <div className={cx('background')}>
+          <img src={bg1} alt="bg1"></img>
+        </div>
+        <div className={cx('wrapper')}>
+          <div className={cx('competition')}>Premier League</div>
+          <div className={cx('venue')}>
+            <time>22-10-2024</time>
+            <p>Eithad stadium</p>
+          </div>
+          <div className={cx('fixture')}>
+            <div className={cx('first')}>
+              <div className={cx('name')}>Manchester City</div>
+              <div className={cx('logo')}>
+                <img src={cityLogo} alt="man-city" />
+              </div>
+            </div>
+            <div className={cx('time')}>
+              <time>22:00</time>
+              <p>GMT</p>
+            </div>
+            <div className={cx('second')}>
+              <img src={`${baseUrl}`} alt="Name" />
+              <div className={cx('name')}>Tottenham</div>
+            </div>
+          </div>
+          <div className={cx('live')}>Live now</div>
+        </div>
+      </header>
       <div className={cx('containPage')}>
         <div className={cx('listCard')}>
           <div className={cx('row', 'pl-3')}>
