@@ -277,7 +277,7 @@ function TableShowCoaches() {
                   }}
                 >
                   <span class="material-symbols-outlined">person_add</span>
-                  <span style={{ marginLeft: '4px' }}>Add player</span>
+                  <span style={{ marginLeft: '4px' }}>Add coach</span>
                 </Button>
               </div>
             </div>
