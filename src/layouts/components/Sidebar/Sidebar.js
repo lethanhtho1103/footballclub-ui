@@ -40,6 +40,7 @@ function Sidebar() {
           { label: 'Clubs', to: '/admin/management/clubs' },
           { label: 'Stadiums', to: '/admin/management/stadiums' },
           { label: 'Matches', to: '/admin/management/matches' },
+          { label: 'Match details', to: '/admin/management/match-details' },
         ]}
       />
       <Menu>
@@ -49,6 +50,7 @@ function Sidebar() {
           icon={<span class="material-symbols-outlined">local_activity</span>}
         />
       </Menu>
+
       <MenuItem
         title="Statistical"
         to="/admin/statistical"

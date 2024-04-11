@@ -26,6 +26,7 @@ import Test from '~/test';
 import Dashboard from '~/pages/Admin/Dashboard';
 import TicketsManagement from '~/pages/Admin/Tickets';
 import UsersManagement from '~/pages/Admin/Users';
+import DetailMatch from '~/pages/Admin/DetailMatch';
 const publicRoutes = [
   {
     path: '/test',
@@ -90,6 +91,10 @@ const adminRoutes = [
   {
     path: '/admin/dashboard',
     component: Dashboard,
+  },
+  {
+    path: '/admin/management/match-details',
+    component: DetailMatch,
   },
   {
     path: '/admin/management/clubs',

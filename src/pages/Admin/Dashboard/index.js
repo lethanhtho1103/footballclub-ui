@@ -1,11 +1,11 @@
 import { AdminLayout } from '~/layouts';
-import classNames from 'classnames/bind';
-import styles from './Dashboard.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding, faUserTie } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import adminService from '~/services/adminService';
 
+import classNames from 'classnames/bind';
+import styles from './Dashboard.module.scss';
 const cx = classNames.bind(styles);
 
 function Dashboard() {
@@ -13,11 +13,13 @@ function Dashboard() {
 
   const handleGetDashboard = async () => {
     const res = await adminService.getDashboard();
-    console.log(res[0]);
     setData(res[0]);
   };
+
   useEffect(() => {
     handleGetDashboard();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <AdminLayout>

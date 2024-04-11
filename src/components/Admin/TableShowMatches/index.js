@@ -48,13 +48,21 @@ function TableShowMatches() {
     { Header: 'Actions', accessor: 'col8', disableSortBy: true },
   ];
 
+  function convertTimeFormat(timeString) {
+    var timeParts = timeString.split(':');
+    var hour = timeParts[0];
+    var minute = timeParts[1];
+    var formattedTime = hour + ':' + minute;
+    return formattedTime;
+  }
+
   const convertToDataRow = (row) => {
     const dataRow = row.map((row, index) => {
       return {
         match_id: row.game_id,
         stadium: row.stadium.name,
         rival_team: row.club.name,
-        game_time: row.game_time + row.game_date,
+        game_time: `${row.game_date} ${convertTimeFormat(row.game_time)}`,
         goals_scored: row.goals_scored,
         goals_conceded: row.goals_conceded,
         result: row.result,
