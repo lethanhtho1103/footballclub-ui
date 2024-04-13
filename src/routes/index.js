@@ -25,7 +25,7 @@ import Test from '~/test';
 import Dashboard from '~/pages/Admin/Dashboard';
 import TicketsManagement from '~/pages/Admin/Tickets';
 import UsersManagement from '~/pages/Admin/Users';
-import DetailMatch from '~/pages/Admin/DetailMatch';
+import MatchDetail from '~/pages/Admin/MatchDetail';
 const publicRoutes = [
   {
     path: '/test',
@@ -93,7 +93,7 @@ const adminRoutes = [
   },
   {
     path: '/admin/management/match-details',
-    component: DetailMatch,
+    component: MatchDetail,
   },
   {
     path: '/admin/management/clubs',

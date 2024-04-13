@@ -1,0 +1,17 @@
+.btn-edit {
+  float: right;
+  background-color: #c2fbd7;
+  border-radius: 100px;
+  color: green;
+  padding: 7px 20px;
+  transition: all 250ms;
+  border: 0;
+  font-size: 16px;
+  margin-right: 16px;
+  &:hover {
+    transform: scale(1.01) translateY(-2px);
+  }
+  .text-btn {
+    margin-left: 6px;
+  }
+}

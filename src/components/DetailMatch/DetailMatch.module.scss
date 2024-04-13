@@ -1,13 +1,10 @@
-.header {
+.container {
   height: 350px;
   color: #fff;
+  margin-top: 56px;
   .background {
     position: absolute;
-    top: 96px;
-    left: 0;
     width: 95%;
-    margin-left: 3%;
-    // margin-right: 4%;
     height: inherit;
     pointer-events: none;
     background: #001838;
@@ -154,5 +151,96 @@
     .live {
       margin-top: 36px;
     }
+  }
+}
+
+.detail-match {
+  margin-top: 16px;
+  padding: 12px 16px 12px 0;
+  .haft-first,
+  .haft-second {
+    .title {
+      padding: 6px 10px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.6rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      line-height: 1.8rem;
+      color: #4b49ac;
+      border: 1px solid #4b49ac;
+      // color: #fff;
+      // background-color: #4b49ac;
+    }
+    .detail {
+      margin-top: 4px;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      .host,
+      .away {
+        ul {
+          padding: 0;
+          margin: 0;
+          text-transform: capitalize;
+          list-style: none;
+          li {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #555e61;
+            display: flex;
+            align-items: center;
+            p {
+              font-weight: 700;
+              margin-left: 8px;
+              color: #000;
+              margin-bottom: 0;
+            }
+            div {
+              align-items: center;
+              border: 1px solid #eee;
+              border-radius: 8px;
+              box-sizing: border-box;
+              display: flex;
+              height: 28px;
+              justify-content: center;
+              line-height: 1;
+              margin-left: 8px;
+              min-width: 14px;
+              padding-left: 5px;
+              padding-right: 5px;
+              .yellow,
+              .red {
+                padding: 10px 8px;
+                background-color: #ffcd00;
+                border-radius: 4px;
+              }
+              .red {
+                background-color: red;
+              }
+            }
+          }
+          li + li {
+            margin-top: 6px;
+          }
+        }
+      }
+      .away {
+        ul > li {
+          justify-content: end;
+        }
+      }
+    }
+    .reverse {
+      flex-direction: row-reverse;
+      .away {
+        ul > li {
+          justify-content: flex-start;
+        }
+      }
+    }
+  }
+  .haft-second {
+    margin-top: 16px;
   }
 }
