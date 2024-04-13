@@ -98,6 +98,10 @@ function TicketParChart({ year = new Date().getFullYear() - 1 }) {
         const monthIndex = elements[0].index;
         const selectedMonth = monthIndex + 1;
         setMonth(selectedMonth);
+        window.scrollTo({
+          top: 1000,
+          behavior: 'smooth',
+        });
       }
     },
   };

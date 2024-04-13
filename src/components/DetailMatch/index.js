@@ -24,15 +24,12 @@ function DetailMatch({ match, isLive }) {
     return formattedTime;
   }
 
-  const handleCountGoal = (array, isAway, timeRange) =>
-    array?.filter((item) => item.type === 'goal' && item.is_away === isAway && timeRange(item.time)).length;
-
   useEffect(() => {
     let interval;
     if (isCounting) {
-      interval = setInterval(increaseMinute, 60000); // Gọi hàm increaseMinute mỗi 1 phút
+      interval = setInterval(increaseMinute, 60000); //
     }
-    // Clear interval khi component unmount hoặc khi nút dừng được nhấn
+
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCounting]);
@@ -103,10 +100,6 @@ function DetailMatch({ match, isLive }) {
         <div className={cx('haft-first')}>
           <div className={cx('title')}>
             <span>Haft first</span>
-            <span className={cx('score')}>
-              {handleCountGoal(match?.game_detail, 1, (time) => time < 45)} -{' '}
-              {handleCountGoal(match?.game_detail, 0, (time) => time < 45)}
-            </span>
           </div>
           <div
             className={cx('detail', {
@@ -116,7 +109,7 @@ function DetailMatch({ match, isLive }) {
             <div className={cx('host')}>
               <ul>
                 {match?.game_detail
-                  .filter((detail) => detail.is_away === 1 && detail.time < 45)
+                  .filter((detail) => detail.is_away === 1 && detail.time < '45')
                   .map((detail) => (
                     <li key={detail.game_detail_id}>
                       {detail.time}'
@@ -138,7 +131,7 @@ function DetailMatch({ match, isLive }) {
             <div className={cx('away')}>
               <ul>
                 {match?.game_detail
-                  .filter((detail) => detail.is_away === 0 && detail.time < 45)
+                  .filter((detail) => detail.is_away === 0 && detail.time < '45')
                   .map((detail) => (
                     <li key={detail.game_detail_id}>
                       {detail.time}'
@@ -161,9 +154,7 @@ function DetailMatch({ match, isLive }) {
         </div>
         <div className={cx('haft-second')}>
           <div className={cx('title')}>
-            <div>Haft-second</div>
-            {handleCountGoal(match?.game_detail, 1, (time) => time > 45)} -{' '}
-            {handleCountGoal(match?.game_detail, 0, (time) => time > 45)}
+            <div>Haft second</div>
           </div>
           <div
             className={cx('detail', {
@@ -173,7 +164,7 @@ function DetailMatch({ match, isLive }) {
             <div className={cx('host')}>
               <ul>
                 {match?.game_detail
-                  .filter((detail) => detail.is_away === 1 && detail.time > 45)
+                  .filter((detail) => detail.is_away === 1 && detail.time > '45')
                   .map((detail) => (
                     <li key={detail.game_detail_id}>
                       {detail.time}'
@@ -195,7 +186,7 @@ function DetailMatch({ match, isLive }) {
             <div className={cx('away')}>
               <ul>
                 {match?.game_detail
-                  .filter((detail) => detail.is_away === 0 && detail.time > 45)
+                  .filter((detail) => detail.is_away === 0 && detail.time > '45')
                   .map((detail) => (
                     <li key={detail.game_detail_id}>
                       {detail.time}'

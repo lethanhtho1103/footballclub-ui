@@ -161,14 +161,13 @@
   .haft-second {
     .title {
       padding: 6px 10px;
-      display: flex;
-      justify-content: space-between;
+
       font-size: 1.6rem;
       text-transform: uppercase;
       font-weight: 700;
       line-height: 1.8rem;
       color: #4b49ac;
-      border: 1px solid #4b49ac;
+      border-bottom: 1px solid #4b49ac;
       // color: #fff;
       // background-color: #4b49ac;
     }

@@ -6,13 +6,17 @@ import classNames from 'classnames/bind';
 import styles from './MatchDetail.module.scss';
 import Button from '~/components/Admin/Button';
 import DetailMatch from '~/components/DetailMatch';
+import ModalCreateDetailMatch from '~/components/Admin/ModalCreateDetailMatch';
+import { useSelector } from 'react-redux';
+import { accessTokenSelector } from '~/redux/selector';
 
 const cx = classNames.bind(styles);
 
 function MatchDetail() {
+  const access_token = useSelector(accessTokenSelector);
   const [match, setMatch] = useState();
   const [isLive, setIsLive] = useState(true);
-
+  const [isShowModalCreateMatchDetail, setShowModalCreateMatchDetail] = useState(false);
   const handleGetMatchLive = async () => {
     // Tạo đối tượng Date hiện tại
     const currentDate = new Date();
@@ -37,13 +41,25 @@ function MatchDetail() {
     }
   };
 
+  const handleClose = () => {
+    setShowModalCreateMatchDetail(false);
+  };
+
   useEffect(() => {
     handleGetMatchLive();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <AdminLayout>
-      <Button className={cx('btn-edit')}>
+      {isShowModalCreateMatchDetail && (
+        <ModalCreateDetailMatch
+          handleClose={handleClose}
+          access_token={access_token}
+          game_id={match?.game_id}
+          handleGetMatchLive={handleGetMatchLive}
+        />
+      )}
+      <Button className={cx('btn-edit')} onClick={() => setShowModalCreateMatchDetail(true)}>
         <UilEditAlt size={16} />
         <span className={cx('text-btn')}>Edit match</span>
       </Button>

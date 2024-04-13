@@ -16,7 +16,6 @@ const cx = classNames.bind(style);
 
 function ModalCreatePlayers({ handleClose, handleGetAllPlayers, player, access_token, countries, userId }) {
   const [isLoader, setIsLoader] = useState(false);
-
   const [selectedOption, setSelectedOption] = useState(null);
   const [name, setName] = useState(player?.name || '');
   const [email, setEmail] = useState(player?.email || '');

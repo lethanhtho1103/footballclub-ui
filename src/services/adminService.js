@@ -517,6 +517,27 @@ const adminService = {
     return res.data;
   },
 
+  async createMatchDetail(data) {
+    try {
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      const res = await axios.post('/api/match-detail', formData, {
+        headers: {
+          Authorization: `Bearer ${data.access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      return res.data;
+    } catch (error) {
+      console.error('Error creating match:', error);
+      throw error;
+    }
+  },
+
   //Statistical
   async getStatisticalByYear(year) {
     try {
@@ -545,7 +566,6 @@ const adminService = {
       console.error(error);
     }
   },
-
 };
 
 export default adminService;
