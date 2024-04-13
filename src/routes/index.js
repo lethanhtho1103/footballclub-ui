@@ -15,6 +15,7 @@ import Statistical from '~/pages/Admin/Statistical';
 import MatchesManagement from '~/pages/Admin/Matches';
 import CoachManagement from '~/pages/Admin/Coach';
 import PlayersManagement from '~/pages/Admin/Players';
+import CompanyManagement from '~/pages/Admin/Company';
 import TicketPurchase from '~/pages/User/TicketPurchase';
 import MyTicket from '~/pages/User/MyTicket';
 import ClubsManagement from '~/pages/Admin/Clubs';
@@ -131,6 +132,10 @@ const adminRoutes = [
   {
     path: '/admin/statistical',
     component: Statistical,
+  },
+  {
+    path: '/admin/management/company',
+    component: CompanyManagement,
   },
   {
     path: '*',

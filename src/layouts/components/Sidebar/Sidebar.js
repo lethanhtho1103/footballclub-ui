@@ -28,6 +28,7 @@ function Sidebar() {
           { label: 'Users', to: '/admin/management/users' },
           { label: 'Players', to: '/admin/management/players' },
           { label: 'Coaches', to: '/admin/management/coach' },
+          { label: 'Company', to: '/admin/management/company' },
           { label: 'Contracts', to: '/admin/management/contracts' },
         ]}
       />

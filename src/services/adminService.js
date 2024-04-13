@@ -105,17 +105,17 @@ const adminService = {
   },
 
   // Coach
-  async createCoach(playerData) {
+  async createCoach(coachData) {
     try {
       const formData = new FormData();
 
-      Object.entries(playerData).forEach(([key, value]) => {
+      Object.entries(coachData).forEach(([key, value]) => {
         formData.append(key, value);
       });
 
       const res = await axios.post('/api/coaches', formData, {
         headers: {
-          Authorization: `Bearer ${playerData.access_token}`,
+          Authorization: `Bearer ${coachData.access_token}`,
           'Content-Type': 'multipart/form-data',
         },
       });
@@ -167,6 +167,71 @@ const adminService = {
 
   async deleteCoach(user_id, access_token) {
     const res = await axios.delete(`api/coaches/${user_id}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    return res.data;
+  },
+
+  // Company
+  async getAllCompany() {
+    try {
+      const res = await axios.get('/api/company');
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async createCompany(companyData) {
+    try {
+      const formData = new FormData();
+
+      Object.entries(companyData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      const res = await axios.post('/api/company', formData, {
+        headers: {
+          Authorization: `Bearer ${companyData.access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      return res.data;
+    } catch (error) {
+      console.error('Error creating company:', error);
+      throw error;
+    }
+  },
+
+  async getOneCompany(company_id) {
+    try {
+      const res = await axios.get(`api/company/${company_id}`);
+      return res.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+
+  async updateCompany(company_id, formData, access_token) {
+    try {
+      const res = await axios.post(`/api/company/${company_id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.error('Error update company:', error);
+      throw error;
+    }
+  },
+
+  async deleteCompany(company_id, access_token) {
+    const res = await axios.delete(`api/company/${company_id}`, {
       headers: {
         Authorization: `Bearer ${access_token}`,
       },
@@ -480,6 +545,7 @@ const adminService = {
       console.error(error);
     }
   },
+
 };
 
 export default adminService;
