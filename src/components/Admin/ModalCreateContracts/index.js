@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import ToastMassage from '../ToastMassage';
 import Form from 'react-bootstrap/Form';
@@ -16,13 +16,15 @@ const cx = classNames.bind(style);
 
 function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, access_token, contractId, users }) {
   const [isLoader, setIsLoader] = useState(false);
+  const [companies, setCompanies] = useState([]);
 
   const [user_id, setUserId] = useState(contract?.user_id || '');
   const [date_created, setDateCreated] = useState(contract?.date_created || '');
   const [expiration_date, setExpirationDate] = useState(contract?.expiration_date || '');
   const [salary, setSalary] = useState(contract?.salary || '');
   const [pdf, setPdf] = useState(contract?.pdf || null);
-  const [type, setType] = useState(contract?.type || ''); // Thêm state cho type
+  const [type, setType] = useState(contract?.type || '');
+
   const [userIdErr, setUserIdErr] = useState('');
   const [dateCreatedErr, setDateCreatedErr] = useState('');
   const [expirationDateErr, setExpirationDateErr] = useState('');
@@ -152,6 +154,15 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
     }, 1000);
   };
 
+  const handleGetAllCompany = async () => {
+    const res = await adminService.getAllCompany();
+    setCompanies(res.company);
+  };
+
+  useEffect(() => {
+    handleGetAllCompany();
+  }, []);
+
   return (
     <>
       {isLoader && <Loader />}
@@ -181,18 +192,6 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
         <Modal.Body className={cx('modal-body')}>
           <Form>
             <SelectInput
-              id="user_id"
-              label="User"
-              options={users.slice(1).map((user) => ({
-                value: user.user_id,
-                label: user.name,
-                style: { backgroundImage: `url(${baseUrl}${user.image}` },
-              }))}
-              value={user_id}
-              onChange={(e) => changeInput(e, 'user_id')}
-              error={userIdErr?.length > 0}
-            />
-            <SelectInput
               label="Type"
               id="type"
               options={[
@@ -205,6 +204,33 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
               onChange={(e) => changeInput(e, 'type')}
               error={typeErr?.length > 0}
             />
+            {type === 'individual' && (
+              <SelectInput
+                id="user_id"
+                label="User"
+                options={users.slice(1).map((user) => ({
+                  value: user.user_id,
+                  label: user.name,
+                }))}
+                value={user_id}
+                onChange={(e) => changeInput(e, 'user_id')}
+                error={userIdErr?.length > 0}
+              />
+            )}
+            {type !== 'individual' && type.length > 0 && (
+              <SelectInput
+                id="user_id"
+                label="Company"
+                options={companies.map((company) => ({
+                  value: company.user_id,
+                  label: company.name,
+                }))}
+                value={user_id}
+                onChange={(e) => changeInput(e, 'user_id')}
+                error={userIdErr?.length > 0}
+              />
+            )}
+
             <FormInputGroup
               id="date_created"
               label="Date Created"
