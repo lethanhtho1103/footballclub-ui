@@ -8,7 +8,6 @@ import classNames from 'classnames/bind';
 import adminService from '~/services/adminService';
 import Loader from '~/components/Loader';
 import TableErrors from '../TableErrors';
-import { baseUrl } from '~/axios';
 import FormInputGroup from '../FormInputGroup';
 import SelectInput from '../SelectInput';
 

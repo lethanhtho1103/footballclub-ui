@@ -1,4 +1,4 @@
-import TicketParChart from '../TicketParChart/TicketParChart';
+import TicketParChart from '../../Admin/TicketParChart/TicketParChart';
 import { useState } from 'react';
 
 // Scss
@@ -11,7 +11,6 @@ function TicketParStatistical() {
   const currentYear = new Date().getFullYear();
   const startYear = 2010;
   const [selectedYear, setSelectedYear] = useState(currentYear);
-  const filmInfo = [];
 
   const yearOptions = [];
   for (let year = currentYear; year >= startYear; year--) {
@@ -21,15 +20,6 @@ function TicketParStatistical() {
       </option>,
     );
   }
-
-  const filmOptions = [];
-  filmInfo?.map((film, index) =>
-    filmOptions.push(
-      <option key={index} value={film.id}>
-        {film.name}
-      </option>,
-    ),
-  );
 
   const handleYearChange = (event) => {
     setSelectedYear(parseInt(event.target.value));

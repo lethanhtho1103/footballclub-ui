@@ -19,15 +19,6 @@ const adminService = {
     }
   },
 
-  async getMatchLive(date, time) {
-    try {
-      const res = await axios.get(`/api/match-live?date=${date}&time=${time}`);
-      return res.data;
-    } catch (error) {
-      console.log(error.message);
-    }
-  },
-
   // Users
   async getAllUser() {
     try {
@@ -535,6 +526,15 @@ const adminService = {
     } catch (error) {
       console.error('Error creating match:', error);
       throw error;
+    }
+  },
+
+  async getMatchLive(date, time) {
+    try {
+      const res = await axios.get(`/api/match-live?date=${date}&time=${time}`);
+      return res.data;
+    } catch (error) {
+      console.log(error.message);
     }
   },
 

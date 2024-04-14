@@ -18,7 +18,7 @@ import styles from './TicketParChart.module.scss';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import TableShowTicketMonth from '../Admin/TableShowTicketMonth';
+import TableShowTicketMonth from '../TableShowTicketMonth';
 const cx = classNames.bind(styles);
 
 ChartJS.register(ChartDataLabels, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -161,7 +161,7 @@ function TicketParChart({ year = new Date().getFullYear() - 1 }) {
           <hr></hr>
         </div>
       </div>
-      {month && <TableShowTicketMonth month={month} year={year} />}
+      {month > 0 && <TableShowTicketMonth month={month} year={year} />}
     </div>
   );
 }

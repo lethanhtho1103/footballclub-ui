@@ -7,7 +7,8 @@ import styles from './Statistical.module.scss';
 import { AdminLayout } from '~/layouts';
 
 import { Tab, Tabs } from 'react-bootstrap';
-import TicketParStatistical from '~/components/TicketParStatistical/TicketParStatistical';
+import TicketParStatistical from '~/components/Admin/TicketParStatistical/TicketParStatistical';
+import SalaryParStatistical from '~/components/Admin/SalaryParStatistical/SalaryParStatistical';
 
 const cx = classNames.bind(styles);
 
@@ -49,6 +50,15 @@ function Statistical() {
               title="Ticket revenue"
             >
               <TicketParStatistical />
+            </Tab>
+            <Tab
+              eventKey="salary"
+              tabClassName={cx({
+                active: activeTab === 'salary',
+              })}
+              title="Salary"
+            >
+              <SalaryParStatistical />
             </Tab>
           </Tabs>
         </div>
