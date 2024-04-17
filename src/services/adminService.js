@@ -360,6 +360,79 @@ const adminService = {
     return res.data;
   },
 
+  //Seats
+  async getAllSeats() {
+    try {
+      const res = await axios.get('/api/seats');
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async createSeats(seatsData) {
+    try {
+      const formData = new FormData();
+      Object.entries(seatsData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      const res = await axios.post('/api/seats/create', formData, {
+        headers: {
+          Authorization: `Bearer ${seatsData.access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      return res.data;
+    } catch (error) {
+      console.error('Error creating stadium:', error);
+      throw error;
+    }
+  },
+
+  async updateSeats(seatsData) {
+    try {
+      const formData = new FormData();
+      Object.entries(seatsData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      const res = await axios.post('/api/seats/update', formData, {
+        headers: {
+          Authorization: `Bearer ${seatsData.access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      return res.data;
+    } catch (error) {
+      console.error('Error creating stadium:', error);
+      throw error;
+    }
+  },
+
+  async deleteSeats(seatsData) {
+    try {
+      const formData = new FormData();
+      Object.entries(seatsData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      const res = await axios.post('/api/seats/delete', formData, {
+        headers: {
+          Authorization: `Bearer ${seatsData.access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      return res.data;
+    } catch (error) {
+      console.error('Error creating stadium:', error);
+      throw error;
+    }
+  },
+
   // Contracts
   async getAllContracts() {
     try {

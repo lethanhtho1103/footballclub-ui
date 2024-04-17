@@ -39,6 +39,7 @@ function Sidebar() {
         subMenuItems={[
           { label: 'Clubs', to: '/admin/management/clubs' },
           { label: 'Stadiums', to: '/admin/management/stadiums' },
+          { label: 'Seats', to: '/admin/management/seats' },
           { label: 'Matches', to: '/admin/management/matches' },
           { label: 'Match details', to: '/admin/management/match-details' },
         ]}

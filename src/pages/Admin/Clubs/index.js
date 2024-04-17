@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import styles from './Clubs.module.scss'; 
+import styles from './Clubs.module.scss';
 import TableShowClubs from '~/components/Admin/TableShowClubs';
 
 import { AdminLayout } from '~/layouts';

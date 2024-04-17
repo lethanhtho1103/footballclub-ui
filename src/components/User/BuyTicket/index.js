@@ -42,10 +42,10 @@ function BuyTicket() {
   const navigate = useNavigate();
 
   const seatData = [
-    { id: 'east', label: 'East stand', stand: 'E', price: '$13.65', percent: '35/100' },
-    { id: 'west', label: 'West stand', stand: 'W', price: '$13.65', percent: '35/100' },
-    { id: 'north', label: 'North bank', stand: 'N', price: '$13.65', percent: '35/100' },
-    { id: 'block', label: 'Block end', stand: 'S', price: '$13.65', percent: '35/100' },
+    { id: 'east', label: 'East stand', stand: 'E', price: '$6', percent: '35/400' },
+    { id: 'west', label: 'West stand', stand: 'W', price: '$7.5', percent: '22/400' },
+    { id: 'north', label: 'North bank', stand: 'N', price: '$8.35', percent: '56/400' },
+    { id: 'block', label: 'Block end', stand: 'S', price: '$13.65', percent: '32/400' },
   ];
 
   const getOneMatch = async () => {

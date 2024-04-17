@@ -27,6 +27,7 @@ import Dashboard from '~/pages/Admin/Dashboard';
 import TicketsManagement from '~/pages/Admin/Tickets';
 import UsersManagement from '~/pages/Admin/Users';
 import MatchDetail from '~/pages/Admin/MatchDetail';
+import SeatsManagement from '~/pages/Admin/Seats';
 const publicRoutes = [
   {
     path: '/test',
@@ -103,6 +104,10 @@ const adminRoutes = [
   {
     path: '/admin/management/stadiums',
     component: StadiumsManagement,
+  },
+  {
+    path: '/admin/management/seats',
+    component: SeatsManagement,
   },
   {
     path: '/admin/tickets-management',

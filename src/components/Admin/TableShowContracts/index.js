@@ -76,8 +76,10 @@ function TableShowContracts() {
           currency: 'USD',
         }).format(row.salary),
         col7: (
-          // Bam vao hien cai PDF co in an xuat ra
-          <a href={row.pdf}>PDF</a>
+          // eslint-disable-next-line react/jsx-no-target-blank
+          <a href="https://drive.google.com/file/d/1eGKRf-_KDev6frONL9b-Ua0RzT3MFd_E/view?usp=sharing" target="_blank">
+            PDF
+          </a>
         ),
         col8: (
           <div
