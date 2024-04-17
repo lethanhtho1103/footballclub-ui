@@ -109,7 +109,7 @@ function DetailMatch({ match, isLive }) {
             <div className={cx('host')}>
               <ul>
                 {match?.game_detail
-                  .filter((detail) => detail.is_away === 1 && detail.time < '45')
+                  .filter((detail) => detail.is_away === 0   && detail.time < '45')
                   .map((detail) => (
                     <li key={detail.game_detail_id}>
                       {detail.time}'
@@ -131,7 +131,7 @@ function DetailMatch({ match, isLive }) {
             <div className={cx('away')}>
               <ul>
                 {match?.game_detail
-                  .filter((detail) => detail.is_away === 0 && detail.time < '45')
+                  .filter((detail) => detail.is_away === 1 && detail.time < '45')
                   .map((detail) => (
                     <li key={detail.game_detail_id}>
                       {detail.time}'
@@ -164,7 +164,7 @@ function DetailMatch({ match, isLive }) {
             <div className={cx('host')}>
               <ul>
                 {match?.game_detail
-                  .filter((detail) => detail.is_away === 1 && detail.time > '45')
+                  .filter((detail) => detail.is_away === 0   && detail.time > '45')
                   .map((detail) => (
                     <li key={detail.game_detail_id}>
                       {detail.time}'
@@ -186,7 +186,7 @@ function DetailMatch({ match, isLive }) {
             <div className={cx('away')}>
               <ul>
                 {match?.game_detail
-                  .filter((detail) => detail.is_away === 0 && detail.time > '45')
+                  .filter((detail) => detail.is_away === 1 && detail.time > '45')
                   .map((detail) => (
                     <li key={detail.game_detail_id}>
                       {detail.time}'
