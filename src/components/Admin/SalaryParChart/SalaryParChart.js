@@ -125,10 +125,10 @@ function SalaryParChart({ year = new Date().getFullYear() - 1 }) {
     labels,
     datasets: [
       {
-        label: 'Ticket revenue ($)',
+        label: 'Salary statistics ($)',
         data: [...dataPar],
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgb(85, 162, 199)',
+        backgroundColor: 'rgb(85, 162, 199, 0.5)',
         font: {
           size: 20,
         },
@@ -137,16 +137,8 @@ function SalaryParChart({ year = new Date().getFullYear() - 1 }) {
   };
 
   const getData = async () => {
-    const res = await adminService.getStatisticalByYear(year);
-    let dataParExample = new Array(12).fill(0);
-    // Lặp qua dữ liệu ban đầu để cập nhật giá trị doanh thu cho các tháng có dữ liệu
-    res.forEach((item) => {
-      const monthIndex = item.month - 1; // Chuyển đổi về index của mảng (từ 1-12 -> 0-11)
-      if (item.total_revenue !== null && !isNaN(parseFloat(item.total_revenue))) {
-        dataParExample[monthIndex] = parseFloat(item.total_revenue);
-      }
-    });
-    setDataPar(dataParExample);
+    const res = await adminService.getSalaryByYear(year);
+    setDataPar(Object.values(res));
   };
 
   useEffect(() => {

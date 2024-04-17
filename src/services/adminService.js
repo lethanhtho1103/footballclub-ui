@@ -630,6 +630,15 @@ const adminService = {
     }
   },
 
+  async getSalaryByYear(year) {
+    try {
+      const res = await axios.get(`/api/salary-report/${year}`);
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
   // Tickets
   async getAllTickets() {
     try {

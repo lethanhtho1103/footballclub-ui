@@ -140,7 +140,7 @@ function TicketParChart({ year = new Date().getFullYear() - 1 }) {
     const res = await adminService.getStatisticalByYear(year);
     let dataParExample = new Array(12).fill(0);
     // Lặp qua dữ liệu ban đầu để cập nhật giá trị doanh thu cho các tháng có dữ liệu
-    res.forEach((item) => {
+    res?.forEach((item) => {
       const monthIndex = item.month - 1; // Chuyển đổi về index của mảng (từ 1-12 -> 0-11)
       if (item.total_revenue !== null && !isNaN(parseFloat(item.total_revenue))) {
         dataParExample[monthIndex] = parseFloat(item.total_revenue);

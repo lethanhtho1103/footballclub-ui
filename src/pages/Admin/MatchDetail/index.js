@@ -59,13 +59,12 @@ function MatchDetail() {
           handleGetMatchLive={handleGetMatchLive}
         />
       )}
-      <div className={cx('wrap')}>
-        <Button className={cx('btn-edit')} onClick={() => setShowModalCreateMatchDetail(true)}>
-          <UilEditAlt size={16} />
-          <span className={cx('text-btn')}>Edit match</span>
-        </Button>
-        <DetailMatch match={match} isLive={isLive} />
-      </div>
+
+      <Button className={cx('btn-edit')} onClick={() => setShowModalCreateMatchDetail(true)}>
+        <UilEditAlt size={16} />
+        <span className={cx('text-btn')}>Edit match</span>
+      </Button>
+      <DetailMatch match={match} isLive={isLive} />
     </AdminLayout>
   );
 }
