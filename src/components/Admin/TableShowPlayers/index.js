@@ -63,8 +63,6 @@ function TableShowPlayers() {
               style={{
                 width: '48px',
                 height: '48px',
-                display: 'block',
-                borderRadius: '50%',
               }}
             />
           </div>
@@ -86,7 +84,6 @@ function TableShowPlayers() {
               style={{
                 width: '32px',
                 height: '32px',
-                border: '1px solid #dde6ed',
                 display: 'block',
                 borderRadius: '4px',
               }}

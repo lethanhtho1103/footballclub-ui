@@ -35,15 +35,12 @@ function PlayerSection({ title, position, players, coaches, cx }) {
               <li className={cx('member-item')} key={i}>
                 <Link to={`http://localhost:3000/players/${coache.name}`}>
                   <div className={cx('header')}>
-                    <div className={cx('shirt-number')}>{coache.jersey_number}</div>
+                    {/* <div className={cx('shirt-number')}>{coache.jersey_number}</div> */}
                     <div className={cx('photo')}>
-                      <img
-                        src="https://www.mancity.com/meta/media/ejhjw1j4/scott-carson.png?width=376&quality=100"
-                        alt="coache"
-                      />
+                      <img src={`${baseUrl}${coache.image}`} alt={coache.name} />
                     </div>
                     <div className={cx('country')}>
-                      <img src="https://mediacdn.mancity.com/meta/media/kbujcobi/gb-eng.svg" alt="country" />
+                      <img src={`https://flagcdn.com/h60/${coache.flag}.png`} alt="No flag" />
                     </div>
                   </div>
                   <div className={cx('content')}>

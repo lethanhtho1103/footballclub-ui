@@ -34,6 +34,8 @@ function Players() {
     }
   };
 
+  console.log(coaches);
+
   useEffect(() => {
     handleGetAllData();
   }, []);

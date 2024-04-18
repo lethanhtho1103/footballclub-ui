@@ -57,8 +57,6 @@ function TableShowClubs() {
               style={{
                 width: '48px',
                 height: '48px',
-                display: 'block',
-                borderRadius: '50%',
               }}
             />
           </div>
