@@ -306,32 +306,34 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
               pattern="[0-2][0-9]:[0-5][0-9]" // Ensure the input follows HH:mm format
               title="Please enter the time in HH:mm format"
             />
-
-            <SelectInput
-              label="Result"
-              id="result"
-              options={[
-                { value: 'win', label: 'Win' },
-                { value: 'draw', label: 'Draw' },
-                { value: 'loss', label: 'Loss' },
-              ]}
-              value={result}
-              onChange={(e) => changeInput(e, 'result')}
-              error={resultErr?.length > 0}
-            />
-            <SelectInput
-              label="State"
-              id="state"
-              options={[
-                { value: 'upcoming', label: 'Upcoming' },
-                { value: 'in_progress', label: 'In Progress' },
-                { value: 'finished', label: 'Finished' },
-              ]}
-              value={state}
-              onChange={(e) => changeInput(e, 'state')}
-              error={stateErr?.length > 0}
-            />
-
+            {match && (
+              <SelectInput
+                label="Result"
+                id="result"
+                options={[
+                  { value: 'win', label: 'Win' },
+                  { value: 'draw', label: 'Draw' },
+                  { value: 'loss', label: 'Loss' },
+                ]}
+                value={result}
+                onChange={(e) => changeInput(e, 'result')}
+                error={resultErr?.length > 0}
+              />
+            )}
+            {match && (
+              <SelectInput
+                label="State"
+                id="state"
+                options={[
+                  { value: 'upcoming', label: 'Upcoming' },
+                  { value: 'in_progress', label: 'In Progress' },
+                  { value: 'finished', label: 'Finished' },
+                ]}
+                value={state}
+                onChange={(e) => changeInput(e, 'state')}
+                error={stateErr?.length > 0}
+              />
+            )}
             <div
               className={cx('form__group', 'field', {
                 err: hostErr?.length > 0,
@@ -352,20 +354,25 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
                 <span>*</span> Host:
               </label> */}
             </div>
-            <FormInputGroup
-              id="goalsScored"
-              label="Goals Scored"
-              type="number"
-              value={goalsScored}
-              onChange={(e) => changeInput(e, 'goalsScored')}
-            />
-            <FormInputGroup
-              id="goalsConceded"
-              label="Goals Conceded"
-              type="number"
-              value={goalsConceded}
-              onChange={(e) => changeInput(e, 'goalsConceded')}
-            />
+            {match && (
+              <FormInputGroup
+                id="goalsScored"
+                label="Goals Scored"
+                type="number"
+                value={goalsScored}
+                onChange={(e) => changeInput(e, 'goalsScored')}
+              />
+            )}
+            {match && (
+              <FormInputGroup
+                id="goalsConceded"
+                label="Goals Conceded"
+                type="number"
+                value={goalsConceded}
+                onChange={(e) => changeInput(e, 'goalsConceded')}
+              />
+            )}
+
             {/* <FormInputGroup
               id="remainingSeats"
               label="Remaining Seats"
