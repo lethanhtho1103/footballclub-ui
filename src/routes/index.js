@@ -94,7 +94,7 @@ const adminRoutes = [
     component: Dashboard,
   },
   {
-    path: '/admin/management/match-details',
+    path: '/admin/management/match-live',
     component: MatchDetail,
   },
   {

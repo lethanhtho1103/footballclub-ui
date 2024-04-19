@@ -1,22 +1,21 @@
 import DataTable from '~/components/Admin/DataTable';
 import classNames from 'classnames/bind';
-import style from './TableShowMatches.module.scss';
+import style from '../TableShowMatchesHistory/TableShowMatchesHistory.module.scss';
 import { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { UilTimes, UilEditAlt, UilPlus } from '@iconscout/react-unicons';
-// import { userService } from '~/services';
 import ModalCreateMatches from '../ModalCreateMatches';
 import adminService from '~/services/adminService';
 import ToastMassage from '../ToastMassage';
 import Loader from '~/components/Loader';
-// import { baseUrl } from '~/axios';
-// import noAvatar from '~/assets/images/no-avatar.png';
 import { useSelector } from 'react-redux';
 import { accessTokenSelector } from '~/redux/selector';
+import { userService } from '~/services';
+import { baseUrl } from '~/axios';
 
 const cx = classNames.bind(style);
 
-function TableShowMatches() {
+function TableShowMatchesUpComming({ stadiums, clubs, convertTimeFormat, isMatchesUpcomming }) {
   const access_token = useSelector(accessTokenSelector);
   const [row, setRow] = useState([]);
   const [match, setMatch] = useState();
@@ -24,8 +23,6 @@ function TableShowMatches() {
   const [showDeleteConfirmationDialog, setShowDeleteConfirmationDialog] = useState(false);
   const [matchId, setMatchId] = useState('');
   const [name, setName] = useState('');
-  const [stadiums, setStadiums] = useState([]);
-  const [clubs, setClubs] = useState([]);
 
   const [obToast, setObToast] = useState({
     content: '',
@@ -38,42 +35,44 @@ function TableShowMatches() {
     { Header: 'Match ID', accessor: 'match_id', filter: 'fuzzyText' },
     { Header: 'Stadium', accessor: 'stadium', filter: 'fuzzyText' },
     { Header: 'Rival team', accessor: 'rival_team', filter: 'fuzzyText' },
+    { Header: 'Game Date', accessor: 'game_date', filter: 'fuzzyText' },
     { Header: 'Game Time', accessor: 'game_time', filter: 'fuzzyText' },
-    { Header: 'Goals Scored', accessor: 'goals_scored', filter: 'fuzzyText' },
-    { Header: 'Goals Conceded', accessor: 'goals_conceded', filter: 'fuzzyText' },
-    { Header: 'Result', accessor: 'result', filter: 'fuzzyText' },
-    { Header: 'State', accessor: 'state', filter: 'fuzzyText' },
     { Header: 'Host', accessor: 'host', filter: 'fuzzyText' },
-    { Header: 'Remaining Seats', accessor: 'remaining_seats', filter: 'fuzzyText' },
     { Header: 'Actions', accessor: 'col8', disableSortBy: true },
   ];
-
-  function convertTimeFormat(timeString) {
-    var timeParts = timeString.split(':');
-    var hour = timeParts[0];
-    var minute = timeParts[1];
-    var formattedTime = hour + ':' + minute;
-    return formattedTime;
-  }
 
   const convertToDataRow = (row) => {
     const dataRow = row.map((row, index) => {
       return {
         match_id: row.game_id,
         stadium: row.stadium.name,
-        rival_team: row.club.name,
-        game_time: `${row.game_date} ${convertTimeFormat(row.game_time)}`,
-        goals_scored: row.goals_scored,
-        goals_conceded: row.goals_conceded,
-        result: row.result,
-        state: row.state,
+        rival_team: (
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <div style={{ width: '100%', textAlign: 'center' }}>{row.club.name}</div>
+            <img
+              src={`${baseUrl}${row.club.image}`}
+              alt=""
+              style={{
+                width: '48px',
+                height: '48px',
+              }}
+            />
+          </div>
+        ),
+        game_date: row.game_date,
+        game_time: convertTimeFormat(row.game_time),
         host: row.host,
-        remaining_seats: row.remaining_seats,
         col8: (
           <div
             style={{
               display: 'flex',
-              justifyContent: 'space-between',
+              justifyContent: 'space-evenly',
             }}
           >
             <Button
@@ -112,21 +111,11 @@ function TableShowMatches() {
     setRow(dataRow);
   };
 
-  //
-  const handleGetAllStadiums = async () => {
-    const res = await adminService.getAllStadiums();
-    setStadiums(res.stadiums);
-  };
-
-  const handleGetAllClubs = async () => {
-    const res = await adminService.getAllClubs();
-    setClubs(res.clubs);
-  };
-  //
-
   const handleGetAllMatches = async () => {
-    const res = await adminService.getAllMatches();
-    convertToDataRow(res.matches);
+    setIsLoader(true);
+    const res = await userService.getAllMatchesComingUp();
+    setIsLoader(false);
+    convertToDataRow(res.upcoming_matches);
   };
 
   const handleUpdateMatch = async (match_id) => {
@@ -227,8 +216,6 @@ function TableShowMatches() {
 
   useEffect(() => {
     handleGetAllMatches();
-    handleGetAllStadiums();
-    handleGetAllClubs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -242,7 +229,7 @@ function TableShowMatches() {
       >
         <div className={cx('container-content')}>
           <div className={cx('wrap-table')}>
-            <h2 className={cx('title')}>List of matchs</h2>
+            <h2 className={cx('title')}>List of upcoming matches</h2>
             <div className={cx('note')}>
               Actions:
               <div className={cx('btn-actions')}>
@@ -279,6 +266,8 @@ function TableShowMatches() {
               matchId={matchId}
               clubs={clubs}
               stadiums={stadiums}
+              isMatchesUpcomming={isMatchesUpcomming}
+              convertTimeFormat={convertTimeFormat}
             />
           )}
         </div>
@@ -287,4 +276,4 @@ function TableShowMatches() {
   );
 }
 
-export default TableShowMatches;
+export default TableShowMatchesUpComming;

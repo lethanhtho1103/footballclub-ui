@@ -13,7 +13,17 @@ import SelectInput from '../SelectInput';
 
 const cx = classNames.bind(style);
 
-function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_token, matchId, clubs, stadiums }) {
+function ModalCreateMatches({
+  handleClose,
+  handleGetAllMatches,
+  match,
+  access_token,
+  matchId,
+  clubs,
+  stadiums,
+  isMatchesUpcomming,
+  convertTimeFormat,
+}) {
   const [isLoader, setIsLoader] = useState(false);
   const [stadiumId, setStadiumId] = useState(match?.stadium.stadium_id || '');
   const [clubId, setClubId] = useState(match?.club.club_id || '');
@@ -24,7 +34,6 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
   const [result, setResult] = useState(match?.result || '');
   const [state, setState] = useState(match?.state || '');
   const [host, setHost] = useState(match?.host || '');
-  const [remainingSeats, setRemainingSeats] = useState(match?.remaining_seats || '');
 
   const [stadiumIdErr, setStadiumIdErr] = useState('');
   const [clubIdErr, setClubIdErr] = useState('');
@@ -81,9 +90,6 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
       case 'host':
         setHost(value);
         break;
-      case 'remainingSeats':
-        setRemainingSeats(value);
-        break;
       default:
         break;
     }
@@ -99,7 +105,6 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
     setResult(match?.result || '');
     setState(match?.state || '');
     setHost(match?.host || '');
-    setRemainingSeats(match?.remaining_seats || '');
 
     setStadiumIdErr('');
     setClubIdErr('');
@@ -160,11 +165,6 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
       } else {
         setHostErr('');
       }
-      if (errors.remaining_seats) {
-        setRemainingSeatsErr(errors.remaining_seats);
-      } else {
-        setRemainingSeatsErr('');
-      }
     }
   };
 
@@ -175,12 +175,7 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
         club_id: clubId,
         game_date: gameDate,
         game_time: gameTime,
-        goals_scored: goalsScored,
-        goals_conceded: goalsConceded,
-        result: result,
-        state: state,
         host: host,
-        remaining_seats: remainingSeats,
         access_token: access_token,
       };
       const res = await adminService.createMatch(matchData);
@@ -200,13 +195,14 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
       formData.append('stadium_id', stadiumId);
       formData.append('club_id', clubId);
       formData.append('game_date', gameDate);
-      formData.append('game_time', gameTime);
-      formData.append('goals_scored', goalsScored);
-      formData.append('goals_conceded', goalsConceded);
-      formData.append('result', result);
-      formData.append('state', state);
+      formData.append('game_time', convertTimeFormat(gameTime));
+      if (isMatchesUpcomming) {
+        formData.append('goals_scored', goalsScored);
+        formData.append('goals_conceded', goalsConceded);
+        formData.append('state', state);
+        formData.append('result', result);
+      }
       formData.append('host', host);
-      formData.append('remaining_seats', 9999);
       const res = await adminService.updateMatch(matchId, formData, access_token);
       if (res.match) {
         setDefaultValue(res.match);
@@ -220,6 +216,7 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
 
   const handleCLickCreate = () => {
     setIsLoader(true);
+    console.log(gameTime);
     setTimeout(() => {
       createMatch();
       setIsLoader(false);
@@ -306,7 +303,7 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
               pattern="[0-2][0-9]:[0-5][0-9]" // Ensure the input follows HH:mm format
               title="Please enter the time in HH:mm format"
             />
-            {match && (
+            {!isMatchesUpcomming && (
               <SelectInput
                 label="Result"
                 id="result"
@@ -320,7 +317,7 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
                 error={resultErr?.length > 0}
               />
             )}
-            {match && (
+            {!isMatchesUpcomming && (
               <SelectInput
                 label="State"
                 id="state"
@@ -354,7 +351,7 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
                 <span>*</span> Host:
               </label> */}
             </div>
-            {match && (
+            {!isMatchesUpcomming && (
               <FormInputGroup
                 id="goalsScored"
                 label="Goals Scored"
@@ -363,7 +360,7 @@ function ModalCreateMatches({ handleClose, handleGetAllMatches, match, access_to
                 onChange={(e) => changeInput(e, 'goalsScored')}
               />
             )}
-            {match && (
+            {!isMatchesUpcomming && (
               <FormInputGroup
                 id="goalsConceded"
                 label="Goals Conceded"

@@ -41,7 +41,7 @@ function Sidebar() {
           { label: 'Stadiums', to: '/admin/management/stadiums' },
           { label: 'Seats', to: '/admin/management/seats' },
           { label: 'Matches', to: '/admin/management/matches' },
-          { label: 'Match details', to: '/admin/management/match-details' },
+          { label: 'Match live', to: '/admin/management/match-live' },
         ]}
       />
       <Menu>
