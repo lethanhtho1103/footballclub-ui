@@ -175,7 +175,7 @@ function ModalCreateSeats({ handleClose, access_token, isUpdate, isDelete, handl
     setTimeout(() => {
       updateSeats();
       setIsLoader(false);
-    }, 1000);
+    }, 600);
   };
 
   const handleCLickDelete = () => {
@@ -214,6 +214,19 @@ function ModalCreateSeats({ handleClose, access_token, isUpdate, isDelete, handl
         </Modal.Header>
         <Modal.Body className={cx('modal-body')}>
           <Form>
+            <SelectInput
+              label="Stand"
+              id="stand"
+              options={[
+                { value: 'E', label: 'East stand' },
+                { value: 'W', label: 'West stand' },
+                { value: 'N', label: 'North bank' },
+                { value: 'S', label: 'South end' },
+              ]}
+              value={stand}
+              onChange={(e) => changeInput(e, 'stand')}
+              error={standErr?.length > 0}
+            />
             {(isUpdate || isDelete) && (
               <div>
                 <FormInputGroup
@@ -240,19 +253,7 @@ function ModalCreateSeats({ handleClose, access_token, isUpdate, isDelete, handl
                 />
               </div>
             )}
-            <SelectInput
-              label="Stand"
-              id="stand"
-              options={[
-                { value: 'E', label: 'East stand' },
-                { value: 'W', label: 'West stand' },
-                { value: 'N', label: 'North bank' },
-                { value: 'S', label: 'South end' },
-              ]}
-              value={stand}
-              onChange={(e) => changeInput(e, 'stand')}
-              error={standErr?.length > 0}
-            />
+
             {!isDelete && (
               <SelectInput
                 label="Type"
