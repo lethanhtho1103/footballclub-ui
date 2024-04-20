@@ -136,8 +136,8 @@ function ModalCreateDetailMatch({ handleClose, access_token, game_id, handleGetM
               label="Club"
               id="is_away"
               options={[
-                { value: 1, label: 'Host' },
-                { value: 0, label: 'Away' },
+                { value: 0, label: 'Host' },
+                { value: 1, label: 'Away' },
               ]}
               value={is_away}
               onChange={(e) => changeInput(e, 'is_away')}

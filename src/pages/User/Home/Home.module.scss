@@ -277,7 +277,7 @@
           margin-top: 14px;
           display: flex;
           justify-content: space-evenly;
-          align-items: center;
+          align-items: flex-start;
           .first,
           .second {
             font-size: 15px;
@@ -286,6 +286,7 @@
             display: flex;
             flex-direction: column;
             text-align: center;
+            width: 50%;
             .logo {
               img {
                 max-width: 52px;
@@ -298,6 +299,7 @@
             }
           }
           .time {
+            margin-top: 7.5%;
             padding: 4px 12px;
             display: flex;
             flex-direction: column;
@@ -347,7 +349,6 @@
         align-items: center;
         width: 300px;
         height: 250px;
-
         .wrapper {
           width: 240px;
           height: 200px;

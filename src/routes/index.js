@@ -26,7 +26,7 @@ import Test from '~/test';
 import Dashboard from '~/pages/Admin/Dashboard';
 import TicketsManagement from '~/pages/Admin/Tickets';
 import UsersManagement from '~/pages/Admin/Users';
-import MatchDetail from '~/pages/Admin/MatchDetail';
+import MatchLive from '~/pages/Admin/MatchLive';
 import SeatsManagement from '~/pages/Admin/Seats';
 const publicRoutes = [
   {
@@ -95,7 +95,7 @@ const adminRoutes = [
   },
   {
     path: '/admin/management/match-live',
-    component: MatchDetail,
+    component: MatchLive,
   },
   {
     path: '/admin/management/clubs',

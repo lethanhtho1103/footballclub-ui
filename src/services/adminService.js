@@ -604,7 +604,7 @@ const adminService = {
 
   async getMatchLive(date, time) {
     try {
-      const res = await axios.get(`/api/match-live?date=${date}&time=${time}`);
+      const res = await axios.get(`/api/match-live`);
       return res.data;
     } catch (error) {
       console.log(error.message);
