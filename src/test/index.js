@@ -1,99 +1,50 @@
-// SoccerFieldApp.js
-import React from 'react';
-import { DndProvider, useDrag, useDrop } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const ItemTypes = {
-  PLAYER: 'player',
-};
+const LiveMatch = () => {
+  const [match, setMatch] = useState(null);
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [startTime, setStartTime] = useState(null);
 
-const Player = ({ player }) => {
-  const [{ isDragging }, drag] = useDrag({
-    item: { type: ItemTypes.PLAYER, id: player.id },
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-  });
+  useEffect(() => {
+    const fetchLiveMatch = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/match-live');
+        setMatch(response.data.live_matches[0]);
+        setStartTime(new Date(response.data.live_matches[0].game_date + ' ' + response.data.live_matches[0].game_time));
+      } catch (error) {
+        console.error('Error fetching live match:', error);
+      }
+    };
+
+    fetchLiveMatch();
+
+    const intervalId = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000); // Update every second
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  if (!match || !startTime) {
+    return <div>Loading...</div>;
+  }
+
+  const elapsedTime = Math.floor((currentTime - startTime) / 1000); // Time elapsed in seconds
+
+  const hours = Math.floor(elapsedTime / 3600);
+  const minutes = Math.floor((elapsedTime % 3600) / 60);
+  const seconds = elapsedTime % 60;
 
   return (
-    <div
-      ref={drag}
-      style={{
-        opacity: isDragging ? 0.5 : 1,
-        cursor: 'move',
-        width: '50px',
-        height: '50px',
-        backgroundColor: 'blue',
-        borderRadius: '50%',
-        textAlign: 'center',
-        lineHeight: '50px',
-        color: 'white',
-        position: 'absolute',
-      }}
-    >
-      {player.name}
+    <div>
+      <h2>{match.club.name} vs ???</h2>
+      <img src={match.club.image} alt={match.club.name} />
+      <p>Stadium: {match.stadium.name}</p>
+      <p>Game Time: {match.game_time}</p>
+      <p>Real Time Elapsed: {hours}h {minutes}m {seconds}s</p>
     </div>
   );
 };
 
-const Field = ({ position }) => {
-  const [, drop] = useDrop({
-    accept: ItemTypes.PLAYER,
-    drop: () => ({ position }),
-  });
-
-  return (
-    <div
-      ref={drop}
-      style={{
-        width: '50px',
-        height: '50px',
-        border: '1px solid white',
-        borderRadius: '50%',
-        textAlign: 'center',
-        lineHeight: '50px',
-        color: 'white',
-        position: 'absolute',
-        top: position.top,
-        left: position.left,
-      }}
-    >
-      {position.name}
-    </div>
-  );
-};
-
-const SoccerFieldApp = () => {
-  const players = [
-    { id: 1, name: 'Player 1' },
-    { id: 2, name: 'Player 2' },
-    { id: 3, name: 'Player 3' },
-    // Thêm nhiều cầu thủ khác nếu cần
-  ];
-
-  const fieldPositions = [
-    { id: 1, name: 'Goalkeeper', top: '50%', left: '5%' },
-    { id: 2, name: 'Defender', top: '25%', left: '20%' },
-    { id: 3, name: 'Defender', top: '75%', left: '20%' },
-    { id: 4, name: 'Midfielder', top: '50%', left: '40%' },
-    { id: 5, name: 'Midfielder', top: '25%', left: '60%' },
-    { id: 6, name: 'Midfielder', top: '75%', left: '60%' },
-    { id: 7, name: 'Forward', top: '25%', left: '90%' },
-    { id: 8, name: 'Forward', top: '75%', left: '90%' },
-  ];
-
-  return (
-    <DndProvider backend={HTML5Backend}>
-      <div style={{ position: 'relative', width: '800px', height: '400px', background: 'green' }}>
-        {fieldPositions.map((position) => (
-          <Field key={position.id} position={position} />
-        ))}
-        {players.map((player) => (
-          <Player key={player.id} player={player} />
-        ))}
-      </div>
-    </DndProvider>
-  );
-};
-
-export default SoccerFieldApp;
+export default LiveMatch;

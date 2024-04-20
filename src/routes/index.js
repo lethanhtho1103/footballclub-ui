@@ -86,6 +86,10 @@ const publicRoutes = [
 
 const adminRoutes = [
   {
+    path: '/test',
+    component: Test,
+  },
+  {
     path: '/admin',
     component: Admin,
   },
