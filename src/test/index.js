@@ -31,10 +31,9 @@ const LiveMatch = () => {
   }
 
   const elapsedTime = Math.floor((currentTime - startTime) / 1000); // Time elapsed in seconds
+  const elapsedMinutes = Math.floor(elapsedTime / 60); // Convert seconds to minutes
 
-  const hours = Math.floor(elapsedTime / 3600);
-  const minutes = Math.floor((elapsedTime % 3600) / 60);
-  const seconds = elapsedTime % 60;
+  const minutesRemaining = Math.min(Math.max(0, elapsedMinutes), 90); // Limit minutes between 0 and 90
 
   return (
     <div>
@@ -42,7 +41,7 @@ const LiveMatch = () => {
       <img src={match.club.image} alt={match.club.name} />
       <p>Stadium: {match.stadium.name}</p>
       <p>Game Time: {match.game_time}</p>
-      <p>Real Time Elapsed: {hours}h {minutes}m {seconds}s</p>
+      <p>Elapsed Time: {minutesRemaining} minutes</p>
     </div>
   );
 };

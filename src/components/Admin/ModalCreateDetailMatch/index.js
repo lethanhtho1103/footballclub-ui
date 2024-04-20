@@ -155,7 +155,7 @@ function ModalCreateDetailMatch({ handleClose, access_token, game_id, handleGetM
               onChange={(e) => changeInput(e, 'type')}
               error={typeErr?.length > 0}
             />
-            {is_away === '0' && (
+            {is_away === '1' && (
               <FormInputGroup
                 id="player_name"
                 label="Name"
@@ -167,7 +167,7 @@ function ModalCreateDetailMatch({ handleClose, access_token, game_id, handleGetM
                 error={playerNameErr?.length > 0}
               />
             )}
-            {is_away === '1' && (
+            {is_away === '0' && (
               <SelectInput
                 id="player_name"
                 label="Name"
