@@ -63,7 +63,7 @@ function DetailMatchLive({ match, isLive }) {
                     <span>-</span>
                     <div className={cx('away')}>{match?.goals_conceded}</div>
                   </div>
-                  <div className={cx('minute')}>{minute}'</div>
+                  {match?.state === 'in_progress' && <div className={cx('minute')}>{minute}'</div>}
                 </>
               ) : (
                 <>
@@ -72,7 +72,7 @@ function DetailMatchLive({ match, isLive }) {
                     <span>-</span>
                     <div className={cx('host')}>{match?.goals_scored}</div>
                   </div>
-                  <div className={cx('minute')}>{minute}'</div>
+                  {match?.state === 'in_progress' && <div className={cx('minute')}>{minute}'</div>}
                 </>
               )
             ) : (
@@ -81,7 +81,6 @@ function DetailMatchLive({ match, isLive }) {
                 <p>GMT</p>
               </div>
             )}
-
             <div className={cx('second')}>
               {match?.host !== 1 ? (
                 <img src={cityLogo} alt="man-city" />
@@ -112,7 +111,7 @@ function DetailMatchLive({ match, isLive }) {
               <div className={cx('host')}>
                 <ul>
                   {match?.game_detail
-                    .filter((detail) => detail.is_away === 1 && detail.time <= '45')
+                    .filter((detail) => detail.is_away === 0 && detail.time <= '45')
                     .map((detail) => (
                       <li key={detail.game_detail_id}>
                         {detail.time}'
@@ -134,7 +133,7 @@ function DetailMatchLive({ match, isLive }) {
               <div className={cx('away')}>
                 <ul>
                   {match?.game_detail
-                    .filter((detail) => detail.is_away === 0 && detail.time <= '45')
+                    .filter((detail) => detail.is_away === 1 && detail.time <= '45')
                     .map((detail) => (
                       <li key={detail.game_detail_id}>
                         {detail.time}'
@@ -167,7 +166,7 @@ function DetailMatchLive({ match, isLive }) {
               <div className={cx('host')}>
                 <ul>
                   {match?.game_detail
-                    .filter((detail) => detail.is_away === 1 && detail.time > '45')
+                    .filter((detail) => detail.is_away === 0 && detail.time > '45')
                     .map((detail) => (
                       <li key={detail.game_detail_id}>
                         {detail.time}'
@@ -189,7 +188,7 @@ function DetailMatchLive({ match, isLive }) {
               <div className={cx('away')}>
                 <ul>
                   {match?.game_detail
-                    .filter((detail) => detail.is_away === 0 && detail.time > '45')
+                    .filter((detail) => detail.is_away === 1 && detail.time > '45')
                     .map((detail) => (
                       <li key={detail.game_detail_id}>
                         {detail.time}'

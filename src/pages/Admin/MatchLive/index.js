@@ -43,6 +43,7 @@ function MatchDetail() {
           access_token={access_token}
           game_id={match?.game_id}
           handleGetMatchLive={handleGetMatchLive}
+          host={match?.host}
         />
       )}
       {match?.state === 'in_progress' && (
