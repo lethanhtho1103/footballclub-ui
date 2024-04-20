@@ -18,7 +18,7 @@ import styles from './SalaryParChart.module.scss';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import TableShowTicketMonth from '../TableShowTicketMonth';
+import TableShowSalaryMonth from '../TableShowSalaryMonth';
 const cx = classNames.bind(styles);
 
 ChartJS.register(ChartDataLabels, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -153,7 +153,7 @@ function SalaryParChart({ year = new Date().getFullYear() - 1 }) {
           <hr></hr>
         </div>
       </div>
-      {/* {month > 0 && <TableShowTicketMonth month={month} year={year} />} */}
+      {month > 0 && <TableShowSalaryMonth month={month} year={year} />}
     </div>
   );
 }

@@ -639,6 +639,24 @@ const adminService = {
     }
   },
 
+  async getSalaryByMonth(month, year) {
+    try {
+      const res = await axios.get(`api/salary-payments/${month}/${year}`);
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async updateReceivedSalary(salaryId, access_token) {
+    const res = await axios.post(`api/salary-payments/receive/${salaryId}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    return res.data;
+  },
+
   // Tickets
   async getAllTickets() {
     try {
