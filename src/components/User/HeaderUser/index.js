@@ -46,9 +46,6 @@ function HeaderUser() {
               <li className={cx('nav-item')}>
                 <Link to="/results">Results</Link>
               </li>
-              <li className={cx('nav-item')}>
-                <Link to="/shop">Shop</Link>
-              </li>
             </ul>
           </nav>
           <nav className={cx('nav-secondary')}>

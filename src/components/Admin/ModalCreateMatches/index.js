@@ -53,7 +53,7 @@ function ModalCreateMatches({
 
   useEffect(() => {
     // Update host based on stadium_id
-    if (stadiumId === 1) {
+    if (stadiumId === '1') {
       setHost('1');
     } else {
       setHost('0');
@@ -203,8 +203,8 @@ function ModalCreateMatches({
         formData.append('goals_conceded', goalsConceded);
         formData.append('state', state);
         formData.append('result', result);
-        formData.append('host', host);
       }
+      formData.append('host', host);
       const res = await adminService.updateMatch(matchId, formData, access_token);
       if (res.match) {
         setDefaultValue(res.match);

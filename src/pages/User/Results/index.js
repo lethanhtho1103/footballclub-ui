@@ -95,7 +95,7 @@ function Results() {
                     </div>
                     <div className={cx('hight-light')}>
                       <Link to="/" className={cx('text')}>
-                        Hightlights
+                        Details
                       </Link>
                       <FontAwesomeIcon icon={faArrowRight} />
                     </div>

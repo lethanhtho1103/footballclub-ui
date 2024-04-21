@@ -11,18 +11,22 @@ import HeaderUser from '~/components/User/HeaderUser';
 import FooterUser from '~/components/User/FooterUser';
 import { userService } from '~/services';
 import TicketUser from '~/components/User/TicketUser';
+import Loader from '~/components/Loader';
 
 const cx = classNames.bind(style);
 function MyTicket() {
   const [allTicketPurchases, setAllTicketPurchases] = useState([]);
-
+  const [isLoader, setIsLoader] = useState(false);
   const { infoUser, isLogIn } = useContext(InfoUserContext);
-
   const handleGetAllTicketPurchase = async () => {
-    const res = await userService.getAllTicketPurchases(infoUser.user_id);
-    if (res.tickets) {
-      setAllTicketPurchases(res.tickets);
-    }
+    setIsLoader(true);
+    setTimeout(async () => {
+      const res = await userService.getAllTicketPurchases(infoUser.user_id);
+      if (res.tickets) {
+        setAllTicketPurchases(res.tickets);
+      }
+      setIsLoader(false);
+    }, 500);
   };
 
   const memoizedAllTicketPurchases = useMemo(() => {
@@ -36,12 +40,14 @@ function MyTicket() {
       navigate('/login');
     }
     handleGetAllTicketPurchase();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [infoUser.user_id]);
   return (
     <div className={cx('wrapper')}>
       <HeaderUser />
       <main className={cx('content')}>
+        {isLoader && <Loader />}
         <Container>
           <Row className={cx('row')}>
             <Col md={3} className={cx('side-bar')}>

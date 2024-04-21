@@ -22,7 +22,7 @@ function DetailMatchLive({ match, isLive }) {
   }, [isLive]);
 
   const startMatchTime = new Date(match?.game_date + 'T' + match?.game_time); // Tạo đối tượng Date từ thời gian bắt đầu trận đấu
-  const elapsedMinutes = Math.floor((time - startMatchTime) / (1000 * 60)); // Tính số phút đã trôi qua
+  const elapsedMinutes = Math.ceil((time - startMatchTime) / (1000 * 60)); // Tính số phút đã trôi qua
 
   function convertTimeFormat(timeString) {
     var timeParts = timeString?.split(':');
@@ -63,7 +63,7 @@ function DetailMatchLive({ match, isLive }) {
                     <span>-</span>
                     <div className={cx('away')}>{match?.goals_conceded}</div>
                   </div>
-                  <div className={cx('minute')}>{minute}'</div>
+                  {match?.state === 'in_progress' && <div className={cx('minute')}>{elapsedMinutes}'</div>}
                 </>
               ) : (
                 <>
@@ -72,7 +72,7 @@ function DetailMatchLive({ match, isLive }) {
                     <span>-</span>
                     <div className={cx('host')}>{match?.goals_scored}</div>
                   </div>
-                  <div className={cx('minute')}>{minute}'</div>
+                  {match?.state === 'in_progress' && <div className={cx('minute')}>{elapsedMinutes}'</div>}
                 </>
               )
             ) : (
@@ -111,7 +111,7 @@ function DetailMatchLive({ match, isLive }) {
               <div className={cx('host')}>
                 <ul>
                   {match?.game_detail
-                    .filter((detail) => detail.is_away === 0 && detail.time <= '45')
+                    .filter((detail) => detail.is_away === 0 && detail.time <= 45)
                     .map((detail) => (
                       <li key={detail.game_detail_id}>
                         {detail.time}'
@@ -133,7 +133,7 @@ function DetailMatchLive({ match, isLive }) {
               <div className={cx('away')}>
                 <ul>
                   {match?.game_detail
-                    .filter((detail) => detail.is_away === 1 && detail.time <= '45')
+                    .filter((detail) => detail.is_away === 1 && detail.time <= 45)
                     .map((detail) => (
                       <li key={detail.game_detail_id}>
                         {detail.time}'
@@ -166,7 +166,7 @@ function DetailMatchLive({ match, isLive }) {
               <div className={cx('host')}>
                 <ul>
                   {match?.game_detail
-                    .filter((detail) => detail.is_away === 0 && detail.time > '45')
+                    .filter((detail) => detail.is_away === 0 && detail.time > 45)
                     .map((detail) => (
                       <li key={detail.game_detail_id}>
                         {detail.time}'
@@ -188,7 +188,7 @@ function DetailMatchLive({ match, isLive }) {
               <div className={cx('away')}>
                 <ul>
                   {match?.game_detail
-                    .filter((detail) => detail.is_away === 1 && detail.time > '45')
+                    .filter((detail) => detail.is_away === 1 && detail.time > 45)
                     .map((detail) => (
                       <li key={detail.game_detail_id}>
                         {detail.time}'
