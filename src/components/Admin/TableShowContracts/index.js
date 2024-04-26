@@ -38,7 +38,7 @@ function TableShowContracts() {
     { Header: 'Type', accessor: 'col3', filter: 'fuzzyText' },
     { Header: 'Date created', accessor: 'col4', filter: 'fuzzyText' },
     { Header: 'Expiration date', accessor: 'col5', filter: 'fuzzyText' },
-    { Header: 'Salary', accessor: 'col6', filter: 'fuzzyText' },
+    { Header: 'Price', accessor: 'col6', filter: 'fuzzyText' },
     { Header: 'PDF', accessor: 'col7', filter: 'fuzzyText' },
     { Header: 'Actions', accessor: 'col8', disableSortBy: true },
   ];
@@ -72,7 +72,7 @@ function TableShowContracts() {
         col6: new Intl.NumberFormat('en-US', {
           style: 'currency',
           currency: 'USD',
-        }).format(row.salary),
+        }).format(row.price),
         col7: (
           // eslint-disable-next-line react/jsx-no-target-blank
           <a href="https://drive.google.com/file/d/1eGKRf-_KDev6frONL9b-Ua0RzT3MFd_E/view?usp=sharing" target="_blank">
