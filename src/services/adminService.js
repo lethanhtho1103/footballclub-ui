@@ -602,6 +602,15 @@ const adminService = {
     }
   },
 
+  async deleteDetailMatchLive(id) {
+    try {
+      const res = await axios.delete(`/api/match-detail/${id}`);
+      return res.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+
   async getMatchLive(date, time) {
     try {
       const res = await axios.get(`/api/match-live`);

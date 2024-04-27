@@ -53,7 +53,7 @@ function MatchDetail() {
         </Button>
       )}
 
-      <DetailMatch match={match} isLive={isLive} />
+      <DetailMatch match={match} isLive={isLive} handleGetMatchLive={handleGetMatchLive} />
     </AdminLayout>
   );
 }

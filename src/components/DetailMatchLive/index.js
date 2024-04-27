@@ -4,16 +4,109 @@ import styles from './DetailMatch.module.scss';
 import bg1 from '~/assets/images/bg.jpg';
 import cityLogo from '~/assets/images/manchester_city.webp';
 import { baseUrl } from '~/axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleMinus } from '@fortawesome/free-solid-svg-icons';
+import adminService from '~/services/adminService';
+import { Button, Modal } from 'react-bootstrap';
+import Loader from '../Loader';
+import ToastMassage from '../Admin/ToastMassage';
 
 const cx = classNames.bind(styles);
 
-function DetailMatchLive({ match, isLive }) {
-  const [time, setTime] = useState(new Date()); // Sử dụng state để lưu trữ thời gian
+function DetailMatchLive({ match, isLive, handleGetMatchLive }) {
+  const [time, setTime] = useState(new Date());
+  const [gameDetailId, setGameDetailId] = useState('');
+  const [isLoader, setIsLoader] = useState(false);
+  const [showDeleteConfirmationDialog, setShowDeleteConfirmationDialog] = useState(false);
+
+  const [obToast, setObToast] = useState({
+    content: '',
+    isShow: false,
+  });
+
+  const handleDelete = () => {
+    setIsLoader(true);
+    setTimeout(async () => {
+      const res = await adminService.deleteDetailMatchLive(gameDetailId);
+      setObToast({ content: res.message, isShow: true });
+      setIsLoader(false);
+      handleGetMatchLive();
+      handleClose();
+    }, 500);
+  };
+
+  const handleClose = () => setShowDeleteConfirmationDialog(false);
+
+  const DeleteConfirmationDialog = () => {
+    return (
+      <Modal show={showDeleteConfirmationDialog} onHide={handleClose} centered>
+        <Modal.Header
+          closeButton
+          className="modal-header"
+          style={{
+            backgroundColor: '#fff',
+            borderRadius: '5px',
+            padding: '20px 20px 10px',
+            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
+          }}
+        >
+          <Modal.Title style={{ fontSize: '24px' }}>Confirm details of match deletion?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body
+          className="modal-body"
+          style={{
+            padding: '20px 20px 20px',
+            fontSize: '1.4rem',
+          }}
+        >
+          Are you sure you want to delete?
+        </Modal.Body>
+        <Modal.Footer
+          className="modal-footer"
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            marginTop: '20px',
+          }}
+        >
+          <Button
+            variant="secondary"
+            onClick={handleClose}
+            style={{
+              backgroundColor: '#385678',
+              color: '#fff',
+              fontSize: '1.3rem',
+              fontWeight: '600',
+              borderRadius: '5px',
+              padding: '7.4px 16px',
+              marginRight: '8px',
+              border: 'none',
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="danger"
+            onClick={handleDelete}
+            style={{
+              backgroundColor: '#d9534f',
+              color: '#fff',
+              fontSize: '1.3rem',
+              fontWeight: '600',
+              borderRadius: '5px',
+              padding: '7px 16px',
+            }}
+          >
+            Confirm
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  };
 
   useEffect(() => {
     let interval;
     if (isLive) {
-      // Nếu trận đấu đang diễn ra, cập nhật thời gian mỗi giây
       interval = setInterval(() => {
         setTime(new Date());
       }, 1000); // 1000ms = 1 giây
@@ -21,8 +114,8 @@ function DetailMatchLive({ match, isLive }) {
     return () => clearInterval(interval);
   }, [isLive]);
 
-  const startMatchTime = new Date(match?.game_date + 'T' + match?.game_time); // Tạo đối tượng Date từ thời gian bắt đầu trận đấu
-  const elapsedMinutes = Math.ceil((time - startMatchTime) / (1000 * 60)); // Tính số phút đã trôi qua
+  const startMatchTime = new Date(match?.game_date + 'T' + match?.game_time);
+  const elapsedMinutes = Math.ceil((time - startMatchTime) / (1000 * 60));
 
   function convertTimeFormat(timeString) {
     var timeParts = timeString?.split(':');
@@ -34,6 +127,11 @@ function DetailMatchLive({ match, isLive }) {
 
   return (
     <>
+      {isLoader && <Loader />}
+      {DeleteConfirmationDialog()}
+      {obToast?.content?.length > 0 && (
+        <ToastMassage isShow={obToast.show} content={obToast.content} handleClose={() => setObToast({ content: '' })} />
+      )}
       <div className={cx('container')}>
         <div className={cx('background')}>
           <img src={bg1} alt="bg1" />
@@ -101,7 +199,7 @@ function DetailMatchLive({ match, isLive }) {
         <div className={cx('detail-match')}>
           <div className={cx('haft-first')}>
             <div className={cx('title')}>
-              <span>Haft first</span>
+              <span>Detail match</span>
             </div>
             <div
               className={cx('detail', {
@@ -111,7 +209,7 @@ function DetailMatchLive({ match, isLive }) {
               <div className={cx('host')}>
                 <ul>
                   {match?.game_detail
-                    .filter((detail) => detail.is_away === 0 && detail.time <= 45)
+                    .filter((detail) => detail.is_away === 0)
                     .map((detail) => (
                       <li key={detail.game_detail_id}>
                         {detail.time}'
@@ -126,6 +224,15 @@ function DetailMatchLive({ match, isLive }) {
                           </div>
                         )}
                         <p>{detail.player_name}</p>
+                        <i
+                          className={cx('icon-delete')}
+                          onClick={() => {
+                            setGameDetailId(detail.game_detail_id);
+                            setShowDeleteConfirmationDialog(true);
+                          }}
+                        >
+                          <FontAwesomeIcon icon={faCircleMinus} />
+                        </i>
                       </li>
                     ))}
                 </ul>
@@ -133,7 +240,7 @@ function DetailMatchLive({ match, isLive }) {
               <div className={cx('away')}>
                 <ul>
                   {match?.game_detail
-                    .filter((detail) => detail.is_away === 1 && detail.time <= 45)
+                    .filter((detail) => detail.is_away === 1)
                     .map((detail) => (
                       <li key={detail.game_detail_id}>
                         {detail.time}'
@@ -148,13 +255,22 @@ function DetailMatchLive({ match, isLive }) {
                           </div>
                         )}
                         <p>{detail.player_name}</p>
+                        <i
+                          className={cx('icon-delete')}
+                          onClick={() => {
+                            setGameDetailId(detail.game_detail_id);
+                            setShowDeleteConfirmationDialog(true);
+                          }}
+                        >
+                          <FontAwesomeIcon icon={faCircleMinus} />
+                        </i>
                       </li>
                     ))}
                 </ul>
               </div>
             </div>
           </div>
-          <div className={cx('haft-second')}>
+          {/* <div className={cx('haft-second')}>
             <div className={cx('title')}>
               <div>Haft second</div>
             </div>
@@ -208,7 +324,7 @@ function DetailMatchLive({ match, isLive }) {
                 </ul>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       )}
     </>
