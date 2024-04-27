@@ -20,14 +20,14 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
   const [user_id, setUserId] = useState(contract?.user_id || '');
   const [date_created, setDateCreated] = useState(contract?.date_created || '');
   const [expiration_date, setExpirationDate] = useState(contract?.expiration_date || '');
-  const [salary, setSalary] = useState(contract?.salary || '');
+  const [price, setPrice] = useState(contract?.price || '');
   const [pdf, setPdf] = useState(contract?.pdf || null);
   const [type, setType] = useState(contract?.type || '');
 
   const [userIdErr, setUserIdErr] = useState('');
   const [dateCreatedErr, setDateCreatedErr] = useState('');
   const [expirationDateErr, setExpirationDateErr] = useState('');
-  const [salaryErr, setSalaryErr] = useState('');
+  const [priceErr, setPriceErr] = useState('');
   const [pdfErr, setPdfErr] = useState('');
   const [typeErr, setTypeErr] = useState(''); // State lưu trữ lỗi liên quan đến type
 
@@ -51,8 +51,8 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
         setExpirationDate(value);
         break;
       }
-      case 'salary': {
-        setSalary(value);
+      case 'price': {
+        setPrice(value);
         break;
       }
       case 'type': {
@@ -74,12 +74,12 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
     setUserId(contract?.user_id || '');
     setDateCreated(contract?.date_created || '');
     setExpirationDate(contract?.expiration_date || '');
-    setSalary(contract?.salary || '');
+    setPrice(contract?.price || '');
     setPdf(contract?.pdf || null);
     setType(contract?.type || ''); // Thêm type
     setUserIdErr('');
     setExpirationDateErr('');
-    setSalaryErr('');
+    setPriceErr('');
     setPdfErr('');
     setTypeErr(''); // Reset typeErr
   };
@@ -88,7 +88,7 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
     setUserIdErr(errors.user_id);
     setDateCreatedErr(errors.date_created);
     setExpirationDateErr(errors.expiration_date);
-    setSalaryErr(errors.salary);
+    setPriceErr(errors.price);
     setPdfErr(errors.pdf);
     setTypeErr(errors.type); // Thêm xử lý cho type
   };
@@ -99,7 +99,7 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
         user_id,
         date_created,
         expiration_date,
-        salary,
+        price,
         pdf,
         access_token,
         type, // Thêm type
@@ -121,7 +121,7 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
       formData.append('user_id', user_id);
       formData.append('date_created', date_created);
       formData.append('expiration_date', expiration_date);
-      formData.append('salary', salary);
+      formData.append('price', price);
       formData.append('type', type); // Thêm type
       if (contract?.pdf !== pdf) {
         formData.append('pdf', pdf);
@@ -180,7 +180,7 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
             user_id: userIdErr,
             date_created: dateCreatedErr,
             expiration_date: expirationDateErr,
-            salary: salaryErr,
+            price: priceErr,
             pdf: pdfErr,
             type: typeErr,
           }}
@@ -247,13 +247,13 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
               error={expirationDateErr?.length > 0}
             />
             <FormInputGroup
-              id="salary"
-              label="Salary"
+              id="price"
+              label="Price"
               type="number"
-              value={salary}
-              placeholder="salary"
-              onChange={(e) => changeInput(e, 'salary')}
-              error={salaryErr?.length > 0}
+              value={price}
+              placeholder="price"
+              onChange={(e) => changeInput(e, 'price')}
+              error={priceErr?.length > 0}
             />
             <FormInputGroup
               id="pdf"
