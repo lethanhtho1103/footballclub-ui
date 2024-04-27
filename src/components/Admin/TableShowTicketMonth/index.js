@@ -5,11 +5,15 @@ import { useEffect, useState } from 'react';
 import { baseUrl } from '~/axios';
 import noAvatar from '~/assets/images/no-avatar.png';
 import adminService from '~/services/adminService';
+import { Button } from 'react-bootstrap';
+import ModalShowUserOfMatch from '../ModalShowUserOfMatch';
 
 const cx = classNames.bind(style);
 
 function TableShowTicketMonth({ month, year }) {
   const [row, setRow] = useState([]);
+  const [isShowUser, setIsShowUser] = useState(false);
+  const [gameId, setGameId] = useState('');
 
   const columns = [
     { Header: 'STT', accessor: 'col1', filter: 'fuzzyText' },
@@ -39,7 +43,7 @@ function TableShowTicketMonth({ month, year }) {
   const convertToDataRow = (row) => {
     const dataRow = row.map((row, index) => {
       return {
-        col1: index + 1,
+        col1: row.game_id,
         col2: 'Premier league',
         col3: (
           <div
@@ -65,7 +69,28 @@ function TableShowTicketMonth({ month, year }) {
         col4: row.game_date,
         col5: row.tickets_sold,
         col6: row.revenue,
-        col7: 'Show detail',
+        col7: (
+          <Button
+            style={{
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              padding: '8px 10px',
+              backgroundColor: '#5E5DF0',
+              color: '#fff',
+              borderRadius: '8px',
+              borderColor: '#5E5DF0',
+              fontSize: '1.3rem',
+            }}
+            onMouseOver={(e) => (e.target.style.opacity = 0.8)}
+            onMouseOut={(e) => (e.target.style.opacity = 1)}
+            onClick={() => {
+              setIsShowUser(true);
+              setGameId(row.game_id);
+            }}
+          >
+            Show detail
+          </Button>
+        ),
       };
     });
     setRow(dataRow);
@@ -74,6 +99,10 @@ function TableShowTicketMonth({ month, year }) {
   const handleGetAllMatchOfMonth = async () => {
     const res = await adminService.getStatisticalByMonth(month, year);
     convertToDataRow(res.matches);
+  };
+
+  const handleCloseX = () => {
+    setIsShowUser(false);
   };
 
   useEffect(() => {
@@ -96,6 +125,7 @@ function TableShowTicketMonth({ month, year }) {
             </div>
           </div>
         </div>
+        {isShowUser && <ModalShowUserOfMatch toggleX={handleCloseX} gameId={gameId} />}
       </div>
     </>
   );

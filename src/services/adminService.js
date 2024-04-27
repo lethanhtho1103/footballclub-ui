@@ -666,6 +666,15 @@ const adminService = {
       console.error(error);
     }
   },
+
+  async getAllUserOfMatch(gameId) {
+    try {
+      const res = await axios.get(`/api/tickets/match/${gameId}`);
+      return res.data;
+    } catch (error) {
+      console.log('Get all ticket purchase errors:', error);
+    }
+  },
 };
 
 export default adminService;
