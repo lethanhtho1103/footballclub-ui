@@ -7,10 +7,13 @@ import noAvatar from '~/assets/images/no-avatar.png';
 import adminService from '~/services/adminService';
 import { Button } from 'react-bootstrap';
 import ModalShowUserOfMatch from '../ModalShowUserOfMatch';
+import { useSelector } from 'react-redux';
+import { accessTokenSelector } from '~/redux/selector';
 
 const cx = classNames.bind(style);
 
 function TableShowTicketMonth({ month, year }) {
+  const access_token = useSelector(accessTokenSelector);
   const [row, setRow] = useState([]);
   const [isShowUser, setIsShowUser] = useState(false);
   const [gameId, setGameId] = useState('');
@@ -97,7 +100,7 @@ function TableShowTicketMonth({ month, year }) {
   };
 
   const handleGetAllMatchOfMonth = async () => {
-    const res = await adminService.getStatisticalByMonth(month, year);
+    const res = await adminService.getStatisticalByMonth(month, year, access_token);
     convertToDataRow(res.matches);
   };
 

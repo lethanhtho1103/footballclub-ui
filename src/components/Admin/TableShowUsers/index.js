@@ -7,10 +7,13 @@ import adminService from '~/services/adminService';
 import { baseUrl } from '~/axios';
 import noAvatar from '~/assets/images/no-avatar.png';
 import ModalDetailTicket from '../ModalDetailTicket';
+import { useSelector } from 'react-redux';
+import { accessTokenSelector } from '~/redux/selector';
 
 const cx = classNames.bind(style);
 
 function TableShowUsers() {
+  const access_token = useSelector(accessTokenSelector);
   const [row, setRow] = useState([]);
   const [isShowModalDetailTicket, setIsShowModalDetailTicket] = useState(false);
   const [userId, setUserId] = useState('');
@@ -100,7 +103,7 @@ function TableShowUsers() {
   };
 
   const handleGetAllUsers = async () => {
-    const res = await adminService.getAllAccountUsers();
+    const res = await adminService.getAllAccountUsers(access_token);
     convertToDataRow(res.users);
   };
 

@@ -19,10 +19,13 @@ import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import TableShowTicketMonth from '../TableShowTicketMonth';
+import { useSelector } from 'react-redux';
+import { accessTokenSelector } from '~/redux/selector';
 const cx = classNames.bind(styles);
 
 ChartJS.register(ChartDataLabels, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 function TicketParChart({ year = new Date().getFullYear() - 1 }) {
+  const access_token = useSelector(accessTokenSelector);
   const [dataPar, setDataPar] = useState([]);
   const [month, setMonth] = useState(0);
   const options = {
@@ -137,7 +140,7 @@ function TicketParChart({ year = new Date().getFullYear() - 1 }) {
   };
 
   const getData = async () => {
-    const res = await adminService.getStatisticalByYear(year);
+    const res = await adminService.getStatisticalByYear(year, access_token);
     let dataParExample = new Array(12).fill(0);
     // Lặp qua dữ liệu ban đầu để cập nhật giá trị doanh thu cho các tháng có dữ liệu
     res?.forEach((item) => {

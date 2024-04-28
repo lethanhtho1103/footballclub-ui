@@ -10,9 +10,14 @@ const adminService = {
   },
 
   // Dashboard
-  async getDashboard() {
+  async getDashboard(access_token) {
     try {
-      const res = await axios.get('api/count-all-users');
+      const res = await axios.get('api/count-all-users', {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.log(error.message);
@@ -20,9 +25,14 @@ const adminService = {
   },
 
   // Users
-  async getAllUser() {
+  async getAllUser(access_token) {
     try {
-      const res = await axios.get('api/users/all');
+      const res = await axios.get('api/users/all', {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data.users;
     } catch (error) {
       console.log(error.message);
@@ -30,9 +40,14 @@ const adminService = {
   },
 
   // Accounts-users
-  async getAllAccountUsers() {
+  async getAllAccountUsers(access_token) {
     try {
-      const res = await axios.get('api/users');
+      const res = await axios.get('api/users', {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.log(error.message);
@@ -62,9 +77,14 @@ const adminService = {
     }
   },
 
-  async getOnePlayer(user_id) {
+  async getOnePlayer(user_id, access_token) {
     try {
-      const res = await axios.get(`api/players/id/${user_id}`);
+      const res = await axios.get(`api/players/id/${user_id}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data.player;
     } catch (error) {
       console.log(error.message);
@@ -132,9 +152,14 @@ const adminService = {
   //   }
   // },
 
-  async getOneCoach(user_id) {
+  async getOneCoach(user_id, access_token) {
     try {
-      const res = await axios.get(`api/coaches/id/${user_id}`);
+      const res = await axios.get(`api/coaches/id/${user_id}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.log(error.message);
@@ -166,9 +191,14 @@ const adminService = {
   },
 
   // Company
-  async getAllCompany() {
+  async getAllCompany(access_token) {
     try {
-      const res = await axios.get('/api/company');
+      const res = await axios.get('/api/company', {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.error(error);
@@ -197,9 +227,14 @@ const adminService = {
     }
   },
 
-  async getOneCompany(company_id) {
+  async getOneCompany(company_id, access_token) {
     try {
-      const res = await axios.get(`api/company/${company_id}`);
+      const res = await axios.get(`api/company/${company_id}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.log(error.message);
@@ -231,9 +266,14 @@ const adminService = {
   },
 
   //Clubs
-  async getAllClubs() {
+  async getAllClubs(access_token) {
     try {
-      const res = await axios.get('/api/clubs');
+      const res = await axios.get('/api/clubs', {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.error(error);
@@ -262,9 +302,14 @@ const adminService = {
     }
   },
 
-  async getOneClub(club_id) {
+  async getOneClub(club_id, access_token) {
     try {
-      const res = await axios.get(`api/clubs/${club_id}`);
+      const res = await axios.get(`api/clubs/${club_id}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.log(error.message);
@@ -296,9 +341,14 @@ const adminService = {
   },
 
   // Stadiums
-  async getAllStadiums() {
+  async getAllStadiums(access_token) {
     try {
-      const res = await axios.get('/api/stadiums');
+      const res = await axios.get('/api/stadiums', {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.error(error);
@@ -327,9 +377,14 @@ const adminService = {
     }
   },
 
-  async getOneStadium(stadium_id) {
+  async getOneStadium(stadium_id, access_token) {
     try {
-      const res = await axios.get(`api/stadiums/${stadium_id}`);
+      const res = await axios.get(`api/stadiums/${stadium_id}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.log(error.message);
@@ -361,9 +416,14 @@ const adminService = {
   },
 
   //Seats
-  async getAllSeats() {
+  async getAllSeats(access_token) {
     try {
-      const res = await axios.get('/api/seats');
+      const res = await axios.get('/api/seats', {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.error(error);
@@ -434,9 +494,14 @@ const adminService = {
   },
 
   // Contracts
-  async getAllContracts() {
+  async getAllContracts(access_token) {
     try {
-      const res = await axios.get('/api/contracts');
+      const res = await axios.get('/api/contracts', {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.error(error);
@@ -465,18 +530,28 @@ const adminService = {
     }
   },
 
-  async getOneContract(contract_id) {
+  async getOneContract(contract_id, access_token) {
     try {
-      const res = await axios.get(`api/contracts/${contract_id}`);
+      const res = await axios.get(`api/contracts/${contract_id}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.log(error.message);
     }
   },
 
-  async getOneContractByType(contract_type) {
+  async getOneContractByType(contract_type, access_token) {
     try {
-      const res = await axios.get(`api/contracts/type/${contract_type}`);
+      const res = await axios.get(`api/contracts/type/${contract_type}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.log(error.message);
@@ -508,9 +583,14 @@ const adminService = {
   },
 
   // Matches
-  async getAllMatches() {
+  async getAllMatches(access_token) {
     try {
-      const res = await axios.get('/api/matches');
+      const res = await axios.get('/api/matches', {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.error(error);
@@ -539,18 +619,28 @@ const adminService = {
     }
   },
 
-  async getOneMatch(match_id) {
+  async getOneMatch(match_id, access_token) {
     try {
-      const res = await axios.get(`api/matches/${match_id}`);
+      const res = await axios.get(`api/matches/${match_id}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.log(error.message);
     }
   },
 
-  async getOneMatchByType(match_type) {
+  async getOneMatchByType(match_type, access_token) {
     try {
-      const res = await axios.get(`api/matches/type/${match_type}`);
+      const res = await axios.get(`api/matches/type/${match_type}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.log(error.message);
@@ -602,18 +692,42 @@ const adminService = {
     }
   },
 
-  async deleteDetailMatchLive(id) {
+  async deleteDetailMatchLive(id, access_token) {
     try {
-      const res = await axios.delete(`/api/match-detail/${id}`);
+      const res = await axios.delete(`/api/match-detail/${id}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.log(error.message);
     }
   },
 
-  async getMatchLive(date, time) {
+  async getMatchLive(access_token) {
     try {
-      const res = await axios.get(`/api/match-live`);
+      const res = await axios.get(`/api/match-live`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+
+  async stopMatchLive(id, access_token) {
+    try {
+      const res = await axios.post(`/api/stopMatch/${id}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.log(error.message);
@@ -621,36 +735,56 @@ const adminService = {
   },
 
   //Statistical
-  async getStatisticalByYear(year) {
+  async getStatisticalByYear(year, access_token) {
     try {
-      const res = await axios.get(`/api/revenue-per-month?year=${year}`);
+      const res = await axios.get(`/api/revenue-per-month?year=${year}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.error(error);
     }
   },
 
-  async getStatisticalByMonth(month, year) {
+  async getStatisticalByMonth(month, year, access_token) {
     try {
-      const res = await axios.get(`api/gameTickets?month=${month}&year=${year}`);
+      const res = await axios.get(`api/gameTickets?month=${month}&year=${year}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.error(error);
     }
   },
 
-  async getSalaryByYear(year) {
+  async getSalaryByYear(year, access_token) {
     try {
-      const res = await axios.get(`/api/salary-report/${year}`);
+      const res = await axios.get(`/api/salary-report/${year}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.error(error);
     }
   },
 
-  async getSalaryByMonth(month, year) {
+  async getSalaryByMonth(month, year, access_token) {
     try {
-      const res = await axios.get(`api/salary-payments/${month}/${year}`);
+      const res = await axios.get(`api/salary-payments/${month}/${year}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.error(error);
@@ -667,18 +801,28 @@ const adminService = {
   },
 
   // Tickets
-  async getAllTickets() {
+  async getAllTickets(access_token) {
     try {
-      const res = await axios.get('api/tickets');
+      const res = await axios.get('api/tickets', {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.error(error);
     }
   },
 
-  async getAllUserOfMatch(gameId) {
+  async getAllUserOfMatch(gameId, access_token) {
     try {
-      const res = await axios.get(`/api/tickets/match/${gameId}`);
+      const res = await axios.get(`/api/tickets/match/${gameId}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return res.data;
     } catch (error) {
       console.log('Get all ticket purchase errors:', error);

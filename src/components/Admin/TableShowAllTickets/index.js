@@ -44,13 +44,12 @@ function TableShowAllTickets() {
             }}
           >
             <img
-              src={row.image?.length > 9 ? `${baseUrl}${row.club_away.image}` : noAvatar}
+              src={`${baseUrl}${row.club_away.image}`}
               alt=""
               style={{
                 width: '48px',
                 height: '48px',
                 display: 'block',
-                borderRadius: '50%',
               }}
             />
             <div style={{ width: '100%', textAlign: 'center' }}>{row.club_away.name}</div>

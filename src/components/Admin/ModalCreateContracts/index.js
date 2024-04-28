@@ -85,12 +85,12 @@ function ModalCreateContracts({ handleClose, handleGetAllContracts, contract, ac
   };
 
   const validateErrors = (errors) => {
-    setUserIdErr(errors.user_id);
-    setDateCreatedErr(errors.date_created);
-    setExpirationDateErr(errors.expiration_date);
-    setPriceErr(errors.price);
-    setPdfErr(errors.pdf);
-    setTypeErr(errors.type); // Thêm xử lý cho type
+    setUserIdErr(errors?.user_id);
+    setDateCreatedErr(errors?.date_created);
+    setExpirationDateErr(errors?.expiration_date);
+    setPriceErr(errors?.price);
+    setPdfErr(errors?.pdf);
+    setTypeErr(errors?.type); // Thêm xử lý cho type
   };
 
   const createContract = async () => {

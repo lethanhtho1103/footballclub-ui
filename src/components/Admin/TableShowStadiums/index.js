@@ -8,8 +8,6 @@ import ModalCreateStadiums from '../ModalCreateStadiums';
 import adminService from '~/services/adminService';
 import ToastMassage from '../ToastMassage';
 import Loader from '~/components/Loader';
-import { baseUrl } from '~/axios';
-import noAvatar from '~/assets/images/no-avatar.png';
 import { useSelector } from 'react-redux';
 import { accessTokenSelector } from '~/redux/selector';
 
@@ -36,8 +34,7 @@ function TableShowStadiums() {
     { Header: 'Name', accessor: 'col2', filter: 'fuzzyText' },
     { Header: 'Address', accessor: 'col3', filter: 'fuzzyText' },
     { Header: 'Capacity', accessor: 'col4', filter: 'fuzzyText' },
-    { Header: 'Image', accessor: 'col5', filter: 'fuzzyText' },
-    { Header: 'Actions', accessor: 'col6', disableSortBy: true },
+    { Header: 'Actions', accessor: 'col5', disableSortBy: true },
   ];
 
   const convertToDataRow = (row) => {
@@ -48,18 +45,6 @@ function TableShowStadiums() {
         col3: row.address,
         col4: row.capacity,
         col5: (
-          <img
-            src={row.image?.length > 9 ? `${baseUrl}${row.image}` : noAvatar}
-            alt=""
-            style={{
-              width: '48px',
-              height: '48px',
-              display: 'block',
-              borderRadius: '50%',
-            }}
-          />
-        ),
-        col6: (
           <div
             style={{
               display: 'flex',

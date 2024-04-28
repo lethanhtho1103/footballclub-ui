@@ -3,16 +3,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding, faUserTie } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import adminService from '~/services/adminService';
-
 import classNames from 'classnames/bind';
 import styles from './Dashboard.module.scss';
+import { useSelector } from 'react-redux';
+import { accessTokenSelector } from '~/redux/selector';
 const cx = classNames.bind(styles);
 
 function Dashboard() {
+  const access_token = useSelector(accessTokenSelector);
   const [data, setData] = useState([]);
 
   const handleGetDashboard = async () => {
-    const res = await adminService.getDashboard();
+    const res = await adminService.getDashboard(access_token);
     setData(res[0]);
   };
 

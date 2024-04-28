@@ -103,7 +103,7 @@ function TableShowSalaryMonth({ month, year }) {
   };
 
   const handleGetAllMatchOfMonth = async () => {
-    const res = await adminService.getSalaryByMonth(month, year);
+    const res = await adminService.getSalaryByMonth(month, year, access_token);
     convertToDataRow(res.salary_payments);
   };
 

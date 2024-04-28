@@ -1,7 +1,8 @@
 // .wrap {
 //   min-height: calc(100vh - 150px);
 // }
-.btn-edit {
+.btn-edit,
+.btn-stop {
   float: right;
   background-color: #c2fbd7;
   border-radius: 100px;
@@ -17,4 +18,9 @@
   .text-btn {
     margin-left: 6px;
   }
+}
+
+.btn-stop {
+  background-color: #ff0000;
+  color: #fff;
 }

@@ -16,7 +16,6 @@ const cx = classNames.bind(style);
 
 function ModalCreateCoaches({ handleClose, handleGetAllCoaches, coach, access_token, countries, userId }) {
   const [isLoader, setIsLoader] = useState(false);
-
   const [selectedOption, setSelectedOption] = useState(null);
   const [name, setName] = useState(coach?.name || '');
   const [email, setEmail] = useState(coach?.email || '');

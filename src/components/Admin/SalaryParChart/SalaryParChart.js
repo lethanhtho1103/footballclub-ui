@@ -19,10 +19,13 @@ import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import TableShowSalaryMonth from '../TableShowSalaryMonth';
+import { useSelector } from 'react-redux';
+import { accessTokenSelector } from '~/redux/selector';
 const cx = classNames.bind(styles);
 
 ChartJS.register(ChartDataLabels, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 function SalaryParChart({ year = new Date().getFullYear() - 1 }) {
+  const access_token = useSelector(accessTokenSelector);
   const [dataPar, setDataPar] = useState([]);
   const [month, setMonth] = useState(0);
   const options = {
@@ -137,7 +140,7 @@ function SalaryParChart({ year = new Date().getFullYear() - 1 }) {
   };
 
   const getData = async () => {
-    const res = await adminService.getSalaryByYear(year);
+    const res = await adminService.getSalaryByYear(year, access_token);
     setDataPar(Object.values(res));
   };
 

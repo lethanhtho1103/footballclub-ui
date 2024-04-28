@@ -15,7 +15,7 @@ import { accessTokenSelector } from '~/redux/selector';
 
 const cx = classNames.bind(style);
 
-function TableShowContracts() {
+function TableShowContracts({ isPlayerContract }) {
   const access_token = useSelector(accessTokenSelector);
   const [row, setRow] = useState([]);
   const [contract, setContract] = useState();
@@ -56,14 +56,16 @@ function TableShowContracts() {
             }}
           >
             <div style={{ width: '100%', textAlign: 'center' }}>{row.name}</div>
-            <img
-              src={row.image?.length > 9 ? `${baseUrl}${row.image}` : noAvatar}
-              alt=""
-              style={{
-                width: '48px',
-                height: '48px',
-              }}
-            />
+            {isPlayerContract && (
+              <img
+                src={row.image?.length > 9 ? `${baseUrl}${row.image}` : noAvatar}
+                alt=""
+                style={{
+                  width: '48px',
+                  height: '48px',
+                }}
+              />
+            )}
           </div>
         ),
         col3: row.type,
@@ -123,19 +125,26 @@ function TableShowContracts() {
 
   //
   const handleGetAllUsers = async () => {
-    const res = await adminService.getAllUser();
+    const res = await adminService.getAllUser(access_token);
     setUsers(res);
   };
 
   //
 
   const handleGetAllContracts = async () => {
-    const res = await adminService.getAllContracts();
-    convertToDataRow(res.contracts);
+    setIsLoader(true);
+    const res = await adminService.getAllContracts(access_token);
+    console.log(res.contracts);
+    setIsLoader(false);
+    if (isPlayerContract) {
+      convertToDataRow(res.contracts.filter((contract) => contract.type === 'individual'));
+    } else {
+      convertToDataRow(res.contracts.filter((contract) => contract.type !== 'individual'));
+    }
   };
 
   const handleUpdateContract = async (contract_id) => {
-    const res = await adminService.getOneContract(contract_id);
+    const res = await adminService.getOneContract(contract_id, access_token);
     setIsShowModalCreateContracts(true);
     setContractId(contract_id);
     setContract(res.contract);
@@ -234,7 +243,7 @@ function TableShowContracts() {
     handleGetAllContracts();
     handleGetAllUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isPlayerContract]);
 
   return (
     <>
@@ -246,7 +255,9 @@ function TableShowContracts() {
       >
         <div className={cx('container-content')}>
           <div className={cx('wrap-table')}>
-            <h2 className={cx('title')}>List of contracts</h2>
+            <h2 className={cx('title')}>
+              {isPlayerContract ? 'List of player contracts' : 'List of sponsorship deal'}
+            </h2>
             <div className={cx('note')}>
               Actions:
               <div className={cx('btn-actions')}>
