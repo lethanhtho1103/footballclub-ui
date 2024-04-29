@@ -42,7 +42,7 @@ function MatchDetail() {
 
   const handleStopMatch = async () => {
     // setIsLoader(true);
-    const res = await adminService.stopMatchLive(matchId);
+    const res = await adminService.stopMatchLive(matchId, access_token);
     console.log(res);
     // if (res.message) {
     //   setObToast({ content: res.message, isShow: true });

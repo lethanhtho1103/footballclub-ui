@@ -105,12 +105,13 @@ function ModalCreateDetailMatch({ handleClose, access_token, game_id, handleGetM
   };
 
   const handleGetAllUsers = async () => {
-    const res = await adminService.getAllUser();
+    const res = await adminService.getAllUser(access_token);
     setUsers(res);
   };
 
   useEffect(() => {
     handleGetAllUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
