@@ -56,7 +56,7 @@ function Statistical() {
               tabClassName={cx({
                 active: activeTab === 'salary',
               })}
-              title="Salary"
+              title="Salary and Contract"
             >
               <SalaryParStatistical />
             </Tab>

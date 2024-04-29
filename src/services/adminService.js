@@ -800,6 +800,34 @@ const adminService = {
     return res.data;
   },
 
+  async getPaymentCompanyByYear(year, access_token) {
+    try {
+      const res = await axios.get(`/api/company-report/${year}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async getPaymentCompanyByMonth(month, year, access_token) {
+    try {
+      const res = await axios.get(`api/company-payments/${month}/${year}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
   // Tickets
   async getAllTickets(access_token) {
     try {

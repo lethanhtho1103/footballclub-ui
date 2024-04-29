@@ -21,12 +21,16 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import TableShowSalaryMonth from '../TableShowSalaryMonth';
 import { useSelector } from 'react-redux';
 import { accessTokenSelector } from '~/redux/selector';
+import TableShowPaymentCompanyMonth from '../TableShowPaymentCompanyMonth';
 const cx = classNames.bind(styles);
 
 ChartJS.register(ChartDataLabels, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 function SalaryParChart({ year = new Date().getFullYear() - 1 }) {
   const access_token = useSelector(accessTokenSelector);
   const [dataPar, setDataPar] = useState([]);
+  const [dataPay, setDataPay] = useState([]);
+  const [isSalary, setIsSalary] = useState(0);
+
   const [month, setMonth] = useState(0);
   const options = {
     responsive: true,
@@ -41,7 +45,7 @@ function SalaryParChart({ year = new Date().getFullYear() - 1 }) {
       },
       title: {
         display: true,
-        text: `Salary statistics by month in ${year}`,
+        text: `Salary and contract statistics chart by month in ${year}`,
         font: {
           size: 20,
         },
@@ -101,6 +105,7 @@ function SalaryParChart({ year = new Date().getFullYear() - 1 }) {
         const monthIndex = elements[0].index;
         const selectedMonth = monthIndex + 1;
         setMonth(selectedMonth);
+        setIsSalary(elements[0].datasetIndex);
         window.scrollTo({
           top: 1000,
           behavior: 'smooth',
@@ -130,8 +135,17 @@ function SalaryParChart({ year = new Date().getFullYear() - 1 }) {
       {
         label: 'Salary statistics ($)',
         data: [...dataPar],
-        borderColor: 'rgb(85, 162, 199)',
-        backgroundColor: 'rgb(85, 162, 199, 0.5)',
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        font: {
+          size: 20,
+        },
+      },
+      {
+        label: 'Payment Company ($)',
+        data: [...dataPay],
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
         font: {
           size: 20,
         },
@@ -140,8 +154,16 @@ function SalaryParChart({ year = new Date().getFullYear() - 1 }) {
   };
 
   const getData = async () => {
-    const res = await adminService.getSalaryByYear(year, access_token);
-    setDataPar(Object.values(res));
+    try {
+      const [salaryResponse, paymentResponse] = await Promise.all([
+        adminService.getSalaryByYear(year, access_token),
+        adminService.getPaymentCompanyByYear(year, access_token),
+      ]);
+      setDataPay(Object.values(paymentResponse));
+      setDataPar(Object.values(salaryResponse));
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
   useEffect(() => {
@@ -156,7 +178,9 @@ function SalaryParChart({ year = new Date().getFullYear() - 1 }) {
           <hr></hr>
         </div>
       </div>
-      {month > 0 && <TableShowSalaryMonth month={month} year={year} />}
+      {isSalary === 0
+        ? month > 0 && <TableShowSalaryMonth month={month} year={year} />
+        : month > 0 && <TableShowPaymentCompanyMonth month={month} year={year} />}
     </div>
   );
 }
