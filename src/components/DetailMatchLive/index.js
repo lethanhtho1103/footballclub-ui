@@ -10,10 +10,13 @@ import adminService from '~/services/adminService';
 import { Button, Modal } from 'react-bootstrap';
 import Loader from '../Loader';
 import ToastMassage from '../Admin/ToastMassage';
+import { useSelector } from 'react-redux';
+import { accessTokenSelector } from '~/redux/selector';
 
 const cx = classNames.bind(styles);
 
 function DetailMatchLive({ match, isLive, handleGetMatchLive }) {
+  const access_token = useSelector(accessTokenSelector);
   const [time, setTime] = useState(new Date());
   const [gameDetailId, setGameDetailId] = useState('');
   const [isLoader, setIsLoader] = useState(false);
@@ -27,7 +30,8 @@ function DetailMatchLive({ match, isLive, handleGetMatchLive }) {
   const handleDelete = () => {
     setIsLoader(true);
     setTimeout(async () => {
-      const res = await adminService.deleteDetailMatchLive(gameDetailId);
+      // Thang Ngooo deoo bo access_token vao
+      const res = await adminService.deleteDetailMatchLive(gameDetailId, access_token);
       setObToast({ content: res.message, isShow: true });
       setIsLoader(false);
       handleGetMatchLive();

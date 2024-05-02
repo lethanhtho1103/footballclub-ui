@@ -722,13 +722,14 @@ const adminService = {
 
   async stopMatchLive(id, access_token) {
     try {
+      console.log(id);
+      console.log(access_token);
       const res = await axios.post(`/api/stopMatch/${id}`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
-          'Content-Type': 'multipart/form-data',
         },
       });
-      return res.data;
+      return res;
     } catch (error) {
       console.log(error.message);
     }
