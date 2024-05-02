@@ -724,12 +724,13 @@ const adminService = {
     try {
       console.log(id);
       console.log(access_token);
-      const res = await axios.post(`/api/stopMatch/${id}`, {
+      const res = await axios.post(`/api/matches/stop/${id}`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'multipart/form-data',
         },
       });
-      return res;
+      return res.data;
     } catch (error) {
       console.log(error.message);
     }

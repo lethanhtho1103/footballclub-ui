@@ -10,6 +10,8 @@ import ModalCreateDetailMatch from '~/components/Admin/ModalCreateDetailMatch';
 import { useSelector } from 'react-redux';
 import { accessTokenSelector } from '~/redux/selector';
 import ToastMassage from '~/components/Admin/ToastMassage';
+import axios from '~/axios';
+
 
 const cx = classNames.bind(styles);
 
@@ -41,12 +43,21 @@ function MatchDetail() {
   };
 
   const handleStopMatch = async () => {
-    // setIsLoader(true);
-    const res = await adminService.stopMatchLive(matchId, access_token);
-    console.log(res);
-    // if (res.message) {
-    //   setObToast({ content: res.message, isShow: true });
-    // }
+    try {
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${access_token}`
+        }
+      };
+  
+      const res = await axios.post(`/api/matches/stop/${matchId}`, null, config);
+  
+      if (res && res.data && res.data.message) {
+        setObToast({ content: res.data.message, isShow: true });
+      }
+    } catch (error) {
+      console.error("Error while stopping match: ", error);
+    }
   };
 
   useEffect(() => {
