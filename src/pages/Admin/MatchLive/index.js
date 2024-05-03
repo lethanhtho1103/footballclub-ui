@@ -35,6 +35,7 @@ function MatchDetail() {
       setIsLive(true);
     } else if (res.near_matches.length > 0 && res.live_matches.length === 0) {
       setMatch(res.near_matches[0]);
+      setIsLive(false);
     }
   };
 
